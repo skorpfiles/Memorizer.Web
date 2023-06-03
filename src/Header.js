@@ -1,11 +1,12 @@
 import './Header.css';
 import UserAccountHeaderSection from './UserManagement/UserAccountHeaderSection';
 
-function Header() {
+function Header(props) {
+    let userAccountSection = <UserAccountHeaderSection userLogin={ props.userLogin } />
     return (
         <header>
             <div className="Header-Logo">Memorizer</div>
-            <UserAccountHeaderSection userName="Test User"/>
+            {props.userIsLogged && userAccountSection}
         </header>
     );
 }
