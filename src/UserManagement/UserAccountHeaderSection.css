@@ -1,0 +1,13 @@
+.UserAccountHeaderSection-Main {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+}
+
+.UserAccountHeaderSection-UserIcon {
+
+}
+
+.UserAccountHeaderSection-Text {
+
+}
