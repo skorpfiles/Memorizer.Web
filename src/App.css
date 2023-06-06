@@ -12,3 +12,58 @@ body {
 .App-body {
     flex: 1 0 auto;
 }
+
+.MiddleVerticalAlignContainer {
+    display:flex;
+    justify-content:center;
+    height:100%;
+}
+
+.FullscreenColumnAlignmentByWidth {
+    width:100%;
+}
+
+.Column-small {
+    width: 20em;
+    margin: auto;
+}
+
+.Panel {
+    border: 2px solid black;
+    border-radius: 1.5em;
+    padding: 0.7em;
+}
+
+.MainTextBox, .MainTextBox-FullWidth, .MainButton, .MainButton-FullWidth {
+    border-radius: 0.5em;
+    padding: 0.5em 0.7em;
+    margin: 0.7em;
+    box-sizing: border-box;
+}
+
+.MainTextBox, .MainTextBox-FullWidth {
+    border: 2px solid black;
+}
+
+.MainTextBox-FullWidth, .MainButton-FullWidth {
+    width: calc(100% - 0.7em - 0.7em);
+}
+
+.MainButton, .MainButton-FullWidth {
+    background-color: #002060;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Font-MainForControls {
+    font-size:1em;
+}
+
+.Font-Default {
+    font-size:0.9em;
+}
+
+.CenterText {
+    text-align:center;
+}

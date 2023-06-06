@@ -13,6 +13,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\Utils\" />
-    <Folder Include="src\UserManagement\" />
   </ItemGroup>
 </Project>

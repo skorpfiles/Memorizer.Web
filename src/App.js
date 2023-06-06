@@ -4,6 +4,13 @@ import Header from './Header';
 import Footer from './Footer';
 import { CallApi } from './Utils/GlobalUtils';
 import { CookiesExpireDays } from './Utils/GlobalConstants';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route, useLocation
+} from 'react-router-dom';
+import AuthenticationPanel from './UserManagement/AuthenticationPanel';
+import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -14,16 +21,38 @@ function App() {
         isLoggingError: false,
         loggingErrorMessage: null
     });
+
+    let header = (window.location.pathname == '/Register' || currentUser.isUserLogged) && (<Header
+        userIsLogged={false}
+        userLogin={currentUser.userLogin}
+    />);
  
     return (
         <div className="App">
-            <Header
-                userIsLogged={false}
-                userLogin="Test User"
-            />
+            {header}
             <section className="App-body">
+                {/*<Router>*/}
+                {/*    <Routes>*/}
+                {/*        <Route*/}
+                {/*            path="/"*/}
+                {/*            element={<Home />}*/}
+                {/*        />*/}
+                {/*        <Route*/}
+                {/*            path="blog"*/}
+                {/*            element={<Post />}*/}
+                {/*        />*/}
+                {/*    </Routes>*/}
+                {/*</Router>*/}
+
+                <div className="MiddleVerticalAlignContainer">
+                    <div className="Column-small">
+                        <MemorizerLogoWithSubtitle/>
+                        <AuthenticationPanel/>
+                    </div>
+                </div>
+
             </section>
-            <Footer/>
+            <Footer />
         </div>
     );
 }
