@@ -9,8 +9,8 @@ import {
     Routes,
     Route, useLocation
 } from 'react-router-dom';
-import AuthenticationPanel from './UserManagement/AuthenticationPanel';
-import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
+import AuthenticationPage from './AuthenticationPage';
+import RegisterPage from './RegisterPage';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -31,25 +31,21 @@ function App() {
         <div className="App">
             {header}
             <section className="App-body">
-                {/*<Router>*/}
-                {/*    <Routes>*/}
-                {/*        <Route*/}
-                {/*            path="/"*/}
-                {/*            element={<Home />}*/}
-                {/*        />*/}
-                {/*        <Route*/}
-                {/*            path="blog"*/}
-                {/*            element={<Post />}*/}
-                {/*        />*/}
-                {/*    </Routes>*/}
-                {/*</Router>*/}
-
-                <div className="MiddleVerticalAlignContainer">
-                    <div className="Column-small">
-                        <MemorizerLogoWithSubtitle/>
-                        <AuthenticationPanel/>
-                    </div>
-                </div>
+                <Router>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<AuthenticationPage/>}
+                        />
+                        {!currentUser.isUserLogged && (
+                            <Route
+                                path="register"
+                                element={<RegisterPage />}
+                            />
+                        )}
+                        <Route path="*" status={404} />
+                    </Routes>
+                </Router>
 
             </section>
             <Footer />

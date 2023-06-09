@@ -34,26 +34,45 @@ body {
     padding: 0.7em;
 }
 
-.MainTextBox, .MainTextBox-FullWidth, .MainButton, .MainButton-FullWidth {
+.TitleBeforePanel {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 1.5em 0;
+}
+
+.MainTextBox, .MainButton {
     border-radius: 0.5em;
     padding: 0.5em 0.7em;
     margin: 0.7em;
     box-sizing: border-box;
 }
 
-.MainTextBox, .MainTextBox-FullWidth {
+.MainTextBox {
     border: 2px solid black;
 }
 
-.MainTextBox-FullWidth, .MainButton-FullWidth {
+.FullWidth {
     width: calc(100% - 0.7em - 0.7em);
 }
 
-.MainButton, .MainButton-FullWidth {
-    background-color: #002060;
+.MainButton {
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+.MainButton {
+    background-color: #002060;
+}
+
+.MainButton:disabled {
+    background-color: #BDD7EE;
+    border-color:transparent;
+}
+
+.Font-MainForLabels{
+    font-size:2em;
 }
 
 .Font-MainForControls {
