@@ -7,7 +7,7 @@ import { CookiesExpireDays } from './Utils/GlobalConstants';
 import {
     BrowserRouter as Router,
     Routes,
-    Route, useLocation
+    Route
 } from 'react-router-dom';
 import AuthenticationPage from './AuthenticationPage';
 import RegisterPage from './RegisterPage';
@@ -35,12 +35,12 @@ function App() {
                     <Routes>
                         <Route
                             path="/"
-                            element={<AuthenticationPage/>}
+                            element={<AuthenticationPage />}
                         />
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="register"
-                                element={<RegisterPage />}
+                                element={<RegisterPage/>}
                             />
                         )}
                         <Route path="*" status={404} />
