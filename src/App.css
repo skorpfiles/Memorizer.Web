@@ -86,3 +86,8 @@ body {
 .CenterText {
     text-align:center;
 }
+
+.ValidationLabel{
+    color:red;
+    margin:0 0.7em;
+}
