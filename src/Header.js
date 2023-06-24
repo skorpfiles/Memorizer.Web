@@ -2,7 +2,10 @@ import './Header.css';
 import UserAccountHeaderSection from './UserManagement/UserAccountHeaderSection';
 
 function Header(props) {
-    let userAccountSection = <UserAccountHeaderSection userLogin={ props.userLogin } />
+    let userAccountSection = <UserAccountHeaderSection
+        userLogin={props.userLogin}
+        handleLogOut={props.handleLogOut }
+    />
     return (
         <header>
             <div className="Header-Logo">Memorizer</div>

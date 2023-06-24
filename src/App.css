@@ -29,9 +29,11 @@ body {
 }
 
 .Panel {
-    border: 2px solid black;
+    border: 0.15em solid black;
     border-radius: 1.5em;
     padding: 0.7em;
+    display: flex;
+    flex-direction: column;
 }
 
 .TitleBeforePanel {
@@ -41,19 +43,22 @@ body {
     margin: 0 0 1.5em 0;
 }
 
-.MainTextBox, .MainButton {
+.MainControlContainer {
+    margin: 0.7em;
+}
+
+.MainTextBox, .MainButton, .ErrorLabel {
     border-radius: 0.5em;
     padding: 0.5em 0.7em;
-    margin: 0.7em;
     box-sizing: border-box;
 }
 
 .MainTextBox {
-    border: 2px solid black;
+    border: 0.15em solid black;
 }
 
 .FullWidth {
-    width: calc(100% - 0.7em - 0.7em);
+    width: 100%;
 }
 
 .MainButton {
@@ -93,5 +98,13 @@ body {
 
 .ValidationLabel{
     color:red;
-    margin:0 0.7em;
+    margin:0.2em 0.85em 0 0.85em;
+    font-size:0.8em;
+}
+
+.ErrorLabel {
+    background-color: #FFCDCD;
+    color: red;
+    margin: 1.5em 0 0 0;
+    font-size: 0.8em;
 }

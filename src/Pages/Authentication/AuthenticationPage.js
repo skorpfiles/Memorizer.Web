@@ -2,7 +2,7 @@ import AuthenticationPanel from '../../UserManagement/AuthenticationPanel';
 import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
 import { useEffect } from 'react';
 
-function AuthenticationPage() {
+function AuthenticationPage(props) {
     useEffect(() => {
         document.title = "Memorizer";
     });
@@ -10,7 +10,10 @@ function AuthenticationPage() {
         <div className="MiddleVerticalAlignContainer">
             <div className="Column-small">
                 <MemorizerLogoWithSubtitle />
-                <AuthenticationPanel />
+                <AuthenticationPanel
+                    handleLogIn={props.handleLogIn }
+                    currentUser={props.currentUser }
+                />
             </div>
         </div>
     )

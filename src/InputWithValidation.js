@@ -7,12 +7,13 @@ function InputWithValidation(props) {
     const isInvalid = isFormInvalid(inputError);
 
     return (
-        <div>
+        <div className={props.containerClassName}>
             <input
                 className={props.inputClassName}
                 id={props.inputId}
                 type={props.inputType}
                 placeholder={props.inputPlaceholder}
+                disabled={props.disabled}
                 {...register(props.inputName, props.inputValidation)}
             />
             {isInvalid && (

@@ -1,7 +1,7 @@
 import RegisterPanel from '../UserManagement/RegisterPanel'
 import { useEffect } from 'react';
 
-function RegisterPage() {
+function RegisterPage(props) {
     useEffect(() => {
         document.title = "Register User - Memorizer";
     });
@@ -13,7 +13,9 @@ function RegisterPage() {
                         Register a new account
                     </div>
                 </div>
-                <RegisterPanel />
+                <RegisterPanel
+                    currentUser={ props.currentUser }
+                />
             </div>
         </div>
     )

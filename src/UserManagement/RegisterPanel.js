@@ -5,21 +5,28 @@ import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
 import { PasswordValidations } from './Utils.js';
 
-function RegisterPanel() {
+function RegisterPanel(props) {
     const captchaRef = useRef(null);
     const siteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
-    const [isRegisterButtonEnabled, setIsRegisterButtonEnabled] = useState(false);
+    const [isCaptchaConfirmed, setIsCaptchaConfirmed] = useState(false);
 
     const methods = useForm();
     const onSubmit = data => console.log(data);
+
+    const [registerState, setRegisterState] = useState({
+        isRegistering: false,
+        isRegisteringError: false,
+        registeringErrorMessage: null
+    });
 
     return (
         <FormProvider {...methods}>
             <form className="Panel" onSubmit={methods.handleSubmit(onSubmit)}>
                 <InputWithValidation
+                    containerClassName="MainControlContainer"
                     inputClassName="MainTextBox FullWidth Font-MainForControls"
                     inputId="Email"
-                    inputName="Email"
+                    inputName="email"
                     inputType="text"
                     inputPlaceholder="E-mail"
                     validationLabelClassName="ValidationLabel"
@@ -36,9 +43,10 @@ function RegisterPanel() {
                     }}
                 />
                 <InputWithValidation
+                    containerClassName="MainControlContainer"
                     inputClassName="MainTextBox FullWidth Font-MainForControls"
                     inputId="Username"
-                    inputName="Username"
+                    inputName="username"
                     inputType="text"
                     inputPlaceholder="Username"
                     validationLabelClassName="ValidationLabel"
@@ -54,18 +62,20 @@ function RegisterPanel() {
                     }}
                 />
                 <InputWithValidation
+                    containerClassName="MainControlContainer"
                     inputClassName="MainTextBox FullWidth Font-MainForControls"
                     inputId="Password"
-                    inputName="Password"
+                    inputName="password"
                     inputType="password"
                     inputPlaceholder="Password"
                     validationLabelClassName="ValidationLabel"
                     inputValidation={PasswordValidations}
                 />
                 <InputWithValidation
+                    containerClassName="MainControlContainer"
                     inputClassName="MainTextBox FullWidth Font-MainForControls"
                     inputId="RepeatPassword"
-                    inputName="RepeatPassword"
+                    inputName="repeatPassword"
                     inputType="password"
                     inputPlaceholder="Repeat the password"
                     validationLabelClassName="ValidationLabel"
@@ -82,10 +92,15 @@ function RegisterPanel() {
                         ref={captchaRef}
                         sitekey={siteKey}
                         size="compact"
-                        onChange={() => setIsRegisterButtonEnabled(true)}
+                        onChange={() => setIsCaptchaConfirmed(true)}
                     />
                 </div>
-                <input className="MainButton FullWidth Font-MainForControls" type="submit" id="registerButton" value="Register" disabled={!isRegisterButtonEnabled} />
+                <div className="MainControlContainer">
+                    <input className="MainButton FullWidth Font-MainForControls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || registerState.isRegistering} />
+                    {props.currentUser.isLoggingError && (
+                        <div className="ErrorLabel">{props.currentUser.loggingErrorMessage}</div>)
+                    }
+                </div>
                 <div className="CenterText Font-Default"><a href="/">I already have an account</a></div>
             </form>
         </FormProvider>

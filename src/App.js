@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
@@ -22,13 +22,60 @@ function App() {
         isLoggingError: false,
         loggingErrorMessage: null
     });
+    let [loggingHasBeenChecked, setLoggingHasBeenChecked] = useState(false);
+
+    useEffect(() => {
+        try {
+            if (!loggingHasBeenChecked) {
+                const accessTokenFromCookies = getAccessTokenFromCookies();
+                if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
+                    const userLoginFromCookies = getUserLoginFromCookies();
+
+                    const refreshCurrentUserFunc = async () => {
+                        const response =
+                            await CallApi("/Account/Check", "GET", accessTokenFromCookies);
+
+                        if (response.ok) {
+                            setCurrentUser({
+                                isUserLogged: true,
+                                isUserLogging: false,
+                                userLogin: userLoginFromCookies,
+                                accessToken: accessTokenFromCookies,
+                                isLoggingError: false,
+                                loggingErrorMessage: null
+                            });
+                        }
+
+                        
+                    }
+
+                    refreshCurrentUserFunc();
+                }
+            }
+            
+        }
+        catch {
+            
+        }
+        setLoggingHasBeenChecked(true);
+    })
 
     let header = (window.location.pathname == '/Register' || currentUser.isUserLogged) && (<Header
-        userIsLogged={false}
+        userIsLogged={currentUser.isUserLogged}
         userLogin={currentUser.userLogin}
+        handleLogOut={()=>logOut(currentUser, setCurrentUser)}
     />);
 
-    let mainPage = currentUser.isUserLogged ? (<MainPage />) : (<AuthenticationPage />);
+    let mainPage = currentUser.isUserLogged ?
+        (
+            <MainPage />
+        ) :
+        (
+            <AuthenticationPage
+                handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
+                currentUser={ currentUser }
+            />
+        );
  
     return (
         <div className="App">
@@ -43,7 +90,11 @@ function App() {
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="register"
-                                element={<RegisterPage/>}
+                                element={
+                                    <RegisterPage
+                                        currentUser={ currentUser }
+                                    />
+                                }
                             />
                         )}
                         <Route
@@ -94,14 +145,27 @@ async function logIn(login, password, setCurrentUser) {
         else {
             const result = await response.json();
 
-            setCurrentUser({
-                isUserLogged: false,
-                isUserLogging: false,
-                userLogin: null,
-                accessToken: null,
-                isLoggingError: true,
-                loggingErrorMessage: `${response.status} ${result.errorText}`
-            });
+            if (response.status == 401) {
+                setCurrentUser({
+                    isUserLogged: false,
+                    isUserLogging: false,
+                    userLogin: null,
+                    accessToken: null,
+                    isLoggingError: true,
+                    loggingErrorMessage: "Invalid login or password."
+                });
+            }
+            else {
+                setCurrentUser({
+                    isUserLogged: false,
+                    isUserLogging: false,
+                    userLogin: null,
+                    accessToken: null,
+                    isLoggingError: true,
+                    loggingErrorMessage: `${response.status} ${result.errorText}`
+                });
+            }
+            
         }
     }
     catch (error) {
@@ -115,6 +179,53 @@ async function logIn(login, password, setCurrentUser) {
             loggingErrorMessage: "Error: Unable to connect to the API"
         });
     }
+}
+
+async function logOut(currentUser, setCurrentUser) {
+    try {
+        const response = await CallApi("/Account/Logout", "POST", currentUser.accessToken);
+        if (response.ok) {
+            setCurrentUser({
+                isUserLogged: false,
+                isUserLogging: false,
+                userLogin: null,
+                accessToken: null,
+                isLoggingError: false,
+                loggingErrorMessage: null
+            });
+
+            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            document.cookie = "userLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        }
+        else {
+            const result = await response.json();
+
+            setCurrentUser({
+                isUserLogging: false,
+                isLoggingError: true,
+                loggingErrorMessage: `${response.status} ${result.errorText}`
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function getAccessTokenFromCookies() {
+    const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('accessToken='))
+        .split('=')[1];
+    return cookieValue;
+}
+
+function getUserLoginFromCookies() {
+    const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('userLogin='))
+        .split('=')[1];
+    return cookieValue;
 }
 
 export default App;

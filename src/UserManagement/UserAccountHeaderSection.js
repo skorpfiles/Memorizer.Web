@@ -8,7 +8,7 @@ function UserAccountHeaderSection(props) {
                 <img src={userIcon} width="32em" alt="User" />
             </div>
             <div className="UserAccountHeaderSection-Text">
-                {props.userName} (<a id="logout" href="#">log out</a>)
+                {props.userLogin} (<span onClick={props.handleLogOut}><a id="logout" href="#">log out</a></span>)
             </div>
         </div>
     )
