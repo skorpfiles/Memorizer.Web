@@ -1,4 +1,4 @@
-import AuthenticationPanel from './UserManagement/AuthenticationPanel';
+import AuthenticationPanel from '../../UserManagement/AuthenticationPanel';
 import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
 import { useEffect } from 'react';
 

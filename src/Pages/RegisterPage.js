@@ -1,4 +1,4 @@
-import RegisterPanel from './UserManagement/RegisterPanel'
+import RegisterPanel from '../UserManagement/RegisterPanel'
 import { useEffect } from 'react';
 
 function RegisterPage() {

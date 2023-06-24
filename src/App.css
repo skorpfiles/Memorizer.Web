@@ -71,6 +71,10 @@ body {
     border-color:transparent;
 }
 
+.IncreaseButtonHeight {
+    height:5em;
+}
+
 .Font-MainForLabels{
     font-size:2em;
 }

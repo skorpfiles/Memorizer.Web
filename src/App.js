@@ -9,8 +9,9 @@ import {
     Routes,
     Route
 } from 'react-router-dom';
-import AuthenticationPage from './AuthenticationPage';
-import RegisterPage from './RegisterPage';
+import AuthenticationPage from './Pages/Authentication/AuthenticationPage';
+import RegisterPage from './Pages/RegisterPage';
+import MainPage from './Pages/MainPage';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -26,6 +27,8 @@ function App() {
         userIsLogged={false}
         userLogin={currentUser.userLogin}
     />);
+
+    let mainPage = currentUser.isUserLogged ? (<MainPage />) : (<AuthenticationPage />);
  
     return (
         <div className="App">
@@ -35,7 +38,7 @@ function App() {
                     <Routes>
                         <Route
                             path="/"
-                            element={<AuthenticationPage />}
+                            element={mainPage}
                         />
                         {!currentUser.isUserLogged && (
                             <Route
@@ -43,10 +46,13 @@ function App() {
                                 element={<RegisterPage/>}
                             />
                         )}
-                        <Route path="*" status={404} />
+                        <Route
+                            path="*"
+                            status={404}
+                            element={mainPage}
+                        />
                     </Routes>
                 </Router>
-
             </section>
             <Footer />
         </div>
