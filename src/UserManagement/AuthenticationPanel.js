@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
+import { PasswordValidations } from './Utils.js';
 
 function AuthenticationPanel() {
     const methods = useForm();
@@ -32,12 +33,7 @@ function AuthenticationPanel() {
                     inputType="password"
                     inputPlaceholder="Password"
                     validationLabelClassName="ValidationLabel"
-                    inputValidation={{
-                        required: {
-                            value: true,
-                            message: "Password is required."
-                        }
-                    }}
+                    inputValidation={PasswordValidations}
                 />
                 <input className="MainButton FullWidth Font-MainForControls" type="submit" id="LogIn" value="Log In" />
                 <div className="CenterText Font-Default">or <a href="/Register">register</a></div>

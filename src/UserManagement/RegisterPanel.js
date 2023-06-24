@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import './RegisterPanel.css';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
+import { PasswordValidations } from './Utils.js';
 
 function RegisterPanel() {
     const captchaRef = useRef(null);
@@ -26,7 +27,12 @@ function RegisterPanel() {
                         required: {
                             value: true,
                             message: "E-mail is required."
-                        }
+                        },
+                        pattern: {
+                            value:
+                                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: 'Must be a correct e-mail string.',
+                        },
                     }}
                 />
                 <InputWithValidation
@@ -40,6 +46,10 @@ function RegisterPanel() {
                         required: {
                             value: true,
                             message: "Username is required."
+                        },
+                        maxLength: {
+                            value: 100,
+                            message: "Username must have maximum 100 symbols."
                         }
                     }}
                 />
@@ -50,14 +60,23 @@ function RegisterPanel() {
                     inputType="password"
                     inputPlaceholder="Password"
                     validationLabelClassName="ValidationLabel"
+                    inputValidation={PasswordValidations}
+                />
+                <InputWithValidation
+                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputId="RepeatPassword"
+                    inputName="RepeatPassword"
+                    inputType="password"
+                    inputPlaceholder="Repeat the password"
+                    validationLabelClassName="ValidationLabel"
                     inputValidation={{
-                        required: {
-                            value: true,
-                            message: "Password is required."
-                        }
+                        validate: (val) => {
+                            if (methods.watch('Password') != val) {
+                                return "The passwords must be the same.";
+                            }
+                        },
                     }}
                 />
-                <input className="MainTextBox FullWidth Font-MainForControls" id="RepeatPassword" type="password" placeholder="Repeat the password" />
                 <div className="CaptchaContainer">
                     <ReCAPTCHA
                         ref={captchaRef}
