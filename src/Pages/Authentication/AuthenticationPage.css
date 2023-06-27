@@ -1,0 +1,20 @@
+.SuccessMessage {
+    font-size: 1.9em;
+    color: #00B050;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.FailMessage {
+    font-size: 1.9em;
+    color: red;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.VerticalCenterColumn {
+    margin: auto;
+    flex-direction: column;
+}

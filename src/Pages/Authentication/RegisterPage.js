@@ -1,4 +1,4 @@
-import RegisterPanel from '../UserManagement/RegisterPanel'
+import RegisterPanel from '../../UserManagement/RegisterPanel'
 import { useEffect } from 'react';
 
 function RegisterPage(props) {
@@ -7,7 +7,7 @@ function RegisterPage(props) {
     });
     return (
         <div className="MiddleVerticalAlignContainer">
-            <div className="Column-small">
+            <div className="MiddleVerticalAlignBlock Column-small">
                 <div className="TitleBeforePanel">
                     <div className="Font-MainForLabels">
                         Register a new account

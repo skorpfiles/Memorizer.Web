@@ -7,7 +7,7 @@ function MainPage() {
 
     return (
         <div className="MiddleVerticalAlignContainer">
-            <div className="Column-small">
+            <div className="MiddleVerticalAlignBlock Column-small">
                 <div className="TitleBeforePanel">
                     <div className="Font-MainForLabels">
                         What do you want to do?

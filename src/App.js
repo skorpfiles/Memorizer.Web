@@ -10,9 +10,11 @@ import {
     Route
 } from 'react-router-dom';
 import AuthenticationPage from './Pages/Authentication/AuthenticationPage';
-import RegisterPage from './Pages/RegisterPage';
+import RegisterPage from './Pages/Authentication/RegisterPage';
 import MainPage from './Pages/MainPage';
 import ConfirmEmailPage from './Pages/Authentication/ConfirmEmailPage';
+import WeSentEmailPage from './Pages/Authentication/WeSentEmailPage';
+import SendConfirmationEmailPage from './Pages/Authentication/SendConfirmationEmailPage';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -23,7 +25,15 @@ function App() {
         isLoggingError: false,
         loggingErrorMessage: null
     });
+    let [emailConfirmation, setEmailConfirmation] = useState({
+        showMessageAboutSending: false,
+        isModeActive: false,
+        isFinished: false,
+        isSucceed: false
+    });
+
     let [loggingHasBeenChecked, setLoggingHasBeenChecked] = useState(false);
+
 
     useEffect(() => {
         try {
@@ -61,7 +71,7 @@ function App() {
         setLoggingHasBeenChecked(true);
     })
 
-    let header = (window.location.pathname == '/Register' || currentUser.isUserLogged) && (<Header
+    let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
         userIsLogged={currentUser.isUserLogged}
         userLogin={currentUser.userLogin}
         handleLogOut={()=>logOut(currentUser, setCurrentUser)}
@@ -74,7 +84,8 @@ function App() {
         (
             <AuthenticationPage
                 handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
-                currentUser={ currentUser }
+                currentUser={currentUser}
+                emailConfirmation={emailConfirmation }
             />
         );
  
@@ -107,6 +118,10 @@ function App() {
                                 />}
                             />
                         )}
+                        <Route
+                            path="test"
+                            element={<SendConfirmationEmailPage />}
+                            />
                         <Route
                             path="*"
                             status={404}
