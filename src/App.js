@@ -12,6 +12,7 @@ import {
 import AuthenticationPage from './Pages/Authentication/AuthenticationPage';
 import RegisterPage from './Pages/RegisterPage';
 import MainPage from './Pages/MainPage';
+import ConfirmEmailPage from './Pages/Authentication/ConfirmEmailPage';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -49,7 +50,7 @@ function App() {
                         
                     }
 
-                    refreshCurrentUserFunc();
+                    refreshCurrentUserFunc().catch(console.error);
                 }
             }
             
@@ -95,6 +96,15 @@ function App() {
                                         currentUser={ currentUser }
                                     />
                                 }
+                            />
+                        )}
+                        {!currentUser.isUserLogged && (
+                            <Route
+                                path="confirm_email"
+                                element={<ConfirmEmailPage
+                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
+                                    currentUser={currentUser}
+                                />}
                             />
                         )}
                         <Route
