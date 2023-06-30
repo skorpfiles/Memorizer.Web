@@ -4,6 +4,7 @@ import './RegisterPanel.css';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
 import { PasswordValidations } from './Utils.js';
+import { CallApi } from '../Utils/GlobalUtils';
 
 function RegisterPanel(props) {
     const captchaRef = useRef(null);
@@ -11,13 +12,7 @@ function RegisterPanel(props) {
     const [isCaptchaConfirmed, setIsCaptchaConfirmed] = useState(false);
 
     const methods = useForm();
-    const onSubmit = data => console.log(data);
-
-    const [registerState, setRegisterState] = useState({
-        isRegistering: false,
-        isRegisteringError: false,
-        registeringErrorMessage: null
-    });
+    const onSubmit = data => props.handleRegister(data.email, data.username, data.password, data.repeatPassword, captchaRef.current.getValue());
 
     return (
         <FormProvider {...methods}>
@@ -81,7 +76,7 @@ function RegisterPanel(props) {
                     validationLabelClassName="ValidationLabel"
                     inputValidation={{
                         validate: (val) => {
-                            if (methods.watch('Password') != val) {
+                            if (methods.watch('password') !== val) {
                                 return "The passwords must be the same.";
                             }
                         },
@@ -92,13 +87,13 @@ function RegisterPanel(props) {
                         ref={captchaRef}
                         sitekey={siteKey}
                         size="compact"
-                        onChange={() => setIsCaptchaConfirmed(true)}
+                        onChange={(token) => setIsCaptchaConfirmed(token!==null)}
                     />
                 </div>
                 <div className="MainControlContainer">
-                    <input className="MainButton FullWidth Font-MainForControls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || registerState.isRegistering} />
-                    {props.currentUser.isLoggingError && (
-                        <div className="ErrorLabel">{props.currentUser.loggingErrorMessage}</div>)
+                    <input className="MainButton FullWidth Font-MainForControls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
+                    {(props.registrationState.isError) && (
+                        <div className="ErrorLabel">{props.registrationState.errorMessage}</div>)
                     }
                 </div>
                 <div className="CenterText Font-Default"><a href="/">I already have an account</a></div>

@@ -14,7 +14,9 @@ function RegisterPage(props) {
                     </div>
                 </div>
                 <RegisterPanel
-                    currentUser={ props.currentUser }
+                    currentUser={props.currentUser}
+                    registrationState={props.registrationState}
+                    handleRegister={props.handleRegister}
                 />
             </div>
         </div>

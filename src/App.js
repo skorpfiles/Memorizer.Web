@@ -32,6 +32,17 @@ function App() {
         isSucceed: false
     });
 
+    let [registrationState, setRegistrationState] = useState({
+        isExecuting: false,
+        isFinished: false,
+        isSucceed: false,
+        isError: false,
+        errorMessage: null,
+        resultUserId: null,
+        isConfirmationRequired: false
+    });
+
+
     let [loggingHasBeenChecked, setLoggingHasBeenChecked] = useState(false);
 
 
@@ -99,12 +110,14 @@ function App() {
                             path="/"
                             element={mainPage}
                         />
-                        {!currentUser.isUserLogged && (
+                        {(!currentUser.isUserLogged && !registrationState.isSucceed) && (
                             <Route
                                 path="register"
                                 element={
                                     <RegisterPage
-                                        currentUser={ currentUser }
+                                        currentUser={currentUser}
+                                        registrationState={registrationState}
+                                        handleRegister={(email,login,password,repeatPassword) => registerUser(setRegistrationState, email, login, password, repeatPassword) }
                                     />
                                 }
                             />
@@ -112,10 +125,12 @@ function App() {
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="confirm_email"
-                                element={<ConfirmEmailPage
+                                element={
+                                    <ConfirmEmailPage
                                     handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
                                     currentUser={currentUser}
-                                />}
+                                    />
+                                }
                             />
                         )}
                         <Route
@@ -143,7 +158,9 @@ async function logIn(login, password, setCurrentUser) {
             userLogin: null,
             accessToken: null,
             isLoggingError: false,
-            loggingErrorMessage: null
+            loggingErrorMessage: null,
+            resultUserId: null,
+            isConfirmationRequired: false
         });
 
         const response =
@@ -252,5 +269,75 @@ function getUserLoginFromCookies() {
         .split('=')[1];
     return cookieValue;
 }
+
+async function registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken) {
+
+    if (password === repeatPassword) {
+
+        try {
+            setRegistrationState({
+                isExecuting: true,
+                isFinished: false,
+                isSucceed: false,
+                isError: false,
+                errorMessage: null,
+                resultUserId: null,
+                isConfirmationRequired: false
+            });
+
+            const response =
+                await CallApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setRegistrationState({
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: true,
+                    isError: false,
+                    errorMessage: null,
+                    resultUserId: result.userId,
+                    isConfirmationRequired: result.isConfirmationRequired
+                });
+            }
+            else {
+                setRegistrationState({
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: false,
+                    isError: true,
+                    errorMessage: `${response.status} ${result.errorText}`,
+                    resultUserId: null,
+                    isConfirmationRequired: false
+                });
+            }
+        }
+        catch (error) {
+            console.log(error);
+            setRegistrationState({
+                isExecuting: false,
+                isFinished: true,
+                isSucceed: false,
+                isError: true,
+                errorMessage: "Error: Unable to register user.",
+                resultUserId: null,
+                isConfirmationRequired: false
+            });
+        }
+    }
+    else {
+        setRegistrationState({
+            isExecuting: false,
+            isFinished: true,
+            isSucceed: false,
+            isError: true,
+            errorMessage: "Error: Password and Repeat Password don't match.",
+            resultUserId: null,
+            isConfirmationRequired: false
+        });
+    }
+}
+
 
 export default App;
