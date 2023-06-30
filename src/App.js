@@ -7,7 +7,8 @@ import { CookiesExpireDays } from './Utils/GlobalConstants';
 import {
     BrowserRouter as Router,
     Routes,
-    Route
+    Route,
+    Navigate
 } from 'react-router-dom';
 import AuthenticationPage from './Pages/Authentication/AuthenticationPage';
 import RegisterPage from './Pages/Authentication/RegisterPage';
@@ -99,7 +100,7 @@ function App() {
                 emailConfirmation={emailConfirmation }
             />
         );
- 
+
     return (
         <div className="App">
             {header}
@@ -117,8 +118,24 @@ function App() {
                                     <RegisterPage
                                         currentUser={currentUser}
                                         registrationState={registrationState}
-                                        handleRegister={(email,login,password,repeatPassword) => registerUser(setRegistrationState, email, login, password, repeatPassword) }
+                                        handleRegister={(email,login,password,repeatPassword) => registerUser(setRegistrationState, setEmailConfirmation, email, login, password, repeatPassword) }
                                     />
+                                }
+                            />
+                        )}
+                        {(!currentUser.isUserLogged && registrationState.isSucceed && emailConfirmation.showMessageAboutSending) && (
+                            <Route
+                                path="register"
+                                element={
+                                    <WeSentEmailPage/>
+                                }
+                            />
+                        )}
+                        {(!currentUser.isUserLogged && registrationState.isSucceed && !emailConfirmation.showMessageAboutSending) && (
+                            <Route
+                                path="register"
+                                element={
+                                    <Navigate replace to="/" />
                                 }
                             />
                         )}
@@ -194,8 +211,11 @@ async function logIn(login, password, setCurrentUser) {
                     userLogin: null,
                     accessToken: null,
                     isLoggingError: true,
-                    loggingErrorMessage: "Invalid login or password."
+                    loggingErrorMessage: result.errorText
                 });
+                if (result.errorCode == "EmailNotConfirmed") {
+
+                }
             }
             else {
                 setCurrentUser({
@@ -270,7 +290,7 @@ function getUserLoginFromCookies() {
     return cookieValue;
 }
 
-async function registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken) {
+async function registerUser(setRegistrationState, setEmailConfirmation, email, login, password, repeatPassword, captchaToken) {
 
     if (password === repeatPassword) {
 
@@ -300,6 +320,15 @@ async function registerUser(setRegistrationState, email, login, password, repeat
                     resultUserId: result.userId,
                     isConfirmationRequired: result.isConfirmationRequired
                 });
+
+                if (result.isConfirmationRequired) {
+                    setEmailConfirmation({
+                        showMessageAboutSending: true,
+                        isModeActive: false,
+                        isFinished: false,
+                        isSucceed: false
+                    });
+                }
             }
             else {
                 setRegistrationState({
@@ -307,7 +336,7 @@ async function registerUser(setRegistrationState, email, login, password, repeat
                     isFinished: true,
                     isSucceed: false,
                     isError: true,
-                    errorMessage: `${response.status} ${result.errorText}`,
+                    errorMessage: `${response.status} ${result.errorMessage}`,
                     resultUserId: null,
                     isConfirmationRequired: false
                 });
