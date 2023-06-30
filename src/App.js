@@ -24,13 +24,24 @@ function App() {
         userLogin: null,
         accessToken: null,
         isLoggingError: false,
-        loggingErrorMessage: null
+        loggingErrorMessage: null,
+        isNotEmailConfirmed: false
     });
-    let [emailConfirmation, setEmailConfirmation] = useState({
-        showMessageAboutSending: false,
-        isModeActive: false,
+
+    let [emailSendingState, setEmailSendingState] = useState({
+        isExecuting: false,
         isFinished: false,
-        isSucceed: false
+        isSucceed: false,
+        isError: false,
+        errorMessage: null
+    });
+
+    let [emailConfirmation, setEmailConfirmation] = useState({
+        isExecuting: false,
+        isFinished: false,
+        isSucceed: false,
+        isError: false,
+        errorMessage: null
     });
 
     let [registrationState, setRegistrationState] = useState({
@@ -89,17 +100,62 @@ function App() {
         handleLogOut={()=>logOut(currentUser, setCurrentUser)}
     />);
 
-    let mainPage = currentUser.isUserLogged ?
-        (
+    let mainPage;
+
+    if (currentUser.isUserLogged) {
+        mainPage = (
             <MainPage />
-        ) :
-        (
-            <AuthenticationPage
-                handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
-                currentUser={currentUser}
-                emailConfirmation={emailConfirmation }
-            />
         );
+    }
+    else {
+        if (!currentUser.isNotEmailConfirmed) {
+            mainPage = (
+                <AuthenticationPage
+                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
+                    currentUser={currentUser}
+                    emailConfirmation={emailConfirmation}
+                />
+            );
+        }
+        else {
+            if (!emailSendingState.isFinished) {
+                mainPage = (
+                    <SendConfirmationEmailPage />
+                );
+            }
+            else {
+                mainPage = (
+                    <WeSentEmailPage/>
+                );
+            }
+        }
+    }
+
+    let registerPage;
+
+    if (!currentUser.isUserLogged) {
+        if (!registrationState.isSucceed) {
+            registerPage = (
+                <RegisterPage
+                    currentUser={currentUser}
+                    registrationState={registrationState}
+                    handleRegister={(email, login, password, repeatPassword) => registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword)}
+                />
+            );
+        }
+        else {
+            if (registrationState.isConfirmationRequired) {
+                registerPage = (
+                    <WeSentEmailPage />
+                );
+            }
+            else {
+                registerPage = (
+                    <Navigate replace to="/" />
+                );
+            }
+        }
+    }
 
     return (
         <div className="App">
@@ -111,34 +167,10 @@ function App() {
                             path="/"
                             element={mainPage}
                         />
-                        {(!currentUser.isUserLogged && !registrationState.isSucceed) && (
-                            <Route
-                                path="register"
-                                element={
-                                    <RegisterPage
-                                        currentUser={currentUser}
-                                        registrationState={registrationState}
-                                        handleRegister={(email,login,password,repeatPassword) => registerUser(setRegistrationState, setEmailConfirmation, email, login, password, repeatPassword) }
-                                    />
-                                }
-                            />
-                        )}
-                        {(!currentUser.isUserLogged && registrationState.isSucceed && emailConfirmation.showMessageAboutSending) && (
-                            <Route
-                                path="register"
-                                element={
-                                    <WeSentEmailPage/>
-                                }
-                            />
-                        )}
-                        {(!currentUser.isUserLogged && registrationState.isSucceed && !emailConfirmation.showMessageAboutSending) && (
-                            <Route
-                                path="register"
-                                element={
-                                    <Navigate replace to="/" />
-                                }
-                            />
-                        )}
+                        <Route
+                            path="register"
+                            element={registerPage}
+                        />
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="confirm_email"
@@ -177,7 +209,7 @@ async function logIn(login, password, setCurrentUser) {
             isLoggingError: false,
             loggingErrorMessage: null,
             resultUserId: null,
-            isConfirmationRequired: false
+            isNotEmailConfirmed: false
         });
 
         const response =
@@ -198,7 +230,8 @@ async function logIn(login, password, setCurrentUser) {
                 userLogin: result.login,
                 accessToken: result.accessToken,
                 isLoggingError: false,
-                loggingErrorMessage: null
+                loggingErrorMessage: null,
+                isNotEmailConfirmed: false
             });
         }
         else {
@@ -211,11 +244,9 @@ async function logIn(login, password, setCurrentUser) {
                     userLogin: null,
                     accessToken: null,
                     isLoggingError: true,
-                    loggingErrorMessage: result.errorText
+                    loggingErrorMessage: result.errorText,
+                    isNotEmailConfirmed: result.errorCode == "EmailNotConfirmed"
                 });
-                if (result.errorCode == "EmailNotConfirmed") {
-
-                }
             }
             else {
                 setCurrentUser({
@@ -224,7 +255,8 @@ async function logIn(login, password, setCurrentUser) {
                     userLogin: null,
                     accessToken: null,
                     isLoggingError: true,
-                    loggingErrorMessage: `${response.status} ${result.errorText}`
+                    loggingErrorMessage: `${response.status} ${result.errorText}`,
+                    isNotEmailConfirmed: false
                 });
             }
             
@@ -238,7 +270,8 @@ async function logIn(login, password, setCurrentUser) {
             userLogin: null,
             accessToken: null,
             isLoggingError: true,
-            loggingErrorMessage: "Error: Unable to connect to the API"
+            loggingErrorMessage: "Error: Unable to connect to the API",
+            isNotEmailConfirmed: false
         });
     }
 }
@@ -290,7 +323,7 @@ function getUserLoginFromCookies() {
     return cookieValue;
 }
 
-async function registerUser(setRegistrationState, setEmailConfirmation, email, login, password, repeatPassword, captchaToken) {
+async function registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword, captchaToken) {
 
     if (password === repeatPassword) {
 
@@ -322,11 +355,12 @@ async function registerUser(setRegistrationState, setEmailConfirmation, email, l
                 });
 
                 if (result.isConfirmationRequired) {
-                    setEmailConfirmation({
-                        showMessageAboutSending: true,
-                        isModeActive: false,
-                        isFinished: false,
-                        isSucceed: false
+                    setEmailSendingState({
+                        isExecuting: false,
+                        isFinished: true,
+                        isSucceed: true,
+                        isError: false,
+                        errorMessage: null
                     });
                 }
             }
