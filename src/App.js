@@ -36,7 +36,7 @@ function App() {
         errorMessage: null
     });
 
-    let [emailConfirmation, setEmailConfirmation] = useState({
+    let [emailConfirmationState, setEmailConfirmationState] = useState({
         isExecuting: false,
         isFinished: false,
         isSucceed: false,
@@ -54,45 +54,43 @@ function App() {
         isConfirmationRequired: false
     });
 
-
-    let [loggingHasBeenChecked, setLoggingHasBeenChecked] = useState(false);
-
-
     useEffect(() => {
         try {
-            if (!loggingHasBeenChecked) {
-                const accessTokenFromCookies = getAccessTokenFromCookies();
-                if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
-                    const userLoginFromCookies = getUserLoginFromCookies();
+            const accessTokenFromCookies = getAccessTokenFromCookies();
+            if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
+                const userLoginFromCookies = getUserLoginFromCookies();
 
-                    const refreshCurrentUserFunc = async () => {
-                        const response =
-                            await CallApi("/Account/Check", "GET", accessTokenFromCookies);
+                const refreshCurrentUserFunc = async () => {
+                    const response =
+                        await CallApi("/Account/Check", "GET", accessTokenFromCookies);
 
-                        if (response.ok) {
-                            setCurrentUser({
-                                isUserLogged: true,
-                                isUserLogging: false,
-                                userLogin: userLoginFromCookies,
-                                accessToken: accessTokenFromCookies,
-                                isLoggingError: false,
-                                loggingErrorMessage: null
-                            });
-                        }
-
-                        
+                    if (response.ok) {
+                        setCurrentUser({
+                            isUserLogged: true,
+                            isUserLogging: false,
+                            userLogin: userLoginFromCookies,
+                            accessToken: accessTokenFromCookies,
+                            isLoggingError: false,
+                            loggingErrorMessage: null
+                        });
                     }
 
-                    refreshCurrentUserFunc().catch(console.error);
                 }
+
+                refreshCurrentUserFunc().catch(console.error);
             }
-            
+
+            if (!currentUser.isUserLogged && window.location.pathname == '/confirm_email') {
+                const urlParams = new URLSearchParams(window.location.search);
+                const confirmRegistrationFunc = async () => await confirmRegistration(setEmailConfirmationState, urlParams.get('user'), urlParams.get('code'));
+
+                confirmRegistrationFunc().catch(console.error);
+            }
         }
         catch {
-            
+
         }
-        setLoggingHasBeenChecked(true);
-    })
+    }, []);
 
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
         userIsLogged={currentUser.isUserLogged}
@@ -113,7 +111,7 @@ function App() {
                 <AuthenticationPage
                     handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
                     currentUser={currentUser}
-                    emailConfirmation={emailConfirmation}
+                    emailConfirmation={emailConfirmationState}
                 />
             );
         }
@@ -157,6 +155,23 @@ function App() {
         }
     }
 
+    let confirmEmailPage;
+
+    if (!currentUser.isUserLogged) {
+        if (!emailConfirmationState.isFinished) {
+            confirmEmailPage = (
+                <ConfirmEmailPage
+                    handleConfirmRegistration={(userId, confirmationCode) => confirmRegistration(setEmailSendingState, userId, confirmationCode)}
+                />
+            );
+        }
+        else {
+            confirmEmailPage = (
+                <Navigate replace to="/" />
+            );
+        }
+    }
+
     return (
         <div className="App">
             {header}
@@ -174,12 +189,7 @@ function App() {
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="confirm_email"
-                                element={
-                                    <ConfirmEmailPage
-                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
-                                    currentUser={currentUser}
-                                    />
-                                }
+                                element={confirmEmailPage}
                             />
                         )}
                         <Route
@@ -402,5 +412,60 @@ async function registerUser(setRegistrationState, setEmailSendingState, email, l
     }
 }
 
+async function confirmRegistration(setEmailConfirmationState, userId, confirmationCode) {
+    if (userId !== null || confirmationCode !== null) {
+        try {
+            setEmailConfirmationState({
+                isExecuting: true,
+                isFinished: false,
+                isSucceed: false,
+                isError: false,
+                errorMessage: null
+            });
+
+            const response =
+                await CallApi("/Account/ConfirmRegistration", "POST", null, JSON.stringify({ userId, confirmationCode }));
+
+            if (response.ok) {
+                setEmailConfirmationState({
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: true,
+                    isError: false,
+                    errorMessage: null
+                });
+            }
+            else {
+                const result = await response.json();
+                setEmailConfirmationState({
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: false,
+                    isError: true,
+                    errorMessage: `${response.status} ${result.errorMessage}`,
+                });
+            }
+        }
+        catch (error) {
+            console.log(error);
+            setEmailConfirmationState({
+                isExecuting: false,
+                isFinished: true,
+                isSucceed: false,
+                isError: true,
+                errorMessage: "Error: Unable to register user.",
+            });
+        }
+    }
+    else {
+        setEmailConfirmationState({
+            isExecuting: false,
+            isFinished: true,
+            isSucceed: false,
+            isError: true,
+            errorMessage: "Error: userId and confirmationCode must not be null."
+        });
+    }
+}
 
 export default App;

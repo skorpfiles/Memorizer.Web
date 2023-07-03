@@ -11,11 +11,11 @@ function AuthenticationPage(props) {
         <div className="MiddleVerticalAlignContainer">
             <div className="VerticalCenterColumn MiddleVerticalAlignBlock">
                 {
-                    (props.emailConfirmation.isModeActive && props.emailConfirmation.isFinished && props.emailConfirmation.isSucceed) &&
+                    (props.emailConfirmation.isFinished && props.emailConfirmation.isSucceed) &&
                     (<div className="SuccessMessage">Your email has been confirmed successfully.<br />Now you can log in.</div>)
                 }
                 {
-                    (props.emailConfirmation.isModeActive && props.emailConfirmation.isFinished && !props.emailConfirmation.isSucceed) &&
+                    (props.emailConfirmation.isFinished && !props.emailConfirmation.isSucceed) &&
                     (<div className="FailMessage">Unable to confirm e-mail.<br />Log in to repeat.</div>)
                 }
                 <div className="Column-small">
