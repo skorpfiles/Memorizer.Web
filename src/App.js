@@ -25,10 +25,12 @@ function App() {
         accessToken: null,
         isLoggingError: false,
         loggingErrorMessage: null,
-        isNotEmailConfirmed: false
+        isEmailConfirmationRequired: false
     });
 
     let [emailSendingState, setEmailSendingState] = useState({
+        isModeActive: false,
+        accessToken: null,
         isExecuting: false,
         isFinished: false,
         isSucceed: false,
@@ -71,7 +73,8 @@ function App() {
                             userLogin: userLoginFromCookies,
                             accessToken: accessTokenFromCookies,
                             isLoggingError: false,
-                            loggingErrorMessage: null
+                            loggingErrorMessage: null,
+                            isEmailConfirmationRequired: false
                         });
                     }
 
@@ -106,10 +109,10 @@ function App() {
         );
     }
     else {
-        if (!currentUser.isNotEmailConfirmed) {
+        if (!emailSendingState.isModeActive) {
             mainPage = (
                 <AuthenticationPage
-                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser)}
+                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
                     currentUser={currentUser}
                     emailConfirmation={emailConfirmationState}
                 />
@@ -118,7 +121,10 @@ function App() {
         else {
             if (!emailSendingState.isFinished) {
                 mainPage = (
-                    <SendConfirmationEmailPage />
+                    <SendConfirmationEmailPage
+                        emailSendingState={emailSendingState}
+                        handleSendingEmail={()=>sendConfirmationEmail(setEmailSendingState, emailSendingState.accessToken) }
+                    />
                 );
             }
             else {
@@ -209,7 +215,7 @@ function App() {
     );
 }
 
-async function logIn(login, password, setCurrentUser) {
+async function logIn(login, password, setCurrentUser, setEmailSendingState) {
     try {
         setCurrentUser({
             isUserLogged: false,
@@ -219,7 +225,7 @@ async function logIn(login, password, setCurrentUser) {
             isLoggingError: false,
             loggingErrorMessage: null,
             resultUserId: null,
-            isNotEmailConfirmed: false
+            isEmailConfirmationRequired: false
         });
 
         const response =
@@ -228,34 +234,21 @@ async function logIn(login, password, setCurrentUser) {
         if (response.ok) {
             const result = await response.json();
 
-            let expirationDate1 = new Date();
-            expirationDate1.setDate(expirationDate1.getDate() + CookiesExpireDays);
+            if (result.isEmailConfirmed) {
+                let expirationDate1 = new Date();
+                expirationDate1.setDate(expirationDate1.getDate() + CookiesExpireDays);
 
-            document.cookie = "accessToken=" + result.accessToken + "; expires=" + expirationDate1 + "; ";
-            document.cookie = "userLogin=" + result.login + "; expires=" + expirationDate1 + "; ";
+                document.cookie = "accessToken=" + result.accessToken + "; expires=" + expirationDate1 + "; ";
+                document.cookie = "userLogin=" + result.login + "; expires=" + expirationDate1 + "; ";
 
-            setCurrentUser({
-                isUserLogged: true,
-                isUserLogging: false,
-                userLogin: result.login,
-                accessToken: result.accessToken,
-                isLoggingError: false,
-                loggingErrorMessage: null,
-                isNotEmailConfirmed: false
-            });
-        }
-        else {
-            const result = await response.json();
-
-            if (response.status == 401) {
                 setCurrentUser({
-                    isUserLogged: false,
+                    isUserLogged: true,
                     isUserLogging: false,
-                    userLogin: null,
-                    accessToken: null,
-                    isLoggingError: true,
-                    loggingErrorMessage: result.errorText,
-                    isNotEmailConfirmed: result.errorCode == "EmailNotConfirmed"
+                    userLogin: result.login,
+                    accessToken: result.accessToken,
+                    isLoggingError: false,
+                    loggingErrorMessage: null,
+                    isEmailConfirmationRequired: !result.isEmailConfirmed
                 });
             }
             else {
@@ -264,12 +257,33 @@ async function logIn(login, password, setCurrentUser) {
                     isUserLogging: false,
                     userLogin: null,
                     accessToken: null,
-                    isLoggingError: true,
-                    loggingErrorMessage: `${response.status} ${result.errorText}`,
-                    isNotEmailConfirmed: false
+                    isLoggingError: false,
+                    loggingErrorMessage: null,
+                    isEmailConfirmationRequired: !result.isEmailConfirmed
+                });
+
+                setEmailSendingState({
+                    isModeActive: true,
+                    accessToken: result.accessToken,
+                    isExecuting: false,
+                    isFinished: false,
+                    isSucceed: false,
+                    isError: false,
+                    errorMessage: null,
                 });
             }
-            
+        }
+        else {
+            const result = await response.json();
+            setCurrentUser({
+                isUserLogged: false,
+                isUserLogging: false,
+                userLogin: null,
+                accessToken: null,
+                isLoggingError: true,
+                loggingErrorMessage: `${response.status} ${result.errorText}`,
+                isEmailConfirmationRequired: false
+            });
         }
     }
     catch (error) {
@@ -281,7 +295,7 @@ async function logIn(login, password, setCurrentUser) {
             accessToken: null,
             isLoggingError: true,
             loggingErrorMessage: "Error: Unable to connect to the API",
-            isNotEmailConfirmed: false
+            isEmailConfirmationRequired:false
         });
     }
 }
@@ -296,7 +310,8 @@ async function logOut(currentUser, setCurrentUser) {
                 userLogin: null,
                 accessToken: null,
                 isLoggingError: false,
-                loggingErrorMessage: null
+                loggingErrorMessage: null,
+                isEmailConfirmationRequired: false
             });
 
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
@@ -306,9 +321,13 @@ async function logOut(currentUser, setCurrentUser) {
             const result = await response.json();
 
             setCurrentUser({
+                isUserLogged: false,
                 isUserLogging: false,
+                userLogin: null,
+                accessToken: null,
                 isLoggingError: true,
-                loggingErrorMessage: `${response.status} ${result.errorText}`
+                loggingErrorMessage: `${response.status} ${result.errorText}`,
+                isEmailConfirmationRequired: false
             });
         }
     }
@@ -318,11 +337,16 @@ async function logOut(currentUser, setCurrentUser) {
 }
 
 function getAccessTokenFromCookies() {
-    const cookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('accessToken='))
-        .split('=')[1];
-    return cookieValue;
+    try {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('accessToken='))
+            .split('=')[1];
+        return cookieValue;
+    }
+    catch {
+        return null;
+    }
 }
 
 function getUserLoginFromCookies() {
@@ -366,6 +390,8 @@ async function registerUser(setRegistrationState, setEmailSendingState, email, l
 
                 if (result.isConfirmationRequired) {
                     setEmailSendingState({
+                        isModeActive: false,
+                        accessToken: null,
                         isExecuting: false,
                         isFinished: true,
                         isSucceed: true,
@@ -464,6 +490,58 @@ async function confirmRegistration(setEmailConfirmationState, userId, confirmati
             isSucceed: false,
             isError: true,
             errorMessage: "Error: userId and confirmationCode must not be null."
+        });
+    }
+}
+
+async function sendConfirmationEmail(setEmailSendingState, accessToken) {
+    try {
+        setEmailSendingState({
+            isModeActive: true,
+            accessToken,
+            isExecuting: true,
+            isFinished: false,
+            isSucceed: false,
+            isError: false,
+            errorMessage: null
+        });
+
+        const response =
+            await CallApi("/Account/RepeatEmailConfirmation", "POST", accessToken);
+
+        if (response.ok) {
+            setEmailSendingState({
+                isModeActive: true,
+                accessToken,
+                isExecuting: false,
+                isFinished: true,
+                isSucceed: true,
+                isError: false,
+                errorMessage: null
+            });
+        }
+        else {
+            const result = await response.json();
+            setEmailSendingState({
+                isModeActive: true,
+                accessToken,
+                isExecuting: false,
+                isFinished: true,
+                isSucceed: false,
+                isError: true,
+                errorMessage: `${response.status} ${result.errorMessage}`
+            });
+        }
+    }
+    catch (error) {
+        setEmailSendingState({
+            isModeActive: true,
+            accessToken,
+            isExecuting: false,
+            isFinished: true,
+            isSucceed: false,
+            isError: true,
+            errorMessage: "Error: Unable to send confirmation email"
         });
     }
 }

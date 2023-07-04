@@ -4,7 +4,7 @@ export async function CallApi(relativePath, method, accessToken, body) {
     const headers = {
         'content-type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin,Access-Control-Allow-Headers,content-type, Authorization',
+        'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin,Access-Control-Allow-Headers,content-type, Authorization'
     }
 
     if (accessToken != null) {
