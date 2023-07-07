@@ -406,7 +406,7 @@ async function registerUser(setRegistrationState, setEmailSendingState, email, l
                     isFinished: true,
                     isSucceed: false,
                     isError: true,
-                    errorMessage: `${response.status} ${result.errorMessage}`,
+                    errorMessage: `${response.status} ${result.errorText}`,
                     resultUserId: null,
                     isConfirmationRequired: false
                 });
@@ -529,7 +529,7 @@ async function sendConfirmationEmail(setEmailSendingState, accessToken) {
                 isFinished: true,
                 isSucceed: false,
                 isError: true,
-                errorMessage: `${response.status} ${result.errorMessage}`
+                errorMessage: `${response.status} ${result.errorText}`
             });
         }
     }
