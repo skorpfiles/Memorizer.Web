@@ -85,7 +85,7 @@ function App() {
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
         userIsLogged={currentUser.isUserLogged}
         userLogin={currentUser.userLogin}
-        handleLogOut={()=>logOut(currentUser, setCurrentUser)}
+        handleLogOut={() => logOut(currentUser, setCurrentUser, setEmailConfirmationState)}
     />);
 
     return (
@@ -235,7 +235,7 @@ async function logIn(login, password, setCurrentUser, setEmailSendingState) {
     }
 }
 
-async function logOut(currentUser, setCurrentUser) {
+async function logOut(currentUser, setCurrentUser, setEmailConfirmationState) {
     try {
         const response = await CallApi("/Account/Logout", "POST", currentUser.accessToken);
         if (response.ok) {
@@ -265,6 +265,14 @@ async function logOut(currentUser, setCurrentUser) {
                 isEmailConfirmationRequired: false
             });
         }
+
+        setEmailConfirmationState({
+            isExecuting: false,
+            isFinished: false,
+            isSucceed: false,
+            isError: false,
+            errorMessage: null
+        });
     }
     catch (error) {
         console.log(error);

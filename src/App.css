@@ -52,6 +52,10 @@ body {
     margin: 0.7em;
 }
 
+.DisplayFlex {
+    display: flex;
+}
+
 .MainTextBox, .MainButton, .ErrorLabel {
     border-radius: 0.5em;
     padding: 0.5em 0.7em;
@@ -105,6 +109,11 @@ body {
     width: 17.2em;
     margin-left: auto;
     margin-right: auto;
+}
+
+.ButtonMarginForColumnWithoutBorders {
+    margin-left: 1.55em;
+    margin-right: 1.55em;
 }
 
 .ValidationLabel{

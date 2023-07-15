@@ -13,11 +13,11 @@ function MainPage() {
                         What do you want to do?
                     </div>
                 </div>
-                <div className="MainControlContainer">
-                    <button className="MainButton FullWidth Font-MainForControls IncreaseButtonHeight">Train questions</button>
+                <div className="MainControlContainer DisplayFlex">
+                    <button className="MainButton FullWidth ButtonMarginForColumnWithoutBorders Font-MainForControls IncreaseButtonHeight">Train questions</button>
                 </div>
-                <div className="MainControlContainer">
-                    <button className="MainButton FullWidth Font-MainForControls">Manage questionnaires</button>
+                <div className="MainControlContainer DisplayFlex">
+                    <button className="MainButton FullWidth ButtonMarginForColumnWithoutBorders Font-MainForControls">Manage questionnaires</button>
                 </div>
             </div>
         </div>
