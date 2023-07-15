@@ -80,8 +80,9 @@ function App() {
             }
         }
         catch {
-            setFirstLoadingIsCompleted(true);
+
         }
+        setFirstLoadingIsCompleted(true);
     }, []);
 
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
