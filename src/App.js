@@ -47,31 +47,6 @@ function App() {
 
     useEffect(() => {
         try {
-            const accessTokenFromCookies = getAccessTokenFromCookies();
-            if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
-                const userLoginFromCookies = getUserLoginFromCookies();
-
-                const refreshCurrentUserFunc = async () => {
-                    const response =
-                        await CallApi("/Account/Check", "GET", accessTokenFromCookies);
-
-                    if (response.ok) {
-                        setCurrentUser({
-                            isUserLogged: true,
-                            isUserLogging: false,
-                            userLogin: userLoginFromCookies,
-                            accessToken: accessTokenFromCookies,
-                            isLoggingError: false,
-                            loggingErrorMessage: null,
-                            isEmailConfirmationRequired: false
-                        });
-                    }
-                    setFirstLoadingIsCompleted(true);
-                }
-
-                refreshCurrentUserFunc().catch(console.error);
-            }
-
             if (!currentUser.isUserLogged && window.location.pathname == '/confirm_email') {
                 setFirstLoadingIsCompleted(true);
                 const urlParams = new URLSearchParams(window.location.search);
@@ -79,6 +54,36 @@ function App() {
 
                 confirmRegistrationFunc().catch(console.error);
             }
+            else {
+                const accessTokenFromCookies = getAccessTokenFromCookies();
+                if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
+                    const userLoginFromCookies = getUserLoginFromCookies();
+
+                    const refreshCurrentUserFunc = async () => {
+                        const response =
+                            await CallApi("/Account/Check", "GET", accessTokenFromCookies);
+
+                        if (response.ok) {
+                            setCurrentUser({
+                                isUserLogged: true,
+                                isUserLogging: false,
+                                userLogin: userLoginFromCookies,
+                                accessToken: accessTokenFromCookies,
+                                isLoggingError: false,
+                                loggingErrorMessage: null,
+                                isEmailConfirmationRequired: false
+                            });
+                        }
+                        setFirstLoadingIsCompleted(true);
+                    }
+
+                    refreshCurrentUserFunc().catch(console.error);
+                }
+                else {
+                    setFirstLoadingIsCompleted(true);
+                }
+            }
+
         }
         catch {
             setFirstLoadingIsCompleted(true);
