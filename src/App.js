@@ -73,6 +73,7 @@ function App() {
             }
 
             if (!currentUser.isUserLogged && window.location.pathname == '/confirm_email') {
+                setFirstLoadingIsCompleted(true);
                 const urlParams = new URLSearchParams(window.location.search);
                 const confirmRegistrationFunc = async () => await confirmRegistration(setEmailConfirmationState, urlParams.get('user'), urlParams.get('code'));
 
@@ -80,9 +81,8 @@ function App() {
             }
         }
         catch {
-
+            setFirstLoadingIsCompleted(true);
         }
-        setFirstLoadingIsCompleted(true);
     }, []);
 
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
