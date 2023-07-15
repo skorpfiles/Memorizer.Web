@@ -70,6 +70,7 @@ function App() {
                 }
 
                 refreshCurrentUserFunc().catch(console.error);
+                setFirstLoadingIsCompleted(true);
             }
 
             if (!currentUser.isUserLogged && window.location.pathname == '/confirm_email') {

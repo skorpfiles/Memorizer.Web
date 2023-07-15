@@ -14,10 +14,10 @@ function MainPage() {
                     </div>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
-                    <button className="MainButton FullWidth ButtonMarginForColumnWithoutBorders Font-MainForControls IncreaseButtonHeight">Train questions</button>
+                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls IncreaseButtonHeight">Train questions</button>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
-                    <button className="MainButton FullWidth ButtonMarginForColumnWithoutBorders Font-MainForControls">Manage questionnaires</button>
+                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Manage questionnaires</button>
                 </div>
             </div>
         </div>
