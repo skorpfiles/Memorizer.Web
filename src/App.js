@@ -143,7 +143,7 @@ function App() {
                 <RegisterPage
                     currentUser={currentUser}
                     registrationState={registrationState}
-                    handleRegister={(email, login, password, repeatPassword) => registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword)}
+                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword, captchaToken)}
                 />
             );
         }
