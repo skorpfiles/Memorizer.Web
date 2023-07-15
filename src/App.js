@@ -66,11 +66,10 @@ function App() {
                             isEmailConfirmationRequired: false
                         });
                     }
-
+                    setFirstLoadingIsCompleted(true);
                 }
 
                 refreshCurrentUserFunc().catch(console.error);
-                setFirstLoadingIsCompleted(true);
             }
 
             if (!currentUser.isUserLogged && window.location.pathname == '/confirm_email') {
@@ -81,9 +80,8 @@ function App() {
             }
         }
         catch {
-
+            setFirstLoadingIsCompleted(true);
         }
-        setFirstLoadingIsCompleted(true);
     }, []);
 
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
