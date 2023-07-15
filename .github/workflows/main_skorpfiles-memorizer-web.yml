@@ -12,7 +12,7 @@ on:
 env:
   REACT_APP_API_HOST_URL: https://skorpfiles-memorizer-api-test.azurewebsites.net
   REACT_APP_COOKIES_EXPIRE_DAYS: 7
-  REACT_APP_RECAPTCHA_SITE_KEY: 6Ld_0IAmAAAAAMEtd1QJClK_rf2r4CKXNx9fVqoI
+  REACT_APP_RECAPTCHA_SITE_KEY: 6LdCAyYnAAAAAOWDA-yDpGFj1k8rM1_KnsgGZkM7
 
 jobs:
   build:
