@@ -7,15 +7,12 @@ import { CookiesExpireDays } from './Utils/GlobalConstants';
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    Navigate
+    Route
 } from 'react-router-dom';
-import AuthenticationPage from './Pages/Authentication/AuthenticationPage';
-import RegisterPage from './Pages/Authentication/RegisterPage';
-import MainPage from './Pages/MainPage';
-import ConfirmEmailPage from './Pages/Authentication/ConfirmEmailPage';
-import WeSentEmailPage from './Pages/Authentication/WeSentEmailPage';
-import SendConfirmationEmailPage from './Pages/Authentication/SendConfirmationEmailPage';
+
+import MainRouteElement from './RouteElements/MainRouteElement';
+import RegisterRouteElement from './RouteElements/RegisterRouteElement';
+import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
 
 function App() {
     let [currentUser, setCurrentUser] = useState({
@@ -44,16 +41,6 @@ function App() {
         isSucceed: false,
         isError: false,
         errorMessage: null
-    });
-
-    let [registrationState, setRegistrationState] = useState({
-        isExecuting: false,
-        isFinished: false,
-        isSucceed: false,
-        isError: false,
-        errorMessage: null,
-        resultUserId: null,
-        isConfirmationRequired: false
     });
 
     useEffect(() => {
@@ -101,83 +88,6 @@ function App() {
         handleLogOut={()=>logOut(currentUser, setCurrentUser)}
     />);
 
-    let mainPage;
-
-    if (currentUser.isUserLogged) {
-        mainPage = (
-            <MainPage />
-        );
-    }
-    else {
-        if (!emailSendingState.isModeActive) {
-            mainPage = (
-                <AuthenticationPage
-                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
-                    currentUser={currentUser}
-                    emailConfirmation={emailConfirmationState}
-                />
-            );
-        }
-        else {
-            if (!emailSendingState.isFinished) {
-                mainPage = (
-                    <SendConfirmationEmailPage
-                        emailSendingState={emailSendingState}
-                        handleSendingEmail={()=>sendConfirmationEmail(setEmailSendingState, emailSendingState.accessToken) }
-                    />
-                );
-            }
-            else {
-                mainPage = (
-                    <WeSentEmailPage/>
-                );
-            }
-        }
-    }
-
-    let registerPage;
-
-    if (!currentUser.isUserLogged) {
-        if (!registrationState.isSucceed) {
-            registerPage = (
-                <RegisterPage
-                    currentUser={currentUser}
-                    registrationState={registrationState}
-                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword, captchaToken)}
-                />
-            );
-        }
-        else {
-            if (registrationState.isConfirmationRequired) {
-                registerPage = (
-                    <WeSentEmailPage />
-                );
-            }
-            else {
-                registerPage = (
-                    <Navigate replace to="/" />
-                );
-            }
-        }
-    }
-
-    let confirmEmailPage;
-
-    if (!currentUser.isUserLogged) {
-        if (!emailConfirmationState.isFinished) {
-            confirmEmailPage = (
-                <ConfirmEmailPage
-                    handleConfirmRegistration={(userId, confirmationCode) => confirmRegistration(setEmailSendingState, userId, confirmationCode)}
-                />
-            );
-        }
-        else {
-            confirmEmailPage = (
-                <Navigate replace to="/" />
-            );
-        }
-    }
-
     return (
         <div className="App">
             {header}
@@ -186,26 +96,51 @@ function App() {
                     <Routes>
                         <Route
                             path="/"
-                            element={mainPage}
+                            element={
+                                <MainRouteElement
+                                    currentUser={currentUser}
+                                    setCurrentUser={setCurrentUser}
+                                    emailConfirmationState={emailConfirmationState}
+                                    setEmailConfirmationState={setEmailConfirmationState}
+                                    emailSendingState={emailSendingState}
+                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
+                                    setEmailSendingState={setEmailSendingState}
+                                />
+                            }
                         />
                         <Route
                             path="register"
-                            element={registerPage}
+                            element={
+                                <RegisterRouteElement
+                                    currentUser={currentUser}
+                                    setEmailSendingState={setEmailSendingState}
+                                />
+                            }
                         />
                         {!currentUser.isUserLogged && (
                             <Route
                                 path="confirm_email"
-                                element={confirmEmailPage}
+                                element={
+                                    <ConfirmEmailRouteElement
+                                        currentUser={currentUser}
+                                        emailConfirmationState={emailConfirmationState}
+                                    />
+                                }
                             />
                         )}
                         <Route
-                            path="test"
-                            element={<SendConfirmationEmailPage />}
-                            />
-                        <Route
                             path="*"
                             status={404}
-                            element={mainPage}
+                            element={
+                                <MainRouteElement
+                                    currentUser={currentUser}
+                                    setCurrentUser={setCurrentUser}
+                                    emailConfirmationState={emailConfirmationState}
+                                    setEmailConfirmationState={setEmailConfirmationState}
+                                    emailSendingState={emailSendingState}
+                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
+                                />
+                            }
                         />
                     </Routes>
                 </Router>
@@ -357,87 +292,6 @@ function getUserLoginFromCookies() {
     return cookieValue;
 }
 
-async function registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword, captchaToken) {
-
-    if (password === repeatPassword) {
-
-        try {
-            setRegistrationState({
-                isExecuting: true,
-                isFinished: false,
-                isSucceed: false,
-                isError: false,
-                errorMessage: null,
-                resultUserId: null,
-                isConfirmationRequired: false
-            });
-
-            const response =
-                await CallApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
-
-            const result = await response.json();
-
-            if (response.ok) {
-                setRegistrationState({
-                    isExecuting: false,
-                    isFinished: true,
-                    isSucceed: true,
-                    isError: false,
-                    errorMessage: null,
-                    resultUserId: result.userId,
-                    isConfirmationRequired: result.isConfirmationRequired
-                });
-
-                if (result.isConfirmationRequired) {
-                    setEmailSendingState({
-                        isModeActive: false,
-                        accessToken: null,
-                        isExecuting: false,
-                        isFinished: true,
-                        isSucceed: true,
-                        isError: false,
-                        errorMessage: null
-                    });
-                }
-            }
-            else {
-                setRegistrationState({
-                    isExecuting: false,
-                    isFinished: true,
-                    isSucceed: false,
-                    isError: true,
-                    errorMessage: `${response.status} ${result.errorText}`,
-                    resultUserId: null,
-                    isConfirmationRequired: false
-                });
-            }
-        }
-        catch (error) {
-            console.log(error);
-            setRegistrationState({
-                isExecuting: false,
-                isFinished: true,
-                isSucceed: false,
-                isError: true,
-                errorMessage: "Error: Unable to register user.",
-                resultUserId: null,
-                isConfirmationRequired: false
-            });
-        }
-    }
-    else {
-        setRegistrationState({
-            isExecuting: false,
-            isFinished: true,
-            isSucceed: false,
-            isError: true,
-            errorMessage: "Error: Password and Repeat Password don't match.",
-            resultUserId: null,
-            isConfirmationRequired: false
-        });
-    }
-}
-
 async function confirmRegistration(setEmailConfirmationState, userId, confirmationCode) {
     if (userId !== null || confirmationCode !== null) {
         try {
@@ -490,58 +344,6 @@ async function confirmRegistration(setEmailConfirmationState, userId, confirmati
             isSucceed: false,
             isError: true,
             errorMessage: "Error: userId and confirmationCode must not be null."
-        });
-    }
-}
-
-async function sendConfirmationEmail(setEmailSendingState, accessToken) {
-    try {
-        setEmailSendingState({
-            isModeActive: true,
-            accessToken,
-            isExecuting: true,
-            isFinished: false,
-            isSucceed: false,
-            isError: false,
-            errorMessage: null
-        });
-
-        const response =
-            await CallApi("/Account/RepeatEmailConfirmation", "POST", accessToken);
-
-        if (response.ok) {
-            setEmailSendingState({
-                isModeActive: true,
-                accessToken,
-                isExecuting: false,
-                isFinished: true,
-                isSucceed: true,
-                isError: false,
-                errorMessage: null
-            });
-        }
-        else {
-            const result = await response.json();
-            setEmailSendingState({
-                isModeActive: true,
-                accessToken,
-                isExecuting: false,
-                isFinished: true,
-                isSucceed: false,
-                isError: true,
-                errorMessage: `${response.status} ${result.errorText}`
-            });
-        }
-    }
-    catch (error) {
-        setEmailSendingState({
-            isModeActive: true,
-            accessToken,
-            isExecuting: false,
-            isFinished: true,
-            isSucceed: false,
-            isError: true,
-            errorMessage: "Error: Unable to send confirmation email"
         });
     }
 }
