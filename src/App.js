@@ -15,6 +15,8 @@ import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
 
 function App() {
+    let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
+
     let [currentUser, setCurrentUser] = useState({
         isUserLogging: false,
         isUserLogged: false,
@@ -80,6 +82,7 @@ function App() {
         catch {
 
         }
+        setFirstLoadingIsCompleted(true);
     }, []);
 
     let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || currentUser.isUserLogged) && (<Header
@@ -88,66 +91,70 @@ function App() {
         handleLogOut={() => logOut(currentUser, setCurrentUser, setEmailConfirmationState)}
     />);
 
-    return (
-        <div className="App">
-            {header}
-            <section className="App-body">
-                <Router>
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <MainRouteElement
-                                    currentUser={currentUser}
-                                    setCurrentUser={setCurrentUser}
-                                    emailConfirmationState={emailConfirmationState}
-                                    setEmailConfirmationState={setEmailConfirmationState}
-                                    emailSendingState={emailSendingState}
-                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
-                                    setEmailSendingState={setEmailSendingState}
-                                />
-                            }
-                        />
-                        <Route
-                            path="register"
-                            element={
-                                <RegisterRouteElement
-                                    currentUser={currentUser}
-                                    setEmailSendingState={setEmailSendingState}
-                                />
-                            }
-                        />
-                        {!currentUser.isUserLogged && (
+    if (!firstLoadingIsCompleted) {
+        return (<div>Loading...</div>);
+    }
+    else {
+        return (
+            <div className="App">
+                {header}
+                <section className="App-body">
+                    <Router>
+                        <Routes>
                             <Route
-                                path="confirm_email"
+                                path="/"
                                 element={
-                                    <ConfirmEmailRouteElement
+                                    <MainRouteElement
                                         currentUser={currentUser}
+                                        setCurrentUser={setCurrentUser}
                                         emailConfirmationState={emailConfirmationState}
+                                        setEmailConfirmationState={setEmailConfirmationState}
+                                        emailSendingState={emailSendingState}
+                                        handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
+                                        setEmailSendingState={setEmailSendingState}
                                     />
                                 }
                             />
-                        )}
-                        <Route
-                            path="*"
-                            status={404}
-                            element={
-                                <MainRouteElement
-                                    currentUser={currentUser}
-                                    setCurrentUser={setCurrentUser}
-                                    emailConfirmationState={emailConfirmationState}
-                                    setEmailConfirmationState={setEmailConfirmationState}
-                                    emailSendingState={emailSendingState}
-                                    handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
+                            <Route
+                                path="register"
+                                element={
+                                    <RegisterRouteElement
+                                        currentUser={currentUser}
+                                        setEmailSendingState={setEmailSendingState}
+                                    />
+                                }
+                            />
+                            {!currentUser.isUserLogged && (
+                                <Route
+                                    path="confirm_email"
+                                    element={
+                                        <ConfirmEmailRouteElement
+                                            currentUser={currentUser}
+                                            emailConfirmationState={emailConfirmationState}
+                                        />
+                                    }
                                 />
-                            }
-                        />
-                    </Routes>
-                </Router>
-            </section>
-            <Footer />
-        </div>
-    );
+                            )}
+                            <Route
+                                path="*"
+                                status={404}
+                                element={
+                                    <MainRouteElement
+                                        currentUser={currentUser}
+                                        setCurrentUser={setCurrentUser}
+                                        emailConfirmationState={emailConfirmationState}
+                                        setEmailConfirmationState={setEmailConfirmationState}
+                                        emailSendingState={emailSendingState}
+                                        handleLogIn={(login, password) => logIn(login, password, setCurrentUser, setEmailSendingState)}
+                                    />
+                                }
+                            />
+                        </Routes>
+                    </Router>
+                </section>
+                <Footer />
+            </div>);
+    }
 }
 
 async function logIn(login, password, setCurrentUser, setEmailSendingState) {
