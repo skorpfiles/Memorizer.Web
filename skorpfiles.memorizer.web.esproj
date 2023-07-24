@@ -12,6 +12,8 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\ConfigureTraining\Quick\" />
+    <Folder Include="src\Pages\ConfigureTraining\" />
     <Folder Include="src\Utils\" />
   </ItemGroup>
 </Project>
