@@ -60,21 +60,27 @@ function App() {
                     const userLoginFromCookies = getUserLoginFromCookies();
 
                     const refreshCurrentUserFunc = async () => {
-                        const response =
-                            await CallApi("/Account/Check", "GET", accessTokenFromCookies);
+                        try {
+                            const response =
+                                await CallApi("/Account/Check", "GET", accessTokenFromCookies);
 
-                        if (response.ok) {
-                            setCurrentUser({
-                                isUserLogged: true,
-                                isUserLogging: false,
-                                userLogin: userLoginFromCookies,
-                                accessToken: accessTokenFromCookies,
-                                isLoggingError: false,
-                                loggingErrorMessage: null,
-                                isEmailConfirmationRequired: false
-                            });
+                            if (response.ok) {
+                                setCurrentUser({
+                                    isUserLogged: true,
+                                    isUserLogging: false,
+                                    userLogin: userLoginFromCookies,
+                                    accessToken: accessTokenFromCookies,
+                                    isLoggingError: false,
+                                    loggingErrorMessage: null,
+                                    isEmailConfirmationRequired: false
+                                });
+                            }
+                            setFirstLoadingIsCompleted(true);
                         }
-                        setFirstLoadingIsCompleted(true);
+                        catch(ex) {
+                            setFirstLoadingIsCompleted(true);
+                            throw ex;
+                        }
                     }
 
                     refreshCurrentUserFunc().catch(console.error);
