@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
   
 env:
-  REACT_APP_API_HOST_URL: https://skorpfiles-memorizer-api-test.azurewebsites.net
-  REACT_APP_COOKIES_EXPIRE_DAYS: 7
-  REACT_APP_RECAPTCHA_SITE_KEY: 6LdCAyYnAAAAAOWDA-yDpGFj1k8rM1_KnsgGZkM7
+  REACT_APP_API_HOST_URL: ${{ vars.REACT_APP_API_HOST_URL_MAIN }}
+  REACT_APP_COOKIES_EXPIRE_DAYS: ${{ vars.REACT_APP_COOKIES_EXPIRE_DAYS_MAIN }}
+  REACT_APP_RECAPTCHA_SITE_KEY: ${{ vars.REACT_APP_RECAPTCHA_SITE_KEY_MAIN }}
 
 jobs:
   build:
