@@ -1,4 +1,5 @@
 import QuickTrainingsListPanel from "../../ConfigureTraining/Quick/QuickTrainingsListPanel";
+import ReturnToMainPage from "../../ReturnToMainPage";
 
 function QuickTrainingConfigurationPage() {
     return (
@@ -8,7 +9,7 @@ function QuickTrainingConfigurationPage() {
                     Select a training you've trained recently
                 </div>
             </div>
-            <QuickTrainingsListPanel trainings= {
+            <QuickTrainingsListPanel trainings={
                 [
                     { name: "Questionnaire 1" },
                     { name: "Questionnaire 2" }
@@ -23,7 +24,7 @@ function QuickTrainingConfigurationPage() {
                 <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Browse questionnaires</button>
             </div>
         </div>
-    )
+    );
 }
 
 export default QuickTrainingConfigurationPage;

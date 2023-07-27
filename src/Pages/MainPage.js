@@ -14,7 +14,7 @@ function MainPage() {
                     </div>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
-                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls IncreaseButtonHeight">Train questions</button>
+                    <a className="CentralButton-SmallWidth" href="/train/select"><button className="MainButton IncreaseButtonHeight FullWidth Font-MainForControls">Train questions</button></a>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
                     <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Manage questionnaires</button>

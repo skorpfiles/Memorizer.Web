@@ -14,6 +14,7 @@ import MainRouteElement from './RouteElements/MainRouteElement';
 import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
 import SelectTrainingRouteElement from './RouteElements/SelectTrainingRouteElement';
+import ReturnToMainPage from './ReturnToMainPage';
 
 function App() {
     let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
@@ -103,6 +104,8 @@ function App() {
         handleLogOut={() => logOut(currentUser, setCurrentUser, setEmailConfirmationState)}
     />);
 
+    let backButton = (window.location.pathname == "/train/select" && currentUser.isUserLogged) && (<ReturnToMainPage/>)
+
     if (!firstLoadingIsCompleted) {
         return (<div>Loading...</div>);
     }
@@ -110,6 +113,7 @@ function App() {
         return (
             <div className="App">
                 {header}
+                {backButton}
                 <section className="App-body">
                     <Router>
                         <Routes>

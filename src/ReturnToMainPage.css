@@ -1,0 +1,13 @@
+.ReturnToMainPage-Container {
+    margin:1em;
+    display:flex;
+    align-items:baseline;
+}
+
+.ReturnToMainPage-Button {
+    width:4em;
+}
+
+.ReturnToMainPage-Label {
+    margin-left:0.5em;
+}
