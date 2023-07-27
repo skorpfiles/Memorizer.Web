@@ -48,6 +48,13 @@ body {
     margin: 0 0 1.5em 0;
 }
 
+.TitleBetweenPanels {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 1.5em 0;
+}
+
 .MainControlContainer {
     margin: 0.7em;
 }
@@ -103,6 +110,10 @@ body {
 
 .CenterText {
     text-align:center;
+}
+
+.RightText {
+    text-align: right;
 }
 
 .CentralButton {

@@ -13,6 +13,7 @@ import {
 import MainRouteElement from './RouteElements/MainRouteElement';
 import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
+import SelectTrainingRouteElement from './RouteElements/SelectTrainingRouteElement';
 
 function App() {
     let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
@@ -146,6 +147,12 @@ function App() {
                                     }
                                 />
                             )}
+                            {currentUser.isUserLogged && (<Route
+                                    path="train/select"
+                                    element={
+                                        <SelectTrainingRouteElement />
+                                    }
+                                />)}
                             <Route
                                 path="*"
                                 status={404}
