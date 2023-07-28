@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
     useEffect(() => {
         document.title = "Memorizer";
     });
+
+    const navigate = useNavigate();
 
     return (
         <div className="MiddleVerticalAlignContainer">
@@ -14,7 +17,7 @@ function MainPage() {
                     </div>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
-                    <a className="CentralButton-SmallWidth" href="/train/select"><button className="MainButton IncreaseButtonHeight FullWidth Font-MainForControls">Train questions</button></a>
+                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls IncreaseButtonHeight" onClick={() => navigate("/train/select") }>Train questions</button>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
                     <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Manage questionnaires</button>

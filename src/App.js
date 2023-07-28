@@ -7,7 +7,8 @@ import { CookiesExpireDays } from './Utils/GlobalConstants';
 import {
     BrowserRouter as Router,
     Routes,
-    Route
+    Route,
+    useNavigate
 } from 'react-router-dom';
 
 import MainRouteElement from './RouteElements/MainRouteElement';
@@ -104,8 +105,6 @@ function App() {
         handleLogOut={() => logOut(currentUser, setCurrentUser, setEmailConfirmationState)}
     />);
 
-    let backButton = (window.location.pathname == "/train/select" && currentUser.isUserLogged) && (<ReturnToMainPage/>)
-
     if (!firstLoadingIsCompleted) {
         return (<div>Loading...</div>);
     }
@@ -113,7 +112,6 @@ function App() {
         return (
             <div className="App">
                 {header}
-                {backButton}
                 <section className="App-body">
                     <Router>
                         <Routes>
