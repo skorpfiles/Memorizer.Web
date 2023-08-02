@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 function MainPage() {
     useEffect(() => {
         document.title = "Memorizer";
+        console.log(process.env.REACT_APP_MANAGEMENT_URL);
     });
 
     return (
