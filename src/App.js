@@ -152,7 +152,7 @@ function App() {
                             {currentUser.isUserLogged && (<Route
                                     path="train/select"
                                     element={
-                                        <SelectTrainingRouteElement />
+                                        <SelectTrainingRouteElement currentUser={currentUser} />
                                     }
                                 />)}
                             <Route

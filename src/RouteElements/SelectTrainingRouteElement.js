@@ -1,11 +1,11 @@
 import QuickTrainingConfigurationPage from "../Pages/ConfigureTraining/QuickTrainingConfigurationPage";
 import ReturnToMainPage from "../ReturnToMainPage";
 
-function SelectTrainingRouteElement() {
+function SelectTrainingRouteElement(props) {
     return (
         <div className="RouteElementWithReturnButton">
             <ReturnToMainPage />
-            <QuickTrainingConfigurationPage />
+            <QuickTrainingConfigurationPage currentUser={props.currentUser} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import QuickTrainingsListPanel from "../../ConfigureTraining/Quick/QuickTrainingsListPanel";
 import ReturnToMainPage from "../../ReturnToMainPage";
 
-function QuickTrainingConfigurationPage() {
+function QuickTrainingConfigurationPage(props) {
     return (
         <div className="MiddleVerticalAlignContainer VerticalCenterColumn">
             <div className="TitleBeforePanel">
@@ -9,12 +9,7 @@ function QuickTrainingConfigurationPage() {
                     Select a training you've trained recently
                 </div>
             </div>
-            <QuickTrainingsListPanel trainings={
-                [
-                    { name: "Questionnaire 1" },
-                    { name: "Questionnaire 2" }
-                ]
-            } />
+            <QuickTrainingsListPanel currentUser={props.currentUser} />
             <div className="TitleBetweenPanels">
                 <div className="Font-MainForLabels">
                     Or you can start another questionnaire
