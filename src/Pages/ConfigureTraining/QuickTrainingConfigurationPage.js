@@ -12,11 +12,11 @@ function QuickTrainingConfigurationPage(props) {
             <QuickTrainingsListPanel currentUser={props.currentUser} />
             <div className="TitleBetweenPanels">
                 <div className="Font-MainForLabels">
-                    Or you can start another questionnaire
+                    Or you can start a new training
                 </div>
             </div>
             <div className="MainControlContainer DisplayFlex">
-                <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Browse questionnaires</button>
+                <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Create new training</button>
             </div>
         </div>
     );

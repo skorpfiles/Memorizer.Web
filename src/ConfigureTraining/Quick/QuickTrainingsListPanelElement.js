@@ -1,5 +1,5 @@
 function QuickTrainingsListPanelElement(props) {
-    return (<li><a href="#">{props.training.name}</a></li>);
+    return (<li key={props.training.id}><a href="#">{props.training.name}</a></li>);
 }
 
 export default QuickTrainingsListPanelElement;

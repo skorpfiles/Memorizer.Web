@@ -15,28 +15,48 @@ function QuickTrainingsListPanel(props) {
     useEffect(() => {
         try {
             const getTrainingListFunc = async () => {
-                const response =
-                    await CallApi("/Repository/Trainings?pageNumber=1&pageSize=5", "GET", props.currentUser.accessToken);
-                if (response.ok) {
-                    const result = await response.json();
-                    setCurrentTrainingsList({
-                        items: result.trainings,
-                        isLoading: false,
-                        isLoadingSuccessful: true,
-                        isLoadingError: false,
-                        loadingErrorMessage: null
-                    });
-                }
-                else {
-                    const result = await response.json();
-                    setCurrentTrainingsList({
-                        items: null,
-                        isLoading: false,
-                        isLoadingSuccessful: false,
-                        isLoadingError: true,
-                        loadingErrorMessage: `${response.status} ${result.errorText}`
-                    });
-                }
+                //const response =
+                //    await CallApi("/Repository/Trainings?pageNumber=1&pageSize=4", "GET", props.currentUser.accessToken);
+                //if (response.ok) {
+                //    const result = await response.json();
+                //    setCurrentTrainingsList({
+                //        items: result.trainings,
+                //        isLoading: false,
+                //        isLoadingSuccessful: true,
+                //        isLoadingError: false,
+                //        loadingErrorMessage: null
+                //    });
+                //}
+                //else {
+                //    const result = await response.json();
+                //    setCurrentTrainingsList({
+                //        items: null,
+                //        isLoading: false,
+                //        isLoadingSuccessful: false,
+                //        isLoadingError: true,
+                //        loadingErrorMessage: `${response.status} ${result.errorText}`
+                //    });
+                //}
+                setCurrentTrainingsList({
+                    items: [
+                        {
+                            id: "1",
+                            name: "Training 1"
+                        },
+                        {
+                            id: "2",
+                            name: "Training 2"
+                        },
+                        {
+                            id: "3",
+                            name: "Very Very Very Very Very Very Very Very Very Long Training Name"
+                        }
+                    ],
+                    isLoading: false,
+                    isLoadingSuccessful: true,
+                    isLoadingError: false,
+                    loadingErrorMessage: null
+                });
             }
             getTrainingListFunc().catch(console.error);
         }
@@ -58,8 +78,8 @@ function QuickTrainingsListPanel(props) {
     }
     else if (currentTrainingsList.isLoadingSuccessful) {
         if (currentTrainingsList.items !== null && currentTrainingsList.items.length > 0) {
-            data = (<ul className="Font-MainForControls">
-                {props.trainings.map(item => <QuickTrainingsListPanelElement training={item} />)}
+            data = (<ul className="Font-MainForLists TightList">
+                {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement training={item} />)}
             </ul>);
         }
         else {
@@ -76,11 +96,6 @@ function QuickTrainingsListPanel(props) {
             <div className="CenterText Font-Default"><a href="#">Browse and manage all</a></div>
         </div>
     );
-}
-
-async function getTrainingsList() {
-    
-
 }
 
 export default QuickTrainingsListPanel;
