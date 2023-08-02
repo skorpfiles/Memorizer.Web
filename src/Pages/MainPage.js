@@ -17,7 +17,7 @@ function MainPage() {
                     <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls IncreaseButtonHeight">Train questions</button>
                 </div>
                 <div className="MainControlContainer DisplayFlex">
-                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Manage questionnaires</button>
+                    <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls" onClick={() => window.open(process.env.REACT_APP_MANAGEMENT_URL, "_blank") }>Manage questionnaires</button>
                 </div>
             </div>
         </div>
