@@ -70,7 +70,7 @@ function QuickTrainingsListPanel(props) {
                 loadingErrorMessage: "Error: Unable to connect to the API."
             });
         }
-    });
+    },[]);
 
     var data;
     if (currentTrainingsList.isLoading) {
@@ -79,7 +79,7 @@ function QuickTrainingsListPanel(props) {
     else if (currentTrainingsList.isLoadingSuccessful) {
         if (currentTrainingsList.items !== null && currentTrainingsList.items.length > 0) {
             data = (<ul className="Font-MainForLists TightList">
-                {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement training={item} />)}
+                {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement key={item.id} training={item} />)}
             </ul>);
         }
         else {

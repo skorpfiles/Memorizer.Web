@@ -33,12 +33,6 @@
     margin-right:auto;
 }
 
-.container {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .Panel {
     border: 0.15em solid black;
     border-radius: 1.5em;
@@ -165,14 +159,11 @@ ul.TightList{
 
     ul.TightList li {
         position: relative;
-        padding-left: 2em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        padding: 0.15em 0 0.15em 1.5em;
     }
 
         ul.TightList li:before {
             content: "●";
             position: absolute;
-            left: 1em;
+            left: 0.5em;
         }
