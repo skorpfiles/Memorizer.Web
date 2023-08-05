@@ -27,10 +27,19 @@
     width:100%;
 }
 
+.VerticalCenterColumn {
+    margin: auto;
+    flex-direction: column;
+}
+
 .Column-small {
     width: 20em;
     margin-left:auto;
     margin-right:auto;
+}
+
+.Column-medium {
+    width: 50em;
 }
 
 .Panel {

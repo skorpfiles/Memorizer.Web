@@ -6,7 +6,7 @@ function ReturnToMainPage() {
     return (
         <div className="ReturnToMainPage-Container">
             <input className="ReturnToMainPage-Button MainButton" type="submit" id="Back" value="<" onClick={()=> navigate("/") } />
-            <div className="Font-MainForControls ReturnToMainPage-Label">Return to the main page</div>
+            <div className="Font-MainForControls ReturnToMainPage-Label" onClick={() => navigate("/")} ><a href="#">Return to the main page</a></div>
         </div>
     )
 }

@@ -15,6 +15,7 @@ import MainRouteElement from './RouteElements/MainRouteElement';
 import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
 import SelectTrainingRouteElement from './RouteElements/SelectTrainingRouteElement';
+import ConfigureTrainingRouteElement from './RouteElements/ConfigureTrainingRouteElement';
 import ReturnToMainPage from './ReturnToMainPage';
 
 function App() {
@@ -149,12 +150,22 @@ function App() {
                                     }
                                 />
                             )}
-                            {currentUser.isUserLogged && (<Route
+                            {currentUser.isUserLogged && (
+                                <Route
                                     path="train/select"
                                     element={
                                         <SelectTrainingRouteElement currentUser={currentUser} />
                                     }
-                                />)}
+                                />
+                            )}
+                            {currentUser.isUserLogged && (
+                                <Route
+                                    path="train/configure"
+                                    element={
+                                        <ConfigureTrainingRouteElement currentUser={currentUser} />
+                                    }
+                                />
+                            )}
                             <Route
                                 path="*"
                                 status={404}
