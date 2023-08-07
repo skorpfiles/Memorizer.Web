@@ -4,7 +4,7 @@ import { CallApi } from '../../Utils/GlobalUtils';
 
 function QuickTrainingsListPanel(props) {
 
-    let [currentTrainingsList, setCurrentTrainingsList] = useState({
+    const [currentTrainingsList, setCurrentTrainingsList] = useState({
         items: null,
         isLoading: true,
         isLoadingSuccessful: false,

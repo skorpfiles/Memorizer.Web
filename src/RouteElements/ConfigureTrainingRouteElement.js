@@ -1,11 +1,12 @@
 import SelectQuestionnairePage from '../Pages/ConfigureTraining/SelectQuestionnairePage';
-import {
-    Navigate
-} from 'react-router-dom';
+import ReturnToMainPage from '../ReturnToMainPage';
 
 function ConfigureTrainingRouteElement(props) {
     return (
-        <SelectQuestionnairePage />
+        <div className="RouteElementWithReturnButton">
+            <ReturnToMainPage />
+            <SelectQuestionnairePage currentUser={props.currentUser} />
+        </div>
     );
 }
 

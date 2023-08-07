@@ -1,21 +1,29 @@
 import RadioButton from '../../RadioButton';
 import './SelectQuestionnairePage.css';
 import { useState } from 'react';
+import QuestionnairesListForSelectPanel from '../../ConfigureTraining/QuestionnairesListForSelectPanel';
 
-function SelectQuestionnairePage() {
+function SelectQuestionnairePage(props) {
     const [currentFilter, setCurrentFilter] = useState("ownFilter");
 
     return (
-        <div className="Column-medium VerticalCenterColumn">
+        <div className="Column-medium VerticalFullHeightColumn DisplayFlex">
             <div className="TitleBeforePanel">
                 <div className="Font-MainForLabels">
                     Find and select a questionnaire you like
                 </div>
             </div>
-            <div className="SelectQuestionnairePage-FiltersContainer">
+            <div className="SelectQuestionnairePage-FiltersContainer GroupInsidePanel">
                 <RadioButton containerClassName="SelectQuestionnairePage-LeftFiltersItem" text="My own" id="ownFilter" checked={currentFilter === "ownFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
                 <RadioButton containerClassName="SelectQuestionnairePage-RightFiltersItem" text="From another users" id="foreignFilter" checked={currentFilter === "foreignFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
             </div>
+            <div className="GroupInsidePanel">
+                <input className="MainTextBox TextBoxWithoutPanel FullWidth" type="text" placeholder="Search by name"/>
+            </div>
+            <QuestionnairesListForSelectPanel
+                currentOrigin={currentFilter === "foreignFilter" ? "foreign" : "own"}
+                currentUser={props.currentUser}
+            />
         </div>
     );
 }

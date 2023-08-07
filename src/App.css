@@ -32,6 +32,13 @@
     flex-direction: column;
 }
 
+.VerticalFullHeightColumn {
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    height:100%;
+}
+
 .Column-small {
     width: 20em;
     margin-left:auto;
@@ -64,6 +71,10 @@
     margin: 1.5em 0;
 }
 
+.GroupInsidePanel {
+    margin: 0.7em 0;
+}
+
 .MainControlContainer {
     margin: 0.7em;
 }
@@ -85,12 +96,21 @@
     box-sizing: border-box;
 }
 
+.TextBoxWithoutPanel {
+    border-radius: 1.5em;
+    padding: 0.5em 0.7em;
+}
+
 .MainTextBox {
     border: 0.15em solid black;
 }
 
 .FullWidth {
     width: 100%;
+}
+
+.FullHeight {
+    flex: 1 0 auto;
 }
 
 .MainButton {
@@ -126,6 +146,14 @@
 
 .Font-Default {
     font-size:0.9em;
+}
+
+.Font-Notes {
+    font-size: 0.6em;
+}
+
+.Font-Bold {
+    font-weight: bold;
 }
 
 .CenterText {
