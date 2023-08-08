@@ -8,6 +8,7 @@ function QuestionnairesListForSelectPanel(props) {
         items: null,
         currentPage: null,
         totalPages: null,
+        isFirstLoading: true,
         isLoading: true,
         isLoadingSuccessful: false,
         isLoadingError: false,
@@ -15,55 +16,82 @@ function QuestionnairesListForSelectPanel(props) {
     });
 
     useEffect(() => {
-        try {
-            const getUsersAndQuestionnairesListFunc = async () => {
-                const response =
-                    await CallApi("/Repository/Questionnaires?origin=" + props.currentOrigin, "GET", props.currentUser.accessToken);
-                if (response.ok) {
-                    const result = await response.json();
-                    setQuestionnairesForSelectList({
-                        items: result.questionnaires,
-                        currentPage: result.questionnaires.length>0 ? 1 : 0,
-                        totalPages: result.totalPages,
-                        isLoading: false,
-                        isLoadingSuccessful: true,
-                        isLoadingError: false,
-                        loadingErrorMessage: null
-                    });
-                }
-                else {
-                    const result = await response.json();
-                    setQuestionnairesForSelectList({
-                        items: null,
-                        currentPage: null,
-                        totalPages: null,
-                        isLoading: false,
-                        isLoadingSuccessful: false,
-                        isLoadingError: true,
-                        loadingErrorMessage: `${response.status} ${result.errorText}`
-                    });
-                }
-            }
-            getUsersAndQuestionnairesListFunc().catch(console.error);
-        }
-        catch (error) {
-            console.log(error);
-            setQuestionnairesForSelectList({
+        const debounce = setTimeout(() => {
+            setQuestionnairesForSelectList(prevState => ({
                 items: null,
                 currentPage: null,
                 totalPages: null,
-                isLoading: false,
+                isFirstLoading: prevState.isFirstLoading,
+                isLoading: true,
                 isLoadingSuccessful: false,
-                isLoadingError: true,
-                loadingErrorMessage: "Error: Unable to connect to the API."
-            });
-        }
-    }, [props.currentOrigin]);
+                isLoadingError: false,
+                loadingErrorMessage: null
+            }));
+
+            try {
+                const getUsersAndQuestionnairesListFunc = async () => {
+                    let url = "/Repository/Questionnaires?origin=" + props.currentOrigin;
+                    if (props.currentSearchTerm) {
+                        url += "&partOfName=" + encodeURIComponent(props.currentSearchTerm);
+                    }
+
+                    const response =
+                        await CallApi(url, "GET", props.currentUser.accessToken);
+                    if (response.ok) {
+                        const result = await response.json();
+                        setQuestionnairesForSelectList({
+                            items: result.questionnaires,
+                            currentPage: result.questionnaires.length > 0 ? 1 : 0,
+                            totalPages: result.totalPages,
+                            isFirstLoading: false,
+                            isLoading: false,
+                            isLoadingSuccessful: true,
+                            isLoadingError: false,
+                            loadingErrorMessage: null
+                        });
+                    }
+                    else {
+                        const result = await response.json();
+                        setQuestionnairesForSelectList({
+                            items: null,
+                            currentPage: null,
+                            totalPages: null,
+                            isFirstLoading: false,
+                            isLoading: false,
+                            isLoadingSuccessful: false,
+                            isLoadingError: true,
+                            loadingErrorMessage: `${response.status} ${result.errorText}`
+                        });
+                    }
+                }
+                getUsersAndQuestionnairesListFunc().catch(console.error);
+            }
+            catch (error) {
+                console.log(error);
+                setQuestionnairesForSelectList({
+                    items: null,
+                    currentPage: null,
+                    totalPages: null,
+                    isFirstLoading: false,
+                    isLoading: false,
+                    isLoadingSuccessful: false,
+                    isLoadingError: true,
+                    loadingErrorMessage: "Error: Unable to connect to the API."
+                });
+            }
+        }, 300);
+        return () => clearTimeout(debounce);
+    }, [props.currentOrigin, props.currentSearchTerm]);
 
 
     let data;
     if (questionnairesForSelectList.isLoading) {
-        data = (<div className="CenterText">Loading...</div>);
+        if (questionnairesForSelectList.isFirstLoading) {
+            data = (<div className="CenterText">Loading...</div>);
+        }
+        else {
+            data = null;
+        }
     }
     else if (questionnairesForSelectList.isLoadingSuccessful) {
         if (questionnairesForSelectList.items !== null && questionnairesForSelectList.items.length > 0) {

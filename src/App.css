@@ -192,6 +192,7 @@
 ul.TightList{
     list-style: none;
     padding-left:0;
+    margin:0.5em 0;
 }
 
     ul.TightList li {

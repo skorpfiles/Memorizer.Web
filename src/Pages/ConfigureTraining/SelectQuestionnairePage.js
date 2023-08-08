@@ -5,6 +5,7 @@ import QuestionnairesListForSelectPanel from '../../ConfigureTraining/Questionna
 
 function SelectQuestionnairePage(props) {
     const [currentFilter, setCurrentFilter] = useState("ownFilter");
+    const [searchTerm, setSearchTerm] = useState("");
 
     return (
         <div className="Column-medium VerticalFullHeightColumn DisplayFlex">
@@ -18,10 +19,11 @@ function SelectQuestionnairePage(props) {
                 <RadioButton containerClassName="SelectQuestionnairePage-RightFiltersItem" text="From another users" id="foreignFilter" checked={currentFilter === "foreignFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
             </div>
             <div className="GroupInsidePanel">
-                <input className="MainTextBox TextBoxWithoutPanel FullWidth" type="text" placeholder="Search by name"/>
+                <input className="MainTextBox TextBoxWithoutPanel FullWidth" type="text" placeholder="Search by name" onChange={(event) => setSearchTerm(event.target.value)} value={searchTerm} />
             </div>
             <QuestionnairesListForSelectPanel
                 currentOrigin={currentFilter === "foreignFilter" ? "foreign" : "own"}
+                currentSearchTerm={searchTerm}
                 currentUser={props.currentUser}
             />
         </div>
