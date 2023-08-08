@@ -91,7 +91,7 @@ function QuickTrainingsListPanel(props) {
     }
 
     return (
-        <div className="Column-small Panel">
+        <div className="Column-small DisplayFlex Panel BigBorderRadius">
             {data}
             <div className="CenterText Font-Default"><a href="#">Browse and manage all</a></div>
         </div>

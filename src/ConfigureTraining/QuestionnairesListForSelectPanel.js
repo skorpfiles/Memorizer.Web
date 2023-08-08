@@ -97,7 +97,7 @@ function QuestionnairesListForSelectPanel(props) {
         if (questionnairesForSelectList.items !== null && questionnairesForSelectList.items.length > 0) {
             data = (
                 <ul className="Font-MainForLists TightList">
-                    {questionnairesForSelectList.items.map(item => <QuestionnairesListForSelectElement questionnaire={item} />)}
+                    {questionnairesForSelectList.items.map(item => <QuestionnairesListForSelectElement key={item.id} questionnaire={item} handleClick={() => props.handleConfirmingAddingQuestionnaire(item)} />)}
                 </ul>
             )
         }
@@ -110,8 +110,8 @@ function QuestionnairesListForSelectPanel(props) {
     }
 
     return (
-        <div className="GroupInsidePanel Panel FullHeight">
-            <div style={{flex:"1 0 auto"}}>
+        <div className="GroupInsidePanel Panel DisplayFlex SmallBorderRadius FullHeight">
+            <div className="FlexAllFreeSpace">
                 {data}
             </div>
             <PageSwitcher currentPage={questionnairesForSelectList.currentPage} totalPages={questionnairesForSelectList.totalPages} />

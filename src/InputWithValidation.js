@@ -7,7 +7,7 @@ function InputWithValidation(props) {
     const isInvalid = isFormInvalid(inputError);
 
     return (
-        <div className={props.containerClassName}>
+        <div className={props.containerClassName} style={props.containerStyle}>
             <input
                 className={props.inputClassName}
                 id={props.inputId}

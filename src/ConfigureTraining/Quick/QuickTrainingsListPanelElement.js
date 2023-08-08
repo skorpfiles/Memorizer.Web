@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import settingsIcon from './settings.png';
-import SettingsButton from './SettingsButton';
+import SettingsIcon from './settings.png';
+import IconButton from '../../IconButton';
 import './QuickTrainingsListPanelElement.css';
 
 function QuickTrainingsListPanelElement(props) {
@@ -14,7 +14,7 @@ function QuickTrainingsListPanelElement(props) {
             <div className="QuickTrainingsListPanelElement-Link">
                 <a href="#">{props.training.name}</a>
             </div>
-            <SettingsButton visibility={mouseOnElement} />
+            <IconButton visibility={mouseOnElement} src={SettingsIcon} alt="Settings" title="Settings" />
         </div>
     </li>);
 }

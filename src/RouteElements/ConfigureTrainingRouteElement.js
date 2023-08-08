@@ -1,3 +1,4 @@
+import ConfigureTrainingPage from '../Pages/ConfigureTraining/ConfigureTrainingPage';
 import SelectQuestionnairePage from '../Pages/ConfigureTraining/SelectQuestionnairePage';
 import ReturnToMainPage from '../ReturnToMainPage';
 
@@ -5,7 +6,7 @@ function ConfigureTrainingRouteElement(props) {
     return (
         <div className="RouteElementWithReturnButton">
             <ReturnToMainPage />
-            <SelectQuestionnairePage currentUser={props.currentUser} />
+            <ConfigureTrainingPage currentUser={props.currentUser} />
         </div>
     );
 }

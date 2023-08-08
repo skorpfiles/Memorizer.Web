@@ -9,12 +9,12 @@ function AuthenticationPanel(props) {
     return (
         <FormProvider {...methods}>
             <form
-                className="Panel"
+                className="Panel DisplayFlex BigBorderRadius"
                 onSubmit={methods.handleSubmit(onSubmit)}
             >
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputName="username"
                     inputId="Username"
                     inputType="text"
@@ -30,7 +30,7 @@ function AuthenticationPanel(props) {
                 />
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputName="password"
                     inputId="Password"
                     inputType="password"

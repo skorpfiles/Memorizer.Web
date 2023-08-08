@@ -1,7 +1,6 @@
 import QuickTrainingsListPanel from "../../ConfigureTraining/Quick/QuickTrainingsListPanel";
-import ReturnToMainPage from "../../ReturnToMainPage";
 
-function QuickTrainingConfigurationPage(props) {
+function SelectTrainingPage(props) {
     return (
         <div className="MiddleVerticalAlignContainer VerticalCenterColumn">
             <div className="TitleBeforePanel">
@@ -22,4 +21,4 @@ function QuickTrainingConfigurationPage(props) {
     );
 }
 
-export default QuickTrainingConfigurationPage;
+export default SelectTrainingPage;
