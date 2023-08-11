@@ -1,10 +1,10 @@
 import SelectTrainingPage from "../Pages/ConfigureTraining/SelectTrainingPage";
-import ReturnToMainPage from "../ReturnToMainPage";
+import ReturnToPage from "../ReturnToPage";
 
 function SelectTrainingRouteElement(props) {
     return (
         <div className="RouteElementWithReturnButton">
-            <ReturnToMainPage />
+            <ReturnToPage path="/" text="Return to the main page" />
             <SelectTrainingPage currentUser={props.currentUser} />
         </div>
     );

@@ -26,6 +26,7 @@ function SelectQuestionnairePage(props) {
                 currentSearchTerm={searchTerm}
                 currentUser={props.currentUser}
                 handleConfirmingAddingQuestionnaire={props.handleConfirmingAddingQuestionnaire}
+                alreadySelectedQuestionnaires={props.alreadySelectedQuestionnaires}
             />
         </div>
     );

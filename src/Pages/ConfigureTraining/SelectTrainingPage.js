@@ -1,6 +1,10 @@
 import QuickTrainingsListPanel from "../../ConfigureTraining/Quick/QuickTrainingsListPanel";
+import { useNavigate } from 'react-router-dom';
 
 function SelectTrainingPage(props) {
+
+    const navigate = useNavigate();
+
     return (
         <div className="MiddleVerticalAlignContainer VerticalCenterColumn">
             <div className="TitleBeforePanel">
@@ -15,7 +19,7 @@ function SelectTrainingPage(props) {
                 </div>
             </div>
             <div className="MainControlContainer DisplayFlex">
-                <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls">Create new training</button>
+                <button className="MainButton FullWidth CentralButton-SmallWidth Font-MainForControls" onClick={() => navigate("/train/configure") }>Create new training</button>
             </div>
         </div>
     );

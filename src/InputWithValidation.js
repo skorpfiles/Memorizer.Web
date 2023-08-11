@@ -15,6 +15,7 @@ function InputWithValidation(props) {
                 placeholder={props.inputPlaceholder}
                 disabled={props.disabled}
                 style={props.inputStyle}
+                value={props.value}
                 {...register(props.inputName, props.inputValidation)}
             />
             {isInvalid && (

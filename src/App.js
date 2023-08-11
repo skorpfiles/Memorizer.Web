@@ -16,7 +16,6 @@ import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
 import SelectTrainingRouteElement from './RouteElements/SelectTrainingRouteElement';
 import ConfigureTrainingRouteElement from './RouteElements/ConfigureTrainingRouteElement';
-import ReturnToMainPage from './ReturnToMainPage';
 
 function App() {
     let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);

@@ -2,41 +2,57 @@ import ConfigureTrainingShell from '../../ConfigureTraining/ConfigureTrainingShe
 import InputWithValidation from '../../InputWithValidation';
 import { useState } from 'react';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
+import ReturnToPage from '../../ReturnToPage';
 
 function ConfigureTrainingPage(props) {
-    const [selectedQuestionnaires, setSelectedQuestionnaires] = useState([]);
-    const [questionnairesStats, setQuestionnairesStats] = useState({
-        questionsTotalCount: 0,
-        newQuestionsCount: 0,
-        recheckedQuestionsCount: 0,
-        maxTimeToTrainMinutes: 0
+    const [trainingStatus, setTrainingStatus] = useState({
+        name: "My Training",
+        selectedQuestionnaires: [],
+        questionnairesStats: {
+            questionsTotalCount: 0,
+            newQuestionsCount: 0,
+            recheckedQuestionsCount: 0,
+            maxTimeToTrainMinutes: 0
+        },
+        trainingLengthAsQuestionsCount: true
     });
-    const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(false);
-    const [trainingLengthAsQuestionsCount, setTrainingLengthAsQuestionsCount] = useState(true);
+
+    const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(true); //defines if the SelectQuestionnairePage component is shown in this moment instead of ConfigureTrainingShell.
 
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
-    const handleDeleteQuestionnaire = (id) => setSelectedQuestionnaires(prevState => prevState.filter(questionnaire => questionnaire.id !== id));
+    const handleDeleteQuestionnaire = (id) => setTrainingStatus(prevState => ({
+        ...prevState,
+        selectedQuestionnaires: prevState.selectedQuestionnaires.filter(questionnaire => questionnaire.id !== id)
+    }));
     const handleConfirmingAddingQuestionnaire = (addedQuestionnaire) => {
-        setSelectedQuestionnaires(prevState => ([
+        setTrainingStatus(prevState => ({
             ...prevState,
-            addedQuestionnaire
-        ]));
+            selectedQuestionnaires: [
+                ...prevState.selectedQuestionnaires,
+                addedQuestionnaire
+            ]
+        }));
         setSelectQuestionnairePageIsShown(false);
     }
 
     let result = selectQuestionnairePageIsShown ? (
-        <SelectQuestionnairePage
-            currentUser={props.currentUser}
-            handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
-        />) : (
-        <ConfigureTrainingShell
-                selectedQuestionnaires={selectedQuestionnaires}
+        <div className="RouteElementWithReturnButton">
+            <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text="Return to the training page" />
+            <SelectQuestionnairePage
+                currentUser={props.currentUser}
+                alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
+                handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
+            />
+        </div>
+    ) : (
+        <div className="RouteElementWithReturnButton">
+            <ReturnToPage path="/" text="Return to the main page" />
+            <ConfigureTrainingShell
+                trainingStatus={trainingStatus}
                 handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
-                questionnairesStats={questionnairesStats}
-                trainingLengthAsQuestionsCount={trainingLengthAsQuestionsCount}
-                setTrainingLengthAsQuestionsCount={setTrainingLengthAsQuestionsCount}
                 handleDeleteQuestionnaire={handleDeleteQuestionnaire}
-        />
+            />
+        </div>
     );
 
     return result;
