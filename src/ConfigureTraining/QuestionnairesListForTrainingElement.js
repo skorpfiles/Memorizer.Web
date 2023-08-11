@@ -13,7 +13,7 @@ function QuestionnairesListForTrainingElement(props) {
             <div className="EllipsisList-Label">
                 {props.name}
             </div>
-            <IconButton visibility={mouseOnElement} src={DeleteIcon} alt="Remove" title="Remove" />
+            <IconButton visibility={mouseOnElement} src={DeleteIcon} alt="Remove" title="Remove" onClick={props.handleDeleteElement} />
         </div>
     </li>);
 }

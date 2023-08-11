@@ -12,8 +12,10 @@ function ConfigureTrainingPage(props) {
         maxTimeToTrainMinutes: 0
     });
     const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(false);
+    const [trainingLengthAsQuestionsCount, setTrainingLengthAsQuestionsCount] = useState(true);
 
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
+    const handleDeleteQuestionnaire = (id) => setSelectedQuestionnaires(prevState => prevState.filter(questionnaire => questionnaire.id !== id));
     const handleConfirmingAddingQuestionnaire = (addedQuestionnaire) => {
         setSelectedQuestionnaires(prevState => ([
             ...prevState,
@@ -28,9 +30,12 @@ function ConfigureTrainingPage(props) {
             handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
         />) : (
         <ConfigureTrainingShell
-            selectedQuestionnaires={selectedQuestionnaires}
-            handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
-            questionnairesStats={questionnairesStats}
+                selectedQuestionnaires={selectedQuestionnaires}
+                handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
+                questionnairesStats={questionnairesStats}
+                trainingLengthAsQuestionsCount={trainingLengthAsQuestionsCount}
+                setTrainingLengthAsQuestionsCount={setTrainingLengthAsQuestionsCount}
+                handleDeleteQuestionnaire={handleDeleteQuestionnaire}
         />
     );
 

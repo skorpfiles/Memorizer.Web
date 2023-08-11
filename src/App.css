@@ -81,6 +81,10 @@
     margin: 0.7em 0;
 }
 
+.GroupInsidePanel-2xMargin {
+    margin: 1.4em 0;
+}
+
 .MainControlContainer {
     margin: 0.7em;
 }
@@ -132,6 +136,11 @@
 .MainButton:disabled {
     background-color: #BDD7EE;
     border-color:transparent;
+}
+
+.MainTextBox:disabled {
+    border-color: #BDD7EE;
+    color:lightgray;
 }
 
 .IncreaseButtonHeight {
