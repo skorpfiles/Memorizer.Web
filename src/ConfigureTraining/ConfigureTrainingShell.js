@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
-import QuestionnairesListForTrainingPanel from './QuestionnairesListForTrainingPanel';
+import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import DotRadioButton from '../DotRadioButton';
 
 function ConfigureTrainingShell(props) {
@@ -75,7 +75,7 @@ function ConfigureTrainingShell(props) {
                         <input type="submit" className="MainButton IncreaseButtonHeight CentralButton-SmallWidth Font-MainForControls" disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value="Start Training!" />
                     </div>
                     <div className="GroupInsidePanel-2xMargin">
-                        Note: you will be able to add the next page to your bookmarks if you want to have a quick direct access to start this training.
+                        Add the next page to your bookmarks if you want to have a quick direct access to starting this training.
                     </div>
                 </form>
             </FormProvider>
