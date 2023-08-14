@@ -57,7 +57,8 @@
 
 .PanelForFlexWrapElements {
     border: 0.15em solid black;
-    padding: 0.7em 0.35em;
+    padding: 0.35em;
+    flex-wrap: wrap;
 }
 
 .BigBorderRadius {

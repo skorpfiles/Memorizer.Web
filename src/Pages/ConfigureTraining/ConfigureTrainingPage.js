@@ -19,6 +19,11 @@ function ConfigureTrainingPage(props) {
 
     const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(true); //defines if the SelectQuestionnairePage component is shown in this moment instead of ConfigureTrainingShell.
 
+    const [selectQuestionnairePageStatus, setSelectQuestionnairePageStatus] = useState({
+        currentFilter: "ownFilter",
+        searchTerm: ""
+    });
+
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
     const handleDeleteQuestionnaire = (id) => setTrainingStatus(prevState => ({
         ...prevState,
@@ -34,6 +39,12 @@ function ConfigureTrainingPage(props) {
         }));
         setSelectQuestionnairePageIsShown(false);
     }
+    const handleSettingTrainingLengthAsQuestionsCount = (value) => {
+        setTrainingStatus(prevState => ({
+            ...prevState,
+            trainingLengthAsQuestionsCount: value
+        }));
+    }
 
     let result = selectQuestionnairePageIsShown ? (
         <div className="RouteElementWithReturnButton">
@@ -42,15 +53,18 @@ function ConfigureTrainingPage(props) {
                 currentUser={props.currentUser}
                 alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
                 handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
+                status={selectQuestionnairePageStatus}
+                setStatus={setSelectQuestionnairePageStatus}
             />
         </div>
     ) : (
         <div className="RouteElementWithReturnButton">
             <ReturnToPage path="/" text="Return to the main page" />
             <ConfigureTrainingShell
-                trainingStatus={trainingStatus}
-                handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
-                handleDeleteQuestionnaire={handleDeleteQuestionnaire}
+                    trainingStatus={trainingStatus}
+                    handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
+                    handleDeleteQuestionnaire={handleDeleteQuestionnaire}
+                    handleSettingTrainingLengthAsQuestionsCount={handleSettingTrainingLengthAsQuestionsCount}
             />
         </div>
     );

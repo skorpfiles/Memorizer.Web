@@ -39,7 +39,7 @@ function ConfigureTrainingShell(props) {
                     </div>
                     <div className="GroupInsidePanel-2xMargin">
                         <div style={{ display: "flex", flexDirection:"row", alignItems:"center" }}>
-                            <DotRadioButton id="questionsCountRadioButton" name="trainingLengthRadioGroup" checked={props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.setTrainingLengthAsQuestionsCount(true) } />
+                            <DotRadioButton id="questionsCountRadioButton" name="trainingLengthRadioGroup" checked={props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.handleSettingTrainingLengthAsQuestionsCount(true) } />
                             <div className="Font-MainForSmallLabels">How many questions would you like to train now?</div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -56,7 +56,7 @@ function ConfigureTrainingShell(props) {
                     </div>
                     <div className="GroupInsidePanel-2xMargin">
                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                            <DotRadioButton id="timeRadioButton" name="trainingLengthRadioGroup" checked={!props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.setTrainingLengthAsQuestionsCount(false)} />
+                            <DotRadioButton id="timeRadioButton" name="trainingLengthRadioGroup" checked={!props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.handleSettingTrainingLengthAsQuestionsCount(false)} />
                             <div className="Font-MainForSmallLabels">Or how much time would you like to spend for the training?</div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
