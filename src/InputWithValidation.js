@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { findInputError, isFormInvalid } from './Utils/ValidationUtils.js';
 
 function InputWithValidation(props) {
     const { register, formState: { errors } } = useFormContext();
@@ -13,30 +14,14 @@ function InputWithValidation(props) {
                 id={props.inputId}
                 type={props.inputType}
                 placeholder={props.inputPlaceholder}
-                disabled={props.disabled}
                 style={props.inputStyle}
-                value={props.value}
-                {...register(props.inputName, props.inputValidation)}
+                {...register(props.inputName, { disabled: props.disabled, ...props.inputValidation })}
             />
             {isInvalid && (
                 <div className={props.validationLabelClassName} key={props.inputId+"_errorMessage"}>{inputError.error.message}</div>
             )}
         </div>
     );
-}
-
-export function findInputError(errors, name) {
-    const filtered = Object.keys(errors)
-        .filter(key => key.includes(name))
-        .reduce((cur, key) => {
-            return Object.assign(cur, { error: errors[key] })
-        }, {})
-    return filtered
-}
-
-export const isFormInvalid = err => {
-    if (Object.keys(err).length > 0) return true
-    return false
 }
 
 export default InputWithValidation;

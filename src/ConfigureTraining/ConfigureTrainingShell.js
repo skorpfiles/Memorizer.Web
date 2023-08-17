@@ -2,10 +2,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import DotRadioButton from '../DotRadioButton';
+import QuestionnaireName from './QuestionnaireName';
+import TrainingLengthOption from './TrainingLengthOption';
 
 function ConfigureTrainingShell(props) {
 
-    const methods = useForm();
     const onSubmit = data => console.info(data);
 
     return (
@@ -15,17 +16,28 @@ function ConfigureTrainingShell(props) {
                     Configure your training
                 </div>
             </div>
-            <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <div className="DisplayFlex GroupInsidePanel-2xMargin" style={{ alignItems:"center" }}>
-                        <div className="Font-MainForSmallLabels" style={{marginRight:"1em"}}>Name:</div>
+            <FormProvider {...props.formMethods}>
+                <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
+                    <div className="DisplayFlex GroupInsidePanel-2xMargin" style={{ alignItems: "baseline" }}>
+                        <div className="Font-MainForSmallLabels" style={{ marginRight: "0.5em"}}>Name:</div>
                         <InputWithValidation
                             inputType="text"
                             inputId="trainingName"
                             inputName="trainingName"
                             containerClassName="FlexAllFreeSpace"
                             inputClassName="MainTextBox FullWidth SmallBorderRadius Font-MainForControls"
+                            validationLabelClassName="ValidationLabel"
                             value={props.trainingStatus.name}
+                            inputValidation={{
+                                required: {
+                                    value: true,
+                                    message: "Name is required."
+                                },
+                                maxLength: {
+                                    value: 10000,
+                                    message: "Username must have maximum 10000 symbols."
+                                }
+                            }}
                         />
                     </div>
                     <div className="DisplayFlex GroupInsidePanel-2xMargin" style={{flexDirection:"column"}}>
@@ -37,40 +49,27 @@ function ConfigureTrainingShell(props) {
                         />
                         <div className="CenterText" style={{ marginTop: "0.25em" }}>Questions: {props.trainingStatus.questionnairesStats.questionsTotalCount}; New: {props.trainingStatus.questionnairesStats.newQuestionsCount}; Recheck: {props.trainingStatus.questionnairesStats.recheckedQuestionsCount}; Approx. max time to train: {props.trainingStatus.questionnairesStats.maxTimeToTrainMinutes} min.</div>
                     </div>
-                    <div className="GroupInsidePanel-2xMargin">
-                        <div style={{ display: "flex", flexDirection:"row", alignItems:"center" }}>
-                            <DotRadioButton id="questionsCountRadioButton" name="trainingLengthRadioGroup" checked={props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.handleSettingTrainingLengthAsQuestionsCount(true) } />
-                            <div className="Font-MainForSmallLabels">How many questions would you like to train now?</div>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                            <InputWithValidation
-                                inputType="text"
-                                inputId="questionsCount"
-                                inputName="questionsCount"
-                                inputClassName="MainTextBox SmallBorderRadius Font-MainForControls"
-                                inputStyle={{ width: "5em" }}
-                                disabled={!props.trainingStatus.trainingLengthAsQuestionsCount}
-                            />
-                            <div className="Font-MainForSmallLabels" style={{ marginLeft: "0.5em" }}>(max {props.trainingStatus.questionnairesStats.questionsTotalCount} for these questionnaires)</div>
-                        </div>
-                    </div>
-                    <div className="GroupInsidePanel-2xMargin">
-                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                            <DotRadioButton id="timeRadioButton" name="trainingLengthRadioGroup" checked={!props.trainingStatus.trainingLengthAsQuestionsCount} onChange={() => props.handleSettingTrainingLengthAsQuestionsCount(false)} />
-                            <div className="Font-MainForSmallLabels">Or how much time would you like to spend for the training?</div>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                            <InputWithValidation
-                                inputType="text"
-                                inputId="time"
-                                inputName="time"
-                                inputClassName="MainTextBox SmallBorderRadius Font-MainForControls"
-                                inputStyle={{ width: "5em" }}
-                                disabled={props.trainingStatus.trainingLengthAsQuestionsCount}
-                            />
-                            <div className="Font-MainForSmallLabels" style={{ marginLeft: "0.5em" }}>(minutes; max {props.trainingStatus.questionnairesStats.maxTimeToTrainMinutes} for these questionnaires)</div>
-                        </div>
-                    </div>
+                    <TrainingLengthOption
+                        radioButtonId="questionsCountRadioButton"
+                        radioButtonsName="trainingLengthRadioGroup"
+                        handleSettingRadioButton={props.handleSettingTrainingLength}
+                        title="How many questions would you like to train now?"
+                        inputId="questionsCount"
+                        isInputDisabled={!props.trainingStatus.trainingLengthAsQuestionsCount}
+                        questionsTotalCount={props.trainingStatus.questionnairesStats.questionsTotalCount}
+                        note={"(max " + (props.trainingStatus.questionnairesStats.questionsTotalCount) + " for these questionnaires)"}
+                        formMethods={props.formMethods}
+                    />
+                    <TrainingLengthOption
+                        radioButtonId="timeRadioButton"
+                        radioButtonsName="trainingLengthRadioGroup"
+                        handleSettingRadioButton={props.handleSettingTrainingLength}
+                        title="Or how much time would you like to spend for the training?"
+                        inputId="time"
+                        isInputDisabled={props.trainingStatus.trainingLengthAsQuestionsCount}
+                        note={"(minutes; max " + (props.trainingStatus.questionnairesStats.maxTimeToTrainMinutes) + " for these questionnaires)"}
+                        formMethods={props.formMethods}
+                    />
                     <div className="GroupInsidePanel-2xMargin DisplayFlex">
                         <input type="submit" className="MainButton IncreaseButtonHeight CentralButton-SmallWidth Font-MainForControls" disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value="Start Training!" />
                     </div>

@@ -3,6 +3,7 @@ import InputWithValidation from '../../InputWithValidation';
 import { useState } from 'react';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
 import ReturnToPage from '../../ReturnToPage';
+import { useForm } from 'react-hook-form';
 
 function ConfigureTrainingPage(props) {
     const [trainingStatus, setTrainingStatus] = useState({
@@ -24,6 +25,13 @@ function ConfigureTrainingPage(props) {
         searchTerm: ""
     });
 
+    const defaultValues = {
+        trainingLengthRadioGroup: "questionsCountRadioButton",
+        trainingName: "My Training"
+    };
+
+    const methods = useForm({defaultValues});
+
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
     const handleDeleteQuestionnaire = (id) => setTrainingStatus(prevState => ({
         ...prevState,
@@ -39,10 +47,17 @@ function ConfigureTrainingPage(props) {
         }));
         setSelectQuestionnairePageIsShown(false);
     }
-    const handleSettingTrainingLengthAsQuestionsCount = (value) => {
+    const handleSettingTrainingLength = (value) => {
         setTrainingStatus(prevState => ({
             ...prevState,
-            trainingLengthAsQuestionsCount: value
+            trainingLengthAsQuestionsCount: value ==="questionsCountRadioButton"
+        }));
+    }
+
+    const handleSettingTrainingName = (value) => {
+        setTrainingStatus(prevState => ({
+            ...prevState,
+            name: value
         }));
     }
 
@@ -64,7 +79,9 @@ function ConfigureTrainingPage(props) {
                     trainingStatus={trainingStatus}
                     handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
                     handleDeleteQuestionnaire={handleDeleteQuestionnaire}
-                    handleSettingTrainingLengthAsQuestionsCount={handleSettingTrainingLengthAsQuestionsCount}
+                    handleSettingTrainingLength={handleSettingTrainingLength}
+                    setName={handleSettingTrainingName}
+                    formMethods={methods}
             />
         </div>
     );
