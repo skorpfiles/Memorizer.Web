@@ -7,12 +7,15 @@ import { CookiesExpireDays } from './Utils/GlobalConstants';
 import {
     BrowserRouter as Router,
     Routes,
-    Route
+    Route,
+    useNavigate
 } from 'react-router-dom';
 
 import MainRouteElement from './RouteElements/MainRouteElement';
 import RegisterRouteElement from './RouteElements/RegisterRouteElement';
 import ConfirmEmailRouteElement from './RouteElements/ConfirmEmailRouteElement';
+import SelectTrainingRouteElement from './RouteElements/SelectTrainingRouteElement';
+import ConfigureTrainingRouteElement from './RouteElements/ConfigureTrainingRouteElement';
 
 function App() {
     let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
@@ -143,6 +146,22 @@ function App() {
                                             currentUser={currentUser}
                                             emailConfirmationState={emailConfirmationState}
                                         />
+                                    }
+                                />
+                            )}
+                            {currentUser.isUserLogged && (
+                                <Route
+                                    path="train/select"
+                                    element={
+                                        <SelectTrainingRouteElement currentUser={currentUser} />
+                                    }
+                                />
+                            )}
+                            {currentUser.isUserLogged && (
+                                <Route
+                                    path="train/configure"
+                                    element={
+                                        <ConfigureTrainingRouteElement currentUser={currentUser} />
                                     }
                                 />
                             )}

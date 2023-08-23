@@ -1,4 +1,4 @@
-body {
+﻿body {
     font-family: Arial, Helvetica, sans-serif;
     height: 100%;
 }
@@ -27,18 +27,46 @@ body {
     width:100%;
 }
 
+.VerticalCenterColumn {
+    margin: auto;
+    flex-direction: column;
+}
+
+.VerticalFullHeightColumn {
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    height:100%;
+}
+
 .Column-small {
     width: 20em;
     margin-left:auto;
     margin-right:auto;
 }
 
+.Column-medium {
+    width: 50em;
+}
+
 .Panel {
     border: 0.15em solid black;
-    border-radius: 1.5em;
     padding: 0.7em;
-    display: flex;
     flex-direction: column;
+}
+
+.PanelForFlexWrapElements {
+    border: 0.15em solid black;
+    padding: 0.35em;
+    flex-wrap: wrap;
+}
+
+.BigBorderRadius {
+    border-radius: 1.5em;
+}
+
+.SmallBorderRadius {
+    border-radius: 0.5em;
 }
 
 .TitleBeforePanel {
@@ -48,18 +76,47 @@ body {
     margin: 0 0 1.5em 0;
 }
 
+.TitleBetweenPanels {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 1.5em 0;
+}
+
+.GroupInsidePanel {
+    margin: 0.7em 0;
+}
+
+.GroupInsidePanel-2xMargin {
+    margin: 1.4em 0;
+}
+
 .MainControlContainer {
     margin: 0.7em;
+}
+
+.RouteElementWithReturnButton{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
 }
 
 .DisplayFlex {
     display: flex;
 }
 
+.FlexAllFreeSpace {
+    flex: 1 0 auto;
+}
+
 .MainTextBox, .MainButton, .ErrorLabel {
-    border-radius: 0.5em;
     padding: 0.5em 0.7em;
     box-sizing: border-box;
+}
+
+.TextBoxWithoutPanel {
+    padding: 0.5em 0.7em;
 }
 
 .MainTextBox {
@@ -70,19 +127,35 @@ body {
     width: 100%;
 }
 
+.FullHeight {
+    flex: 1 0 auto;
+}
+
 .MainButton {
     color: white;
     font-weight: bold;
     cursor: pointer;
-}
-
-.MainButton {
     background-color: #002060;
+    border-radius: 0.5em;
 }
 
 .MainButton:disabled {
     background-color: #BDD7EE;
     border-color:transparent;
+}
+
+.MainTextBox:disabled {
+    border-color: #BDD7EE;
+    color:lightgray;
+}
+
+.MainFlexWrapLabel {
+    color: white;
+    cursor: pointer;
+    background-color: #002060;
+    border-radius: 0.5em;
+    padding: 0.25em 0.35em;
+    box-sizing: border-box;
 }
 
 .IncreaseButtonHeight {
@@ -93,6 +166,14 @@ body {
     font-size:2em;
 }
 
+.Font-MainForSmallLabels {
+    font-size:1.5em;
+}
+
+.Font-MainForLists {
+    font-size:1.5em;
+}
+
 .Font-MainForControls {
     font-size:1em;
 }
@@ -101,8 +182,20 @@ body {
     font-size:0.9em;
 }
 
+.Font-Notes {
+    font-size: 0.6em;
+}
+
+.Font-Bold {
+    font-weight: bold;
+}
+
 .CenterText {
     text-align:center;
+}
+
+.RightText {
+    text-align: right;
 }
 
 .CentralButton {
@@ -128,4 +221,33 @@ body {
     color: red;
     margin: 1.5em 0 0 0;
     font-size: 0.8em;
+    border-radius: 0.5em;
+}
+
+ul.TightList{
+    list-style: none;
+    padding-left:0;
+    margin:0.5em 0;
+}
+
+    ul.TightList li {
+        position: relative;
+        padding: 0.15em 0 0.15em 1.5em;
+    }
+
+        ul.TightList li:before {
+            content: "●";
+            position: absolute;
+            left: 0.5em;
+        }
+
+.EllipsisList-LineContainer {
+    display: flex;
+    align-items: baseline;
+}
+
+.EllipsisList-Label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -1,0 +1,9 @@
+.PageSwitcher-Container{
+    margin:0.5em auto;
+    display:flex;
+    align-items:baseline;
+}
+
+.PageSwitcher-Label{
+    margin:0 0.5em;
+}

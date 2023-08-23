@@ -16,10 +16,10 @@ function RegisterPanel(props) {
 
     return (
         <FormProvider {...methods}>
-            <form className="Panel" onSubmit={methods.handleSubmit(onSubmit)}>
+            <form className="Panel DisplayFlex BigBorderRadius" onSubmit={methods.handleSubmit(onSubmit)}>
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputId="Email"
                     inputName="email"
                     inputType="text"
@@ -39,7 +39,7 @@ function RegisterPanel(props) {
                 />
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputId="Username"
                     inputName="username"
                     inputType="text"
@@ -58,7 +58,7 @@ function RegisterPanel(props) {
                 />
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputId="Password"
                     inputName="password"
                     inputType="password"
@@ -68,7 +68,7 @@ function RegisterPanel(props) {
                 />
                 <InputWithValidation
                     containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls"
+                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
                     inputId="RepeatPassword"
                     inputName="repeatPassword"
                     inputType="password"

@@ -1,0 +1,9 @@
+.ReturnToPage-Container {
+    margin:1em;
+    display:flex;
+    align-items:baseline;
+}
+
+.ReturnToPage-Label {
+    margin-left:0.5em;
+}

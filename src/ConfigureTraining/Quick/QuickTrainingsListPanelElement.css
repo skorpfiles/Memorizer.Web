@@ -1,0 +1,10 @@
+.QuickTrainingsListPanelElement-LineContainer {
+    display: flex;
+    align-items: baseline;
+}
+
+.QuickTrainingsListPanelElement-Link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
