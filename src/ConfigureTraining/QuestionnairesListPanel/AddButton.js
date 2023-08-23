@@ -3,8 +3,8 @@ import AddIcon from './add.png';
 
 function AddButton(props) {
     return (
-        <SectionElement>
-            <div className="Font-Bold" onClick={props.onClick}>
+        <SectionElement handleSectionElementClick={props.onClick}>
+            <div className="Font-Bold">
                 +
             </div>
         </SectionElement>

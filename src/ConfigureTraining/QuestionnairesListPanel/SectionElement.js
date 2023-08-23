@@ -2,7 +2,7 @@ import './SectionElement.css';
 
 function SectionElement(props) {
     return (
-        <div className="MainFlexWrapLabel QuestionnairesListPanelSectionElement">{props.children}</div>
+        <div className="MainFlexWrapLabel QuestionnairesListPanelSectionElement" onClick={props.handleSectionElementClick}>{props.children}</div>
     );
 }
 
