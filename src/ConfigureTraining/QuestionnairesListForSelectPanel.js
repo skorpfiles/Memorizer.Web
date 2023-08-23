@@ -40,7 +40,7 @@ function QuestionnairesListForSelectPanel(props) {
                     if (response.ok) {
                         const result = await response.json();
                         setQuestionnairesForSelectList({
-                            items: result.questionnaires.filter(item=>!props.alreadySelectedQuestionnaires.some(item2=>item2.id===item.id)),
+                            items: result.questionnaires.filter(item=> item.countsOfQuestions.total>0 && !props.alreadySelectedQuestionnaires.some(item2=>item2.id===item.id)),
                             currentPage: result.questionnaires.length > 0 ? 1 : 0,
                             totalPages: result.totalPages,
                             isFirstLoading: false,
