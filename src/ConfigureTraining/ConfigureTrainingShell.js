@@ -1,13 +1,29 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { FormProvider } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
-import DotRadioButton from '../DotRadioButton';
-import QuestionnaireName from './QuestionnaireName';
 import TrainingLengthOption from './TrainingLengthOption';
+import { CallApi } from '../Utils/GlobalUtils';
 
 function ConfigureTrainingShell(props) {
 
     const onSubmit = data => console.info(data);
+
+    let statsText;
+    if (props.questionnairesStats.isLoading) {
+        statsText = "Loading...";
+    }
+    else if (props.questionnairesStats.isFinished) {
+        if (props.questionnairesStats.isSuccessful) {
+            statsText = `Questions: ${props.questionnairesStats.stats.questionsTotalCount}; New: ${props.questionnairesStats.stats.newQuestionsCount}; Recheck: ${props.questionnairesStats.stats.recheckedQuestionsCount}; Approx.max time to train: ${props.questionnairesStats.stats.maxTimeToTrainMinutes} min.`
+        }
+        else {
+            statsText = "A error during loading statistics.";
+        }
+    }
+    else {
+        statsText = "";
+    }
 
     return (
         <div className="Column-medium VerticalFullHeightColumn DisplayFlex">
@@ -47,7 +63,7 @@ function ConfigureTrainingShell(props) {
                             handleAddingAnotherQuestionnaire={props.handleAddingAnotherQuestionnaire}
                             handleDeleteQuestionnaire={props.handleDeleteQuestionnaire}
                         />
-                        <div className="CenterText" style={{ marginTop: "0.25em" }}>Questions: {props.trainingStatus.questionnairesStats.questionsTotalCount}; New: {props.trainingStatus.questionnairesStats.newQuestionsCount}; Recheck: {props.trainingStatus.questionnairesStats.recheckedQuestionsCount}; Approx. max time to train: {props.trainingStatus.questionnairesStats.maxTimeToTrainMinutes} min.</div>
+                        <div className="CenterText" style={{ marginTop: "0.25em" }}>{statsText}</div>
                     </div>
                     <TrainingLengthOption
                         radioButtonId="questionsCountRadioButton"
@@ -56,8 +72,8 @@ function ConfigureTrainingShell(props) {
                         title="How many questions would you like to train now?"
                         inputId="questionsCount"
                         isInputDisabled={!props.trainingStatus.trainingLengthAsQuestionsCount}
-                        questionsTotalCount={props.trainingStatus.questionnairesStats.questionsTotalCount}
-                        note={"(max " + (props.trainingStatus.questionnairesStats.questionsTotalCount) + " for these questionnaires)"}
+                        questionsTotalCount={props.questionnairesStats.stats.questionsTotalCount}
+                        note={"(max " + (props.questionnairesStats.stats.questionsTotalCount) + " for these questionnaires)"}
                         formMethods={props.formMethods}
                     />
                     <TrainingLengthOption
@@ -67,7 +83,7 @@ function ConfigureTrainingShell(props) {
                         title="Or how much time would you like to spend for the training?"
                         inputId="time"
                         isInputDisabled={props.trainingStatus.trainingLengthAsQuestionsCount}
-                        note={"(minutes; max " + (props.trainingStatus.questionnairesStats.maxTimeToTrainMinutes) + " for these questionnaires)"}
+                        note={"(minutes; max " + (props.questionnairesStats.stats.maxTimeToTrainMinutes) + " for these questionnaires)"}
                         formMethods={props.formMethods}
                     />
                     <div className="GroupInsidePanel-2xMargin DisplayFlex">
