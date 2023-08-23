@@ -34,6 +34,14 @@ function TrainingLengthOption(props) {
                                     return 'Required when the option is selected.';
                                 return true;
                             }
+                        },
+                        min: {
+                            value: 1,
+                            message: 'Must be 1 or more.'
+                        },
+                        max: {
+                            value: props.maxValue,
+                            message: `Must be ${props.maxValue} or less.`
                         }
                     })}
                 />

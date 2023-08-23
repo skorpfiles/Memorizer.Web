@@ -132,13 +132,19 @@ function ConfigureTrainingPage(props) {
                 const processQuestionnairesResults = await Promise.all(newQuestionnairesStatsItems.map(processQuestionnaireStatsItem));
 
                 //set state
+
+                let maxTimeToTrainMinutes = processQuestionnairesResults.reduce(((acc, value) => acc + Math.floor(value.totalTrainingTimeSeconds / 60)), 0);
+                if (maxTimeToTrainMinutes < 1) {
+                    maxTimeToTrainMinutes = 1;
+                }
+
                 setQuestionnairesStats({
                     questionnaires: processQuestionnairesResults,
                     stats: {
                         questionsTotalCount: newQuestionsTotalCount,
                         newQuestionsCount: newNewQuestionsCount,
                         recheckedQuestionsCount: newRecheckedQuestionsCount,
-                        maxTimeToTrainMinutes: processQuestionnairesResults.reduce(((acc, value) => acc + Math.floor(value.totalTrainingTimeSeconds / 60)), 0)
+                        maxTimeToTrainMinutes
                     },
                     isLoading: false,
                     isFinished: true,

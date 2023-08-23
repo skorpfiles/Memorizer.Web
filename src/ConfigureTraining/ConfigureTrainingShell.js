@@ -77,8 +77,8 @@ function ConfigureTrainingShell(props) {
                         title="How many questions would you like to train now?"
                         inputId="questionsCount"
                         isInputDisabled={!props.trainingStatus.trainingLengthAsQuestionsCount}
-                        questionsTotalCount={props.questionnairesStats.stats.questionsTotalCount}
                         note={questionsCountRadioButtonNote}
+                        maxValue={props.questionnairesStats.stats.questionsTotalCount}
                         formMethods={props.formMethods}
                     />
                     <TrainingLengthOption
@@ -89,6 +89,7 @@ function ConfigureTrainingShell(props) {
                         inputId="time"
                         isInputDisabled={props.trainingStatus.trainingLengthAsQuestionsCount}
                         note={timeRadioButtonNote}
+                        maxValue={props.questionnairesStats.stats.maxTimeToTrainMinutes}
                         formMethods={props.formMethods}
                     />
                     <div className="GroupInsidePanel-2xMargin DisplayFlex">
