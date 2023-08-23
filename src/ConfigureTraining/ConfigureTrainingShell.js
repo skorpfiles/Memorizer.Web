@@ -9,13 +9,18 @@ function ConfigureTrainingShell(props) {
 
     const onSubmit = data => console.info(data);
 
-    let statsText;
+    let statsText, questionsCountRadioButtonNote = "", timeRadioButtonNote = "(minutes)";
+
     if (props.questionnairesStats.isLoading) {
         statsText = "Loading...";
     }
     else if (props.questionnairesStats.isFinished) {
         if (props.questionnairesStats.isSuccessful) {
-            statsText = `Questions: ${props.questionnairesStats.stats.questionsTotalCount}; New: ${props.questionnairesStats.stats.newQuestionsCount}; Recheck: ${props.questionnairesStats.stats.recheckedQuestionsCount}; Approx.max time to train: ${props.questionnairesStats.stats.maxTimeToTrainMinutes} min.`
+            statsText = `Questions: ${props.questionnairesStats.stats.questionsTotalCount}; New: ${props.questionnairesStats.stats.newQuestionsCount}; Recheck: ${props.questionnairesStats.stats.recheckedQuestionsCount}; Approx.max time to train: ${props.questionnairesStats.stats.maxTimeToTrainMinutes} min.`;
+            if (props.questionnairesStats.stats.questionsTotalCount > 0) {
+                questionsCountRadioButtonNote = `(max ${props.questionnairesStats.stats.questionsTotalCount} for these questionnaires)`;
+                timeRadioButtonNote = `(minutes; max ${props.questionnairesStats.stats.maxTimeToTrainMinutes} for these questionnaires)`;
+            }
         }
         else {
             statsText = "A error during loading statistics.";
@@ -73,7 +78,7 @@ function ConfigureTrainingShell(props) {
                         inputId="questionsCount"
                         isInputDisabled={!props.trainingStatus.trainingLengthAsQuestionsCount}
                         questionsTotalCount={props.questionnairesStats.stats.questionsTotalCount}
-                        note={"(max " + (props.questionnairesStats.stats.questionsTotalCount) + " for these questionnaires)"}
+                        note={questionsCountRadioButtonNote}
                         formMethods={props.formMethods}
                     />
                     <TrainingLengthOption
@@ -83,7 +88,7 @@ function ConfigureTrainingShell(props) {
                         title="Or how much time would you like to spend for the training?"
                         inputId="time"
                         isInputDisabled={props.trainingStatus.trainingLengthAsQuestionsCount}
-                        note={"(minutes; max " + (props.questionnairesStats.stats.maxTimeToTrainMinutes) + " for these questionnaires)"}
+                        note={timeRadioButtonNote}
                         formMethods={props.formMethods}
                     />
                     <div className="GroupInsidePanel-2xMargin DisplayFlex">
