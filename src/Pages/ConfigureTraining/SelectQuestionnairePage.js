@@ -22,7 +22,7 @@ function SelectQuestionnairePage(props) {
             </div>
             <div className="SelectQuestionnairePage-FiltersContainer GroupInsidePanel">
                 <RadioButton containerClassName="SelectQuestionnairePage-LeftFiltersItem" text="My own" id="ownFilter" checked={props.status.currentFilter === "ownFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
-                <RadioButton containerClassName="SelectQuestionnairePage-RightFiltersItem" text="From another users" id="foreignFilter" checked={props.status.currentFilter === "foreignFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
+                <RadioButton containerClassName="SelectQuestionnairePage-RightFiltersItem" text="From other users" id="foreignFilter" checked={props.status.currentFilter === "foreignFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
             </div>
             <div className="GroupInsidePanel">
                 <input className="MainTextBox TextBoxWithoutPanel FullWidth SmallBorderRadius" type="text" placeholder="Search by name" onChange={(event) => setSearchTerm(event.target.value)} value={props.status.searchTerm} />
