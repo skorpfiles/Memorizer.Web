@@ -6,10 +6,10 @@ function RegisterPage(props) {
         document.title = "Register User - Memorizer";
     });
     return (
-        <div className="MiddleVerticalAlignContainer">
-            <div className="MiddleVerticalAlignBlock Column-small">
-                <div className="TitleBeforePanel">
-                    <div className="Font-MainForLabels">
+        <div className="middle-vertical-align-container">
+            <div className="middle-vertical-align-block column-small">
+                <div className="title-before-panel">
+                    <div className="font--main-for-labels">
                         Register a new account
                     </div>
                 </div>

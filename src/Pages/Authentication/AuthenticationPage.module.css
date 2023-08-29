@@ -1,4 +1,4 @@
-.SuccessMessage {
+.success-message {
     font-size: 1.9em;
     color: #00B050;
     width: 100%;
@@ -6,7 +6,7 @@
     margin-bottom: 1.5em;
 }
 
-.FailMessage {
+.fail-message {
     font-size: 1.9em;
     color: red;
     width: 100%;

@@ -1,14 +1,14 @@
-.MemorizerLogoWithSubtitle-Container {
+.container {
     display:flex;
     flex-direction:column;
     text-align:center;
     margin: 0 0 2em 0;
 }
 
-.MemorizerLogoWithSubtitle-TitleStyle {
+.title {
     font-size:4.2em;
 }
 
-.MemorizerLogoWithSubtitle-SubtitleStyle {
+.subtitle {
     font-size:1.9em;
 }

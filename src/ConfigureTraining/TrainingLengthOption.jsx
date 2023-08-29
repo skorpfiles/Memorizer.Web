@@ -10,7 +10,7 @@ function TrainingLengthOption(props) {
     const isInvalid = isFormInvalid(inputError);
 
     return (
-        <div className="GroupInsidePanel-2xMargin">
+        <div className="group-inside-panel--2x-margin">
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <DotRadioButton
                     id={props.radioButtonId}
@@ -19,11 +19,11 @@ function TrainingLengthOption(props) {
                     value={props.radioButtonId}
                     onChange={props.handleSettingRadioButton}
                 />
-                <div className="Font-MainForSmallLabels">{props.title}</div>
+                <div className="font--main-for-small-labels">{props.title}</div>
             </div>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <input
-                    className="MainTextBox SmallBorderRadius Font-MainForControls"
+                    className="main-text-box border-radius-small font--main-for-controls"
                     id={props.inputId}
                     type="number"
                     style={{ width: "5em" }}
@@ -45,10 +45,10 @@ function TrainingLengthOption(props) {
                         }
                     })}
                 />
-                <div className="Font-MainForSmallLabels" style={{ marginLeft: "0.5em" }}>{props.note}</div>
+                <div className="font--main-for-small-labels" style={{ marginLeft: "0.5em" }}>{props.note}</div>
             </div>
             {isInvalid && (
-                <div className="ValidationLabel" key={props.inputId + "_errorMessage"}>{inputError.error.message}</div>
+                <div className="validation-label" key={props.inputId + "_errorMessage"}>{inputError.error.message}</div>
             )}
         </div>
     )

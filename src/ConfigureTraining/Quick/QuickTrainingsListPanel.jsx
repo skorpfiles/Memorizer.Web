@@ -74,26 +74,26 @@ function QuickTrainingsListPanel(props) {
 
     var data;
     if (currentTrainingsList.isLoading) {
-        data = (<div className="CenterText">Loading...</div>);
+        data = (<div className="central-text">Loading...</div>);
     }
     else if (currentTrainingsList.isLoadingSuccessful) {
         if (currentTrainingsList.items !== null && currentTrainingsList.items.length > 0) {
-            data = (<ul className="Font-MainForLists TightList">
+            data = (<ul className="font--main-for-lists tight-list">
                 {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement key={item.id} training={item} />)}
             </ul>);
         }
         else {
-            data = (<div className="CenterText">No items</div>);
+            data = (<div className="central-text">No items</div>);
         }
     }
     else {
-        data = (<div className="CenterText">Error: {currentTrainingsList.loadingErrorMessage}</div>);
+        data = (<div className="central-text">Error: {currentTrainingsList.loadingErrorMessage}</div>);
     }
 
     return (
-        <div className="Column-small DisplayFlex Panel BigBorderRadius">
+        <div className="column-small display-flex panel border-radius-big">
             {data}
-            <div className="CenterText Font-Default"><a href="#">Browse and manage all</a></div>
+            <div className="central-text font--default"><a href="#">Browse and manage all</a></div>
         </div>
     );
 }

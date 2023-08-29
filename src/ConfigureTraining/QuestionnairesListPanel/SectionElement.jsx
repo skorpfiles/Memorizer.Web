@@ -1,8 +1,8 @@
-import './SectionElement.css';
+import styles from './SectionElement.module.css';
 
 function SectionElement(props) {
     return (
-        <div className="MainFlexWrapLabel QuestionnairesListPanelSectionElement" onClick={props.handleSectionElementClick}>{props.children}</div>
+        <div className={`main-flex-wrap-label ${styles['section-element']}`} onClick={props.handleSectionElementClick}>{props.children}</div>
     );
 }
 

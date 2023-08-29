@@ -3,135 +3,127 @@
     height: 100%;
 }
 
-.App {
+.app {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.App-body {
+.app-body {
     flex: 1 0 auto;
 }
 
-.MiddleVerticalAlignContainer {
+.middle-vertical-align-container {
     display:flex;
     justify-content:center;
     height:100%;
 }
 
-.MiddleVerticalAlignBlock {
+.middle-vertical-align-block {
     margin: auto;
 }
 
-.FullscreenColumnAlignmentByWidth {
-    width:100%;
-}
-
-.VerticalCenterColumn {
+.vertical-center-column {
     margin: auto;
     flex-direction: column;
 }
 
-.VerticalFullHeightColumn {
+.vertical-full-height-column {
     margin-left: auto;
     margin-right: auto;
     flex-direction: column;
     height:100%;
 }
 
-.Column-small {
+.column-small {
     width: 20em;
     margin-left:auto;
     margin-right:auto;
 }
 
-.Column-medium {
+.column-medium {
     width: 50em;
 }
 
-.Panel {
+.panel {
     border: 0.15em solid black;
     padding: 0.7em;
     flex-direction: column;
 }
 
-.PanelForFlexWrapElements {
+.panel-for-flex-wrap-elements {
     border: 0.15em solid black;
     padding: 0.35em;
     flex-wrap: wrap;
 }
 
-.BigBorderRadius {
+.border-radius-big {
     border-radius: 1.5em;
 }
 
-.SmallBorderRadius {
+.border-radius-small {
     border-radius: 0.5em;
 }
 
-.TitleBeforePanel {
+.title-before-panel {
     display: flex;
     flex-direction: column;
     text-align: center;
     margin: 0 0 1.5em 0;
 }
 
-.TitleBetweenPanels {
+.title-between-panels {
     display: flex;
     flex-direction: column;
     text-align: center;
     margin: 1.5em 0;
 }
 
-.GroupInsidePanel {
+.group-inside-panel {
     margin: 0.7em 0;
 }
 
-.GroupInsidePanel-2xMargin {
+.group-inside-panel--2x-margin {
     margin: 1.4em 0;
 }
 
-.MainControlContainer {
+.main-control-container {
     margin: 0.7em;
 }
 
-.RouteElementWithReturnButton{
+.route-element-with-return-button{
     width:100%;
     height:100%;
     display:flex;
     flex-direction:column;
 }
 
-.DisplayFlex {
+.display-flex {
     display: flex;
 }
 
-.FlexAllFreeSpace {
+.flex-all-free-space {
     flex: 1 0 auto;
 }
 
-.MainTextBox, .MainButton, .ErrorLabel {
+.main-text-box, .main-button, .error-label {
     padding: 0.5em 0.7em;
     box-sizing: border-box;
 }
 
-.TextBoxWithoutPanel {
+.text-box-without-panel {
     padding: 0.5em 0.7em;
 }
 
-.MainTextBox {
+.main-text-box {
     border: 0.15em solid black;
 }
 
-.FullWidth {
+.full-width {
     width: 100%;
 }
 
-.FullHeight {
-    flex: 1 0 auto;
-}
-
-.MainButton {
+.main-button {
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -139,17 +131,17 @@
     border-radius: 0.5em;
 }
 
-.MainButton:disabled {
+.main-button:disabled {
     background-color: #BDD7EE;
     border-color:transparent;
 }
 
-.MainTextBox:disabled {
+.main-text-box:disabled {
     border-color: #BDD7EE;
     color:lightgray;
 }
 
-.MainFlexWrapLabel {
+.main-flex-wrap-label {
     color: white;
     cursor: pointer;
     background-color: #002060;
@@ -158,65 +150,61 @@
     box-sizing: border-box;
 }
 
-.IncreaseButtonHeight {
+.increased-button-height {
     height:5em;
 }
 
-.Font-MainForLabels {
+.font--main-for-labels {
     font-size:2em;
 }
 
-.Font-MainForSmallLabels {
+.font--main-for-small-labels {
     font-size:1.5em;
 }
 
-.Font-MainForLists {
+.font--main-for-lists {
     font-size:1.5em;
 }
 
-.Font-MainForControls {
+.font--main-for-controls {
     font-size:1em;
 }
 
-.Font-Default {
+.font--default {
     font-size:0.9em;
 }
 
-.Font-Notes {
+.font--notes {
     font-size: 0.6em;
 }
 
-.Font-Bold {
+.font--bold {
     font-weight: bold;
 }
 
-.CenterText {
+.central-text {
     text-align:center;
 }
 
-.RightText {
-    text-align: right;
-}
-
-.CentralButton {
+.central-button {
     width: 17.2em;
     margin-left: auto;
     margin-right: auto;
 }
 
-.CentralButton-SmallWidth {
+.central-button--small-width {
     width: 14.4em;
     margin-left: auto;
     margin-right: auto;
 }
 
-.ValidationLabel{
+.validation-label{
     color:red;
     margin:0.2em 0.85em 0 0.85em;
     font-size:0.8em;
 }
 
-.ErrorLabel {
+.error-label {
     background-color: #FFCDCD;
     color: red;
     margin: 1.5em 0 0 0;
@@ -224,30 +212,19 @@
     border-radius: 0.5em;
 }
 
-ul.TightList{
+ul.tight-list{
     list-style: none;
     padding-left:0;
     margin:0.5em 0;
 }
 
-    ul.TightList li {
+    ul.tight-list li {
         position: relative;
         padding: 0.15em 0 0.15em 1.5em;
     }
 
-        ul.TightList li:before {
+        ul.tight-list li:before {
             content: "●";
             position: absolute;
             left: 0.5em;
         }
-
-.EllipsisList-LineContainer {
-    display: flex;
-    align-items: baseline;
-}
-
-.EllipsisList-Label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}

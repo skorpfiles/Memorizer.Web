@@ -110,9 +110,9 @@ function App() {
     }
     else {
         return (
-            <div className="App">
+            <div className="app">
                 {header}
-                <section className="App-body">
+                <section className="app-body">
                     <Router>
                         <Routes>
                             <Route

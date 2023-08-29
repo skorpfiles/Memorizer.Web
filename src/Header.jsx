@@ -8,7 +8,7 @@ function Header(props) {
     />
     return (
         <header>
-            <div className="Header-Logo">Memorizer</div>
+            <div className="logo">Memorizer</div>
             {props.userIsLogged && userAccountSection}
         </header>
     );

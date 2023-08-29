@@ -7,10 +7,10 @@ footer {
     height: 4em;
 }
 
-.Footer-AboutText {
+footer .about-text {
     flex: 1 0 auto;
 }
 
-.Footer-Logo {
+footer .logo {
     text-shadow: 2px 2px 4px #000000;
 }

@@ -1,7 +1,7 @@
 import SectionElement from './SectionElement';
 import DeleteIcon from './delete.png';
 import { useState } from 'react';
-import "./Questionnaire.css";
+import styles from './Questionnaire.module.css';
 
 function Questionnaire(props) {
     const [mouseOnElement, setMouseOnElement] = useState(false);
@@ -14,12 +14,12 @@ function Questionnaire(props) {
             >
                 {props.name}
                 {(mouseOnElement) && (
-                    <div className="QuestionnairesListPanelQuestionnaire-OverButtonBackground">
+                    <div className={styles['over-button-background']}>
                     </div>
                 )
                 }
                 {(mouseOnElement) && (
-                    <div className="QuestionnairesListPanelQuestionnaire-OverButtonIcon"
+                    <div className={styles['over-button-icon']}
                         onClick={props.deleteQuestionnaire}
                     >
                         <a href="#">

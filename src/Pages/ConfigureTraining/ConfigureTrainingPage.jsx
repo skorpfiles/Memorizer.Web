@@ -169,7 +169,7 @@ function ConfigureTrainingPage(props) {
     }, [trainingStatus.selectedQuestionnaires]);
 
     let result = selectQuestionnairePageIsShown ? (
-        <div className="RouteElementWithReturnButton">
+        <div className="route-element-with-return-button">
             <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text="Return to the training page" />
             <SelectQuestionnairePage
                 currentUser={props.currentUser}
@@ -180,7 +180,7 @@ function ConfigureTrainingPage(props) {
             />
         </div>
     ) : (
-        <div className="RouteElementWithReturnButton">
+        <div className="route-element-with-return-button">
             <ReturnToPage path="/" text="Return to the main page" />
             <ConfigureTrainingShell
                     trainingStatus={trainingStatus}

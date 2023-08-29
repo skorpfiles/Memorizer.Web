@@ -1,13 +1,13 @@
-import './UserAccountHeaderSection.css';
+import styles from './UserAccountHeaderSection.module.css';
 import userIcon from './user.png';
 
 function UserAccountHeaderSection(props) {
     return (
-        <div className="UserAccountHeaderSection-Main">
-            <div className="UserAccountHeaderSection-UserIcon">
+        <div className={styles['container']}>
+            <div>
                 <img src={userIcon} width="32em" alt="User" />
             </div>
-            <div className="UserAccountHeaderSection-Text">
+            <div>
                 {props.userLogin} (<span onClick={props.handleLogOut}><a id="logout" href="#">log out</a></span>)
             </div>
         </div>

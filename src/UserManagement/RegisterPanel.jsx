@@ -1,6 +1,6 @@
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useRef, useState } from 'react';
-import './RegisterPanel.css';
+import styles from './RegisterPanel.module.css';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../InputWithValidation';
 import { PasswordValidations } from './Utils.js';
@@ -16,15 +16,15 @@ function RegisterPanel(props) {
 
     return (
         <FormProvider {...methods}>
-            <form className="Panel DisplayFlex BigBorderRadius" onSubmit={methods.handleSubmit(onSubmit)}>
+            <form className="panel display-flex border-radius-big" onSubmit={methods.handleSubmit(onSubmit)}>
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputId="Email"
                     inputName="email"
                     inputType="text"
                     inputPlaceholder="E-mail"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={{
                         required: {
                             value: true,
@@ -38,13 +38,13 @@ function RegisterPanel(props) {
                     }}
                 />
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputId="Username"
                     inputName="username"
                     inputType="text"
                     inputPlaceholder="Username"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={{
                         required: {
                             value: true,
@@ -57,23 +57,23 @@ function RegisterPanel(props) {
                     }}
                 />
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputId="Password"
                     inputName="password"
                     inputType="password"
                     inputPlaceholder="Password"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={PasswordValidations}
                 />
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputId="RepeatPassword"
                     inputName="repeatPassword"
                     inputType="password"
                     inputPlaceholder="Repeat the password"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={{
                         validate: (val) => {
                             if (methods.watch('password') !== val) {
@@ -82,7 +82,7 @@ function RegisterPanel(props) {
                         },
                     }}
                 />
-                <div className="CaptchaContainer">
+                <div className={styles['captcha-container']}>
                     <ReCAPTCHA
                         ref={captchaRef}
                         sitekey={siteKey}
@@ -90,13 +90,13 @@ function RegisterPanel(props) {
                         onChange={(token) => setIsCaptchaConfirmed(token!==null)}
                     />
                 </div>
-                <div className="MainControlContainer">
-                    <input className="MainButton FullWidth Font-MainForControls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
+                <div className="main-control-container">
+                    <input className="main-button full-width font--main-for-controls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
                     {(props.registrationState.isError) && (
-                        <div className="ErrorLabel">{props.registrationState.errorMessage}</div>)
+                        <div className="error-label">{props.registrationState.errorMessage}</div>)
                     }
                 </div>
-                <div className="CenterText Font-Default"><a href="/">I already have an account</a></div>
+                <div className="central-text font--default"><a href="/">I already have an account</a></div>
             </form>
         </FormProvider>
     );

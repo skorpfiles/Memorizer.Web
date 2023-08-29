@@ -1,9 +1,9 @@
-.QuestionnairesListForSelectElement-LineContainer {
+.line-container {
     display: flex;
     align-items: baseline;
 }
 
-.QuestionnairesListForSelectElement-Link {
+.link-container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

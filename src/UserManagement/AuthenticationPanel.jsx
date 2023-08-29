@@ -9,17 +9,17 @@ function AuthenticationPanel(props) {
     return (
         <FormProvider {...methods}>
             <form
-                className="Panel DisplayFlex BigBorderRadius"
+                className="panel display-flex border-radius-big"
                 onSubmit={methods.handleSubmit(onSubmit)}
             >
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputName="username"
                     inputId="Username"
                     inputType="text"
                     inputPlaceholder="Username"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={{
                         required: {
                             value: true,
@@ -29,23 +29,23 @@ function AuthenticationPanel(props) {
                     disabled={props.currentUser.isUserLogging}
                 />
                 <InputWithValidation
-                    containerClassName="MainControlContainer"
-                    inputClassName="MainTextBox FullWidth Font-MainForControls SmallBorderRadius"
+                    containerClassName="main-control-container"
+                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
                     inputName="password"
                     inputId="Password"
                     inputType="password"
                     inputPlaceholder="Password"
-                    validationLabelClassName="ValidationLabel"
+                    validationLabelClassName="validation-label"
                     inputValidation={PasswordValidations}
                     disabled={props.currentUser.isUserLogging}
                 />
-                <div className="MainControlContainer">
-                    <input className="MainButton FullWidth Font-MainForControls" type="submit" id="LogIn" value="Log In" disabled={props.currentUser.isUserLogging} />
+                <div className="main-control-container">
+                    <input className="main-button full-width font--main-for-controls" type="submit" id="LogIn" value="Log In" disabled={props.currentUser.isUserLogging} />
                     {props.currentUser.isLoggingError && (
-                        <div className="ErrorLabel">{props.currentUser.loggingErrorMessage}</div>)
+                        <div className="error-label">{props.currentUser.loggingErrorMessage}</div>)
                     }
                 </div>
-                <div className="CenterText Font-Default">or {!props.currentUser.isUserLogging && (<a href="/Register">register</a>)}{props.currentUser.isUserLogging && "register"}</div>
+                <div className="central-text font--default">or {!props.currentUser.isUserLogging && (<a href="/Register">register</a>)}{props.currentUser.isUserLogging && "register"}</div>
             </form>
         </FormProvider>
     );

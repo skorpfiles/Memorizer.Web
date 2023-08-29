@@ -1,9 +1,9 @@
-.QuickTrainingsListPanelElement-LineContainer {
+.line-container {
     display: flex;
     align-items: baseline;
 }
 
-.QuickTrainingsListPanelElement-Link {
+.link-container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -5,7 +5,7 @@ header {
     padding: 0 1em;
 }
 
-.Header-Logo {
+header .logo {
     font-size: 4em;
     flex: 1 0 auto;
 }

@@ -1,14 +1,14 @@
-.SelectQuestionnairePage-FiltersContainer{
+.filters-container{
     display:flex;
 }
 
-.SelectQuestionnairePage-LeftFiltersItem {
+.left-filters-item {
     flex: 0 1 auto;
     width: 100%;
     margin: 0 1em 0 10em;
 }
 
-.SelectQuestionnairePage-RightFiltersItem {
+.right-filters-item {
     flex: 0 1 auto;
     width: 100%;
     margin: 0 10em 0 1em;

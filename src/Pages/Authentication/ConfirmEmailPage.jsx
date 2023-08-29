@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import './ConfirmEmailPage.css';
 
 function ConfirmEmailPage(props) {
     useEffect(() => {
         document.title = "Memorizer";
     });
     return (
-        <div className="MiddleVerticalAlignContainer">
-            <div className="VerticalCenterColumn">
-                <div className="Font-MainForLabels">Confirmation...</div>
+        <div className="middle-vertical-align-container">
+            <div className="vertical-center-column">
+                <div className="font--main-for-labels">Confirmation...</div>
             </div>
         </div>
     );

@@ -5,12 +5,12 @@ function SendConfirmationEmailPage(props) {
         document.title = "Memorizer";
     });
     return (
-        <div className="MiddleVerticalAlignContainer VerticalCenterColumn">
-            <div className="MainControlContainer MiddleVerticalAlignBlock">
-                <div className="Font-MainForLabels CenterText">You should confirm your e-mail before continuing.<br />If you already sent the e-mail, click the link inside that.</div>
+        <div className="middle-vertical-align-container vertical-center-column">
+            <div className="main-control-container middle-vertical-align-block">
+                <div className="font--main-for-labels central-text">You should confirm your e-mail before continuing.<br />If you already sent the e-mail, click the link inside that.</div>
             </div>
-            <div className="MainControlContainer CenterText">
-                <button onClick={props.handleSendingEmail} disabled={props.emailSendingState.isExecuting} className="MainButton CentralButton Font-MainForControls CentralButton-SmallWidth IncreaseButtonHeight">Send confirmation e-mail</button>
+            <div className="main-control-container central-text">
+                <button onClick={props.handleSendingEmail} disabled={props.emailSendingState.isExecuting} className="main-button central-button font--main-for-controls central-button--small-width increased-button-height">Send confirmation e-mail</button>
             </div>
         </div>
     );

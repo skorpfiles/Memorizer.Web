@@ -1,9 +1,9 @@
-.ReturnToPage-Container {
+.container {
     margin:1em;
     display:flex;
     align-items:baseline;
 }
 
-.ReturnToPage-Label {
+.container label {
     margin-left:0.5em;
 }

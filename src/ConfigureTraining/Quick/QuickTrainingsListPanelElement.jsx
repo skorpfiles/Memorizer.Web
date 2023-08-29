@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SettingsIcon from './settings.png';
 import IconButton from '../../IconButton';
-import './QuickTrainingsListPanelElement.css';
+import styles from './QuickTrainingsListPanelElement.module.css';
 
 function QuickTrainingsListPanelElement(props) {
     const [mouseOnElement, setMouseOnElement] = useState(false);
@@ -10,8 +10,8 @@ function QuickTrainingsListPanelElement(props) {
         onMouseEnter={() => setMouseOnElement(true)}
         onMouseLeave={() => setMouseOnElement(false)}
     >
-        <div className="QuickTrainingsListPanelElement-LineContainer">
-            <div className="QuickTrainingsListPanelElement-Link">
+        <div className={styles['line-container']}>
+            <div className={styles['link-container']}>
                 <a href="#">{props.training.name}</a>
             </div>
             <IconButton visibility={mouseOnElement} src={SettingsIcon} alt="Settings" title="Settings" />

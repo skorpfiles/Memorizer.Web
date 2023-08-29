@@ -1,4 +1,4 @@
-import './ReturnToPage.css';
+import styles from './ReturnToPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import PointerButton from './PointerButton';
 
@@ -6,9 +6,9 @@ function ReturnToPage(props) {
     const navigate = useNavigate();
     const handleClick = props.customClickHandler ?? (() => navigate(props.path));
     return (
-        <div className="ReturnToPage-Container">
+        <div className={styles['container']}>
             <PointerButton id="Back" value="<" onClick={handleClick} />
-            <div className="Font-MainForControls ReturnToPage-Label" onClick={handleClick} ><a href="#">{props.text}</a></div>
+            <label className="font--main-for-controls " onClick={handleClick} ><a href="#">{props.text}</a></label>
         </div>
     )
 }
