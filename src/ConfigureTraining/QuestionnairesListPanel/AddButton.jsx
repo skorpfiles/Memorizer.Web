@@ -1,5 +1,4 @@
 import SectionElement from './SectionElement';
-import AddIcon from './add.png';
 
 function AddButton(props) {
     return (
