@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import InputWithValidation from '../InputWithValidation';
+import InputWithValidation from '../Controls/InputWithValidation';
 import { PasswordValidations } from './Utils.js';
 
 function AuthenticationPanel(props) {

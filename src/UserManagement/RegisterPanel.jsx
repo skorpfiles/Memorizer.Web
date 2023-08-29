@@ -2,7 +2,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useRef, useState } from 'react';
 import styles from './RegisterPanel.module.css';
 import { FormProvider, useForm } from 'react-hook-form';
-import InputWithValidation from '../InputWithValidation';
+import InputWithValidation from '../Controls/InputWithValidation';
 import { PasswordValidations } from './Utils.js';
 import { CallApi } from '../Utils/GlobalUtils';
 

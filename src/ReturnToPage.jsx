@@ -1,6 +1,6 @@
 import styles from './ReturnToPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import PointerButton from './PointerButton';
+import PointerButton from './Controls/PointerButton';
 
 function ReturnToPage(props) {
     const navigate = useNavigate();

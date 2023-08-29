@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { findInputError, isFormInvalid } from './Utils/ValidationUtils.js';
+import { findInputError, isFormInvalid } from '../Utils/ValidationUtils.js';
 
 function InputWithValidation(props) {
     const { register, formState: { errors } } = useFormContext();

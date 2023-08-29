@@ -1,5 +1,5 @@
 import { FormProvider } from 'react-hook-form';
-import InputWithValidation from '../InputWithValidation';
+import InputWithValidation from '../Controls/InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import TrainingLengthOption from './TrainingLengthOption';
 

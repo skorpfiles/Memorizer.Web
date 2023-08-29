@@ -1,4 +1,4 @@
-import TextBasedRadioButton from '../../TextBasedRadioButton';
+import TextBasedRadioButton from '../../Controls/TextBasedRadioButton';
 import styles from './SelectQuestionnairePage.module.css';
 import QuestionnairesListForSelectPanel from '../../ConfigureTraining/QuestionnairesListForSelectPanel';
 

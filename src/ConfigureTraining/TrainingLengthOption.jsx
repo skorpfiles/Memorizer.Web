@@ -1,4 +1,4 @@
-import DotRadioButton from '../DotRadioButton';
+import DotRadioButton from '../Controls/DotRadioButton';
 import { useFormContext } from 'react-hook-form';
 import { findInputError, isFormInvalid } from '../Utils/ValidationUtils.js';
 
@@ -24,7 +24,7 @@ function TrainingLengthOption(props) {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <input
                     className="main-text-box border-radius-small font--main-for-controls"
-                    id={props.inputId}
+                    id={props.inputId}  
                     type="number"
                     style={{ width: "5em" }}
                     {...register(props.inputId, { disabled: props.isInputDisabled,

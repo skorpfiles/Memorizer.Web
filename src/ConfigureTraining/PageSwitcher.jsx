@@ -1,4 +1,4 @@
-import PointerButton from '../PointerButton';
+import PointerButton from '../Controls/PointerButton';
 import styles from './PageSwitcher.module.css';
 
 function PageSwitcher(props) {

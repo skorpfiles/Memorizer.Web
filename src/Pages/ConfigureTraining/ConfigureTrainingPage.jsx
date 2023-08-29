@@ -1,5 +1,4 @@
 import ConfigureTrainingShell from '../../ConfigureTraining/ConfigureTrainingShell';
-import InputWithValidation from '../../InputWithValidation';
 import { useState, useEffect } from 'react';
 import { CallApi } from '../../Utils/GlobalUtils';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
