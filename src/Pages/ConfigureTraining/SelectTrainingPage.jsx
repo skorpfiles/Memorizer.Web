@@ -1,7 +1,7 @@
 import QuickTrainingsListPanel from "../../ConfigureTraining/Quick/QuickTrainingsListPanel";
 import { useNavigate } from 'react-router-dom';
 
-function SelectTrainingPage(props) {
+function SelectTrainingPage() {
 
     const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ function SelectTrainingPage(props) {
                     Select a training you've trained recently
                 </div>
             </div>
-            <QuickTrainingsListPanel currentUser={props.currentUser} />
+            <QuickTrainingsListPanel/>
             <div className="title-between-panels">
                 <div className="font--main-for-labels">
                     Or you can start a new training

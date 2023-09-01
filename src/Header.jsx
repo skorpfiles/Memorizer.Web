@@ -1,15 +1,13 @@
 import './Header.css';
 import UserAccountHeaderSection from './UserManagement/UserAccountHeaderSection';
+import { useSelector } from 'react-redux';
 
-function Header(props) {
-    let userAccountSection = <UserAccountHeaderSection
-        userLogin={props.userLogin}
-        handleLogOut={props.handleLogOut }
-    />
+function Header() {
+    const userIsLogged = useSelector(state => state.user.isUserLogged);
     return (
         <header>
             <div className="logo">Memorizer</div>
-            {props.userIsLogged && userAccountSection}
+            {userIsLogged && (<UserAccountHeaderSection />)}
         </header>
     );
 }

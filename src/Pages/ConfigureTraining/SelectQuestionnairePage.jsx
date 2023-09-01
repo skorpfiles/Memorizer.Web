@@ -30,7 +30,6 @@ function SelectQuestionnairePage(props) {
             <QuestionnairesListForSelectPanel
                 currentOrigin={props.status.currentFilter === "foreignFilter" ? "foreign" : "own"}
                 currentSearchTerm={props.status.searchTerm}
-                currentUser={props.currentUser}
                 handleConfirmingAddingQuestionnaire={props.handleConfirmingAddingQuestionnaire}
                 alreadySelectedQuestionnaires={props.alreadySelectedQuestionnaires}
             />

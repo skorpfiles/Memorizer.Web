@@ -2,28 +2,30 @@ import AuthenticationPanel from '../../UserManagement/AuthenticationPanel';
 import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
 import { useEffect } from 'react';
 import style from './AuthenticationPage.module.css';
+import { useSelector } from 'react-redux';
 
-function AuthenticationPage(props) {
+function AuthenticationPage() {
+    const emailConfirmationIsFinished = useSelector(state => state.emailConfirmationState.isFinished);
+    const emailConfirmationIsSucceed = useSelector(state => state.emailConfirmationState.isSucceed);
+
     useEffect(() => {
         document.title = "Memorizer";
     });
+
     return (
         <div className="middle-vertical-align-container">
             <div className="vertical-center-column middle-vertical-align-block">
                 {
-                    (props.emailConfirmation.isFinished && props.emailConfirmation.isSucceed) &&
+                    (emailConfirmationIsFinished && emailConfirmationIsSucceed) &&
                     (<div className={style['success-message']}>Your email has been confirmed successfully.<br />Now you can log in.</div>)
                 }
                 {
-                    (props.emailConfirmation.isFinished && !props.emailConfirmation.isSucceed) &&
+                    (emailConfirmationIsFinished && !emailConfirmationIsSucceed) &&
                     (<div className={style['fail-message']}>Unable to confirm e-mail.<br />Log in to repeat.</div>)
                 }
                 <div className="column-small">
                     <MemorizerLogoWithSubtitle />
-                    <AuthenticationPanel
-                        handleLogIn={props.handleLogIn}
-                        currentUser={props.currentUser}
-                    />
+                    <AuthenticationPanel/>
                 </div>
             </div>
         </div>

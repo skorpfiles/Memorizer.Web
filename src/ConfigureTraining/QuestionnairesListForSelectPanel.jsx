@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { CallApi } from '../Utils/GlobalUtils';
+import { callApi } from '../Utils/GlobalUtils';
 import QuestionnairesListForSelectElement from "./QuestionnairesListForSelectElement";
 import PageSwitcher from "./PageSwitcher";
+import { useSelector } from 'react-redux';
 
 function QuestionnairesListForSelectPanel(props) {
     const [questionnairesForSelectList, setQuestionnairesForSelectList] = useState({
@@ -14,6 +15,8 @@ function QuestionnairesListForSelectPanel(props) {
         isLoadingError: false,
         loadingErrorMessage: null
     });
+
+    const accessToken = useSelector(state => state.user.accessToken);
 
     useEffect(() => {
         const debounce = setTimeout(() => {
@@ -36,7 +39,7 @@ function QuestionnairesListForSelectPanel(props) {
                     }
 
                     const response =
-                        await CallApi(url, "GET", props.currentUser.accessToken);
+                        await callApi(url, "GET", accessToken);
                     if (response.ok) {
                         const result = await response.json();
                         setQuestionnairesForSelectList({

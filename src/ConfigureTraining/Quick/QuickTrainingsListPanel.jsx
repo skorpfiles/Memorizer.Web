@@ -1,8 +1,8 @@
 import QuickTrainingsListPanelElement from "./QuickTrainingsListPanelElement";
 import { useEffect, useState } from 'react';
-import { CallApi } from '../../Utils/GlobalUtils';
+import { callApi } from '../../Utils/GlobalUtils';
 
-function QuickTrainingsListPanel(props) {
+function QuickTrainingsListPanel() {
 
     const [currentTrainingsList, setCurrentTrainingsList] = useState({
         items: null,
@@ -16,7 +16,7 @@ function QuickTrainingsListPanel(props) {
         try {
             const getTrainingListFunc = async () => {
                 //const response =
-                //    await CallApi("/Repository/Trainings?pageNumber=1&pageSize=4", "GET", props.currentUser.accessToken);
+                //    await callApi("/Repository/Trainings?pageNumber=1&pageSize=4", "GET", props.currentUser.accessToken);
                 //if (response.ok) {
                 //    const result = await response.json();
                 //    setCurrentTrainingsList({

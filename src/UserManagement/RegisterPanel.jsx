@@ -4,7 +4,6 @@ import styles from './RegisterPanel.module.css';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputWithValidation from '../Controls/InputWithValidation';
 import { PasswordValidations } from './Utils.js';
-import { CallApi } from '../Utils/GlobalUtils';
 
 function RegisterPanel(props) {
     const captchaRef = useRef(null);

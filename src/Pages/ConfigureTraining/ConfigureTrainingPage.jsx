@@ -1,11 +1,12 @@
 import ConfigureTrainingShell from '../../ConfigureTraining/ConfigureTrainingShell';
 import { useState, useEffect } from 'react';
-import { CallApi } from '../../Utils/GlobalUtils';
+import { callApi } from '../../Utils/GlobalUtils';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
 import ReturnToPage from '../../ReturnToPage';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
-function ConfigureTrainingPage(props) {
+function ConfigureTrainingPage() {
     const [trainingStatus, setTrainingStatus] = useState({
         name: "My Training",
         selectedQuestionnaires: [],
@@ -40,6 +41,8 @@ function ConfigureTrainingPage(props) {
     };
 
     const methods = useForm({defaultValues});
+
+    const accessToken = useSelector(state => state.user.accessToken);
 
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
     const handleDeleteQuestionnaire = (id) => setTrainingStatus(prevState => ({
@@ -110,7 +113,7 @@ function ConfigureTrainingPage(props) {
                 //refresh stats for unfilled items
                 const processQuestionnaireStatsItem = async (questionnaireStatsItem) => {
                     if (!questionnaireStatsItem.filled) {
-                        const response = await CallApi(`/Repository/Questionnaire/${questionnaireStatsItem.id}?calculateTime=true`, "GET", props.currentUser.accessToken);
+                        const response = await callApi(`/Repository/Questionnaire/${questionnaireStatsItem.id}?calculateTime=true`, "GET", accessToken);
                         if (response.ok) {
                             const result = await response.json();
                             return ({
@@ -171,7 +174,6 @@ function ConfigureTrainingPage(props) {
         <div className="route-element-with-return-button">
             <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text="Return to the training page" />
             <SelectQuestionnairePage
-                currentUser={props.currentUser}
                 alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
                 handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
                 status={selectQuestionnairePageStatus}

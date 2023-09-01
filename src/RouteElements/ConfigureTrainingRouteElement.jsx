@@ -1,9 +1,9 @@
 import ConfigureTrainingPage from '../Pages/ConfigureTraining/ConfigureTrainingPage';
 import ReturnToPage from '../ReturnToPage';
 
-function ConfigureTrainingRouteElement(props) {
+function ConfigureTrainingRouteElement() {
     return (
-        <ConfigureTrainingPage currentUser={props.currentUser} />
+        <ConfigureTrainingPage/>
     );
 }
 

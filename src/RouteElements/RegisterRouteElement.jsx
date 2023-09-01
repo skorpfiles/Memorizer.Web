@@ -4,11 +4,13 @@ import {
 import { useState } from 'react';
 import RegisterPage from '../Pages/Authentication/RegisterPage';
 import WeSentEmailPage from '../Pages/Authentication/WeSentEmailPage';
-import { CallApi } from '../Utils/GlobalUtils';
+import { callApi } from '../Utils/GlobalUtils';
+import { useSelector, useDispatch } from 'react-redux';
+import { emailSendingStateActions } from '../ReduxStore/emailSendingState';
 
-function RegisterRouteElement(props) {
+function RegisterRouteElement() {
 
-    let [registrationState, setRegistrationState] = useState({
+    const [registrationState, setRegistrationState] = useState({
         isExecuting: false,
         isFinished: false,
         isSucceed: false,
@@ -18,15 +20,17 @@ function RegisterRouteElement(props) {
         isConfirmationRequired: false
     });
 
+    const dispatch = useDispatch();
+    const isUserLogged = useSelector(state => state.user.isUserLogged);
+
     let registerPage;
 
-    if (!props.currentUser.isUserLogged) {
+    if (!isUserLogged) {
         if (!registrationState.isSucceed) {
             registerPage = (
                 <RegisterPage
-                    currentUser={props.currentUser}
                     registrationState={registrationState}
-                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(setRegistrationState, props.setEmailSendingState, email, login, password, repeatPassword, captchaToken)}
+                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions)}
                 />
             );
         }
@@ -47,7 +51,7 @@ function RegisterRouteElement(props) {
     return registerPage;
 }
 
-async function registerUser(setRegistrationState, setEmailSendingState, email, login, password, repeatPassword, captchaToken) {
+async function registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions) {
 
     if (password === repeatPassword) {
 
@@ -63,7 +67,7 @@ async function registerUser(setRegistrationState, setEmailSendingState, email, l
             });
 
             const response =
-                await CallApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
+                await callApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
 
             const result = await response.json();
 
@@ -79,15 +83,7 @@ async function registerUser(setRegistrationState, setEmailSendingState, email, l
                 });
 
                 if (result.isConfirmationRequired) {
-                    setEmailSendingState({
-                        isModeActive: false,
-                        accessToken: null,
-                        isExecuting: false,
-                        isFinished: true,
-                        isSucceed: true,
-                        isError: false,
-                        errorMessage: null
-                    });
+                    dispatch(emailSendingStateActions.setDefault());
                 }
             }
             else {
