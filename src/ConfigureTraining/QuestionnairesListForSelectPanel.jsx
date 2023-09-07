@@ -93,7 +93,7 @@ function QuestionnairesListForSelectPanel(props) {
             }
         }, 300);
         return () => clearTimeout(debounce);
-    }, [props.currentOrigin, props.currentSearchTerm]);
+    }, [props.currentOrigin, props.currentSearchTerm, accessToken, props.alreadySelectedQuestionnaires]);
 
 
     let data;

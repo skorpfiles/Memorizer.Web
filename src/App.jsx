@@ -29,16 +29,16 @@ function App() {
 
     useEffect(() => {
         try {
-            if (!isUserLogged && window.location.pathname == '/confirm_email') {
+            if (!isUserLogged && window.location.pathname === '/confirm_email') {
                 setFirstLoadingIsCompleted(true);
                 const urlParams = new URLSearchParams(window.location.search);
                 const confirmRegistrationFunc = async () => await confirmRegistration(urlParams.get('user'), urlParams.get('code'), dispatch, emailConfirmationStateActions);
 
                 confirmRegistrationFunc().catch(console.error);
             }
-            else {
+            else if (!isUserLogged) {
                 const accessTokenFromCookies = getAccessTokenFromCookies();
-                if (accessTokenFromCookies != null && accessTokenFromCookies != "") {
+                if (accessTokenFromCookies != null && accessTokenFromCookies !== "") {
                     const userLoginFromCookies = getUserLoginFromCookies();
 
                     const refreshCurrentUserFunc = async () => {
@@ -73,9 +73,9 @@ function App() {
         catch {
             setFirstLoadingIsCompleted(true);
         }
-    }, []);
+    }, [dispatch, isUserLogged]);
 
-    let header = (window.location.pathname == '/Register' || window.location.pathname == '/confirm_email' || isUserLogged) && (<Header/>);
+    let header = (window.location.pathname === '/Register' || window.location.pathname === '/confirm_email' || isUserLogged) && (<Header/>);
 
     if (!firstLoadingIsCompleted) {
         return (<div>Loading...</div>);

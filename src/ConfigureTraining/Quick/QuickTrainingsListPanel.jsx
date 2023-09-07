@@ -1,6 +1,5 @@
 import QuickTrainingsListPanelElement from "./QuickTrainingsListPanelElement";
 import { useEffect, useState } from 'react';
-import { callApi } from '../../Utils/GlobalUtils';
 
 function QuickTrainingsListPanel() {
 
