@@ -1,7 +1,7 @@
 import {
     Navigate
 } from 'react-router-dom';
-import { useState } from 'react';
+import { useReducer } from 'react';
 import RegisterPage from '../Pages/Authentication/RegisterPage';
 import WeSentEmailPage from '../Pages/Authentication/WeSentEmailPage';
 import { callApi } from '../Utils/GlobalUtils';
@@ -10,7 +10,46 @@ import { emailSendingStateActions } from '../ReduxStore/emailSendingState';
 
 function RegisterRouteElement() {
 
-    const [registrationState, setRegistrationState] = useState({
+    const registrationStateReducer = (state, action) => {
+        switch (action.type) {
+            case 'setIsLoading':
+                return {
+                    isExecuting: true,
+                    isFinished: false,
+                    isSucceed: false,
+                    isError: false,
+                    errorMessage: null,
+                    resultUserId: null,
+                    isConfirmationRequired: false
+                };
+            case 'setSuccess':
+                return {
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: true,
+                    isError: false,
+                    errorMessage: null,
+                    resultUserId: action.userId,
+                    isConfirmationRequired: action.isConfirmationRequired
+                };
+            case 'setError':
+                return {
+                    isExecuting: false,
+                    isFinished: true,
+                    isSucceed: false,
+                    isError: true,
+                    errorMessage: action.errorMessage,
+                    resultUserId: null,
+                    isConfirmationRequired: false
+                };
+            default:
+                return {
+                    ...state
+                };
+        }
+    }
+
+    const [registrationState, dispatchRegistrationState] = useReducer(registrationStateReducer, {
         isExecuting: false,
         isFinished: false,
         isSucceed: false,
@@ -18,7 +57,7 @@ function RegisterRouteElement() {
         errorMessage: null,
         resultUserId: null,
         isConfirmationRequired: false
-    });
+    })
 
     const dispatch = useDispatch();
     const isUserLogged = useSelector(state => state.user.isUserLogged);
@@ -30,7 +69,7 @@ function RegisterRouteElement() {
             registerPage = (
                 <RegisterPage
                     registrationState={registrationState}
-                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions)}
+                    handleRegister={(email, login, password, repeatPassword, captchaToken) => registerUser(dispatchRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions)}
                 />
             );
         }
@@ -51,20 +90,12 @@ function RegisterRouteElement() {
     return registerPage;
 }
 
-async function registerUser(setRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions) {
+async function registerUser(dispatchRegistrationState, email, login, password, repeatPassword, captchaToken, dispatch, emailSendingStateActions) {
 
     if (password === repeatPassword) {
 
         try {
-            setRegistrationState({
-                isExecuting: true,
-                isFinished: false,
-                isSucceed: false,
-                isError: false,
-                errorMessage: null,
-                resultUserId: null,
-                isConfirmationRequired: false
-            });
+            dispatchRegistrationState({ type: 'setIsLoading' });
 
             const response =
                 await callApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
@@ -72,54 +103,24 @@ async function registerUser(setRegistrationState, email, login, password, repeat
             const result = await response.json();
 
             if (response.ok) {
-                setRegistrationState({
-                    isExecuting: false,
-                    isFinished: true,
-                    isSucceed: true,
-                    isError: false,
-                    errorMessage: null,
-                    resultUserId: result.userId,
-                    isConfirmationRequired: result.isConfirmationRequired
-                });
+                dispatchRegistrationState({ type: 'setSuccess', userId: result.userId, isConfirmationRequired: result.isConfirmationRequired });
 
                 if (result.isConfirmationRequired) {
                     dispatch(emailSendingStateActions.setDefault());
                 }
             }
             else {
-                setRegistrationState({
-                    isExecuting: false,
-                    isFinished: true,
-                    isSucceed: false,
-                    isError: true,
-                    errorMessage: `${response.status} ${result.errorText}`,
-                    resultUserId: null,
-                    isConfirmationRequired: false
-                });
+                dispatchRegistrationState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
             }
         }
         catch (error) {
             console.log(error);
-            setRegistrationState({
-                isExecuting: false,
-                isFinished: true,
-                isSucceed: false,
-                isError: true,
-                errorMessage: "Error: Unable to register user.",
-                resultUserId: null,
-                isConfirmationRequired: false
-            });
+            dispatchRegistrationState({ type: 'setError', errorMessage: 'Error: Unable to register user.' });
         }
     }
     else {
-        setRegistrationState({
-            isExecuting: false,
-            isFinished: true,
-            isSucceed: false,
-            isError: true,
-            errorMessage: "Error: Password and Repeat Password don't match.",
-            resultUserId: null,
-            isConfirmationRequired: false
+        dispatchRegistrationState({
+            type: 'setError', errorMessage: "Error: Password and Repeat Password don't match."
         });
     }
 }

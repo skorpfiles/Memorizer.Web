@@ -1,11 +1,51 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import { callApi } from '../Utils/GlobalUtils';
 import QuestionnairesListForSelectElement from "./QuestionnairesListForSelectElement";
 import PageSwitcher from "./PageSwitcher";
 import { useSelector } from 'react-redux';
 
 function QuestionnairesListForSelectPanel(props) {
-    const [questionnairesForSelectList, setQuestionnairesForSelectList] = useState({
+    const questionnairesForSelectListReducer = (state, action) => {
+        switch (action.type) {
+            case 'setIsLoading':
+                return {
+                    items: null,
+                    currentPage: null,
+                    totalPages: null,
+                    isFirstLoading: state.isFirstLoading,
+                    isLoading: true,
+                    isLoadingSuccessful: false,
+                    isLoadingError: false,
+                    loadingErrorMessage: null
+                };
+            case 'setSuccess':
+                return {
+                    items: action.items,
+                    currentPage: action.currentPage,
+                    totalPages: action.totalPages,
+                    isFirstLoading: false,
+                    isLoading: false,
+                    isLoadingSuccessful: true,
+                    isLoadingError: false,
+                    loadingErrorMessage: null
+                };
+            case 'setError':
+                return {
+                    items: null,
+                    currentPage: null,
+                    totalPages: null,
+                    isFirstLoading: false,
+                    isLoading: false,
+                    isLoadingSuccessful: false,
+                    isLoadingError: true,
+                    loadingErrorMessage: action.errorMessage
+                };
+            default:
+                return { ...state };
+        }
+    }
+
+    const [questionnairesForSelectList, dispatchQuestionnairesForSelectList] = useReducer(questionnairesForSelectListReducer, {
         items: null,
         currentPage: null,
         totalPages: null,
@@ -20,16 +60,7 @@ function QuestionnairesListForSelectPanel(props) {
 
     useEffect(() => {
         const debounce = setTimeout(() => {
-            setQuestionnairesForSelectList(prevState => ({
-                items: null,
-                currentPage: null,
-                totalPages: null,
-                isFirstLoading: prevState.isFirstLoading,
-                isLoading: true,
-                isLoadingSuccessful: false,
-                isLoadingError: false,
-                loadingErrorMessage: null
-            }));
+            dispatchQuestionnairesForSelectList({ type: 'setIsLoading' });
 
             try {
                 const getUsersAndQuestionnairesListFunc = async () => {
@@ -42,45 +73,23 @@ function QuestionnairesListForSelectPanel(props) {
                         await callApi(url, "GET", accessToken);
                     if (response.ok) {
                         const result = await response.json();
-                        setQuestionnairesForSelectList({
-                            items: result.questionnaires.filter(item=> item.countsOfQuestions.total>0 && !props.alreadySelectedQuestionnaires.some(item2=>item2.id===item.id)),
+                        dispatchQuestionnairesForSelectList({
+                            type: 'setSuccess',
+                            items: result.questionnaires.filter(item => item.countsOfQuestions.total > 0 && !props.alreadySelectedQuestionnaires.some(item2 => item2.id === item.id)),
                             currentPage: result.questionnaires.length > 0 ? 1 : 0,
-                            totalPages: result.totalPages,
-                            isFirstLoading: false,
-                            isLoading: false,
-                            isLoadingSuccessful: true,
-                            isLoadingError: false,
-                            loadingErrorMessage: null
+                            totalPages: result.totalPages
                         });
                     }
                     else {
                         const result = await response.json();
-                        setQuestionnairesForSelectList({
-                            items: null,
-                            currentPage: null,
-                            totalPages: null,
-                            isFirstLoading: false,
-                            isLoading: false,
-                            isLoadingSuccessful: false,
-                            isLoadingError: true,
-                            loadingErrorMessage: `${response.status} ${result.errorText}`
-                        });
+                        dispatchQuestionnairesForSelectList({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
                     }
                 }
                 getUsersAndQuestionnairesListFunc().catch(console.error);
             }
             catch (error) {
                 console.log(error);
-                setQuestionnairesForSelectList({
-                    items: null,
-                    currentPage: null,
-                    totalPages: null,
-                    isFirstLoading: false,
-                    isLoading: false,
-                    isLoadingSuccessful: false,
-                    isLoadingError: true,
-                    loadingErrorMessage: "Error: Unable to connect to the API."
-                });
+                dispatchQuestionnairesForSelectList({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
             }
         }, 300);
         return () => clearTimeout(debounce);

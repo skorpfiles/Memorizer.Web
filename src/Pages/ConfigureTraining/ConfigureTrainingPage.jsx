@@ -1,5 +1,5 @@
 import ConfigureTrainingShell from '../../ConfigureTraining/ConfigureTrainingShell';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { callApi } from '../../Utils/GlobalUtils';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
 import ReturnToPage from '../../ReturnToPage';
@@ -13,7 +13,47 @@ function ConfigureTrainingPage() {
         trainingLengthAsQuestionsCount: true
     });
 
-    const [questionnairesStats, setQuestionnairesStats] = useState({
+    const questionnairesStatsReducer = (state, action) => {
+        switch (action.type) {
+            case 'setIsLoading':
+                return {
+                    ...state,
+                    isLoading: true,
+                    isFinished: false,
+                    isSuccessful: false,
+                    isError: false,
+                    errorMessage: null
+                };
+            case 'setSuccess':
+                return {
+                    questionnaires: action.questionnaires,
+                    stats: {
+                        questionsTotalCount: action.questionsTotalCount,
+                        newQuestionsCount: action.newQuestionsCount,
+                        recheckedQuestionsCount: action.recheckedQuestionsCount,
+                        maxTimeToTrainMinutes: action.maxTimeToTrainMinutes
+                    },
+                    isLoading: false,
+                    isFinished: true,
+                    isSuccessful: true,
+                    isError: false,
+                    errorMessage: null
+                };
+            case 'setError':
+                return {
+                    ...state,
+                    isLoading: false,
+                    isFinished: true,
+                    isSuccessful: false,
+                    isError: true,
+                    errorMessage: action.errorMessage
+                };
+            default:
+                return { ...state };
+        }
+    }
+
+    const [questionnairesStats, dispatchQuestionnairesStats] = useReducer(questionnairesStatsReducer, {
         questionnaires: [], //{ id : ..., filled: ..., maxTimeToTrainMinutes : ... }
         stats: {
             questionsTotalCount: 0,
@@ -76,14 +116,7 @@ function ConfigureTrainingPage() {
     useEffect(() => {
         try {
             const refreshStatsFunc = async () => {
-                setQuestionnairesStats(prevState => ({
-                    ...prevState,
-                    isLoading: true,
-                    isFinished: false,
-                    isSuccessful: false,
-                    isError: false,
-                    errorMessage: null
-                }));
+                dispatchQuestionnairesStats({ type: 'setIsLoading' });
 
                 let newQuestionnairesStatsItems = [];
                 let newQuestionsTotalCount = 0;
@@ -140,33 +173,23 @@ function ConfigureTrainingPage() {
                     maxTimeToTrainMinutes = 1;
                 }
 
-                setQuestionnairesStats({
+                dispatchQuestionnairesStats({
+                    type: 'setSuccess',
                     questionnaires: processQuestionnairesResults,
-                    stats: {
-                        questionsTotalCount: newQuestionsTotalCount,
-                        newQuestionsCount: newNewQuestionsCount,
-                        recheckedQuestionsCount: newRecheckedQuestionsCount,
-                        maxTimeToTrainMinutes
-                    },
-                    isLoading: false,
-                    isFinished: true,
-                    isSuccessful: true,
-                    isError: false,
-                    errorMessage: null
+                    questionsTotalCount: newQuestionsTotalCount,
+                    newQuestionsCount: newNewQuestionsCount,
+                    recheckedQuestionsCount: newRecheckedQuestionsCount,
+                    maxTimeToTrainMinutes
                 });
             }
             refreshStatsFunc().catch(console.error);
         }
         catch (error) {
             console.log(error);
-            setQuestionnairesStats(prevState => ({
-                ...prevState,
-                isLoading: false,
-                isFinished: true,
-                isSuccessful: false,
-                isError: true,
+            dispatchQuestionnairesStats({
+                type: 'setError',
                 errorMessage: error
-            }));
+            });
         }
     }, [trainingStatus.selectedQuestionnaires]);
 
