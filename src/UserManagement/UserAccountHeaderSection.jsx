@@ -1,5 +1,6 @@
 import styles from './UserAccountHeaderSection.module.css';
 import userIcon from './user.png';
+import logoutIcon from './logout.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { userActions } from '../ReduxStore/user';
 import { emailConfirmationStateActions } from '../ReduxStore/emailConfirmationState';
@@ -13,12 +14,11 @@ function UserAccountHeaderSection() {
 
     return (
         <div className={styles['container']}>
-            <div>
-                <img src={userIcon} width="32rem" alt="User" />
+            <img src={userIcon} width="16rem" alt="User" />
+            <div className={styles['userName']}>
+                {userLoginSelector}
             </div>
-            <div>
-                {userLoginSelector} (<span onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)}><a id="logout" href="#">log out</a></span>)
-            </div>
+            <img src={logoutIcon} width="16rem" alt="Log Out" title="Log Out" className={styles['logOutButton']} onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)} />
         </div>
     )
 }
