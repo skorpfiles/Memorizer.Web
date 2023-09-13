@@ -90,7 +90,7 @@ function RegisterPanel(props) {
                     />
                 </div>
                 <div className="main-control-container">
-                    <input className="main-button full-width font--main-for-controls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
+                    <input className="main-button border-radius-small full-width font--main-for-controls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
                     {(props.registrationState.isError) && (
                         <div className="error-label">{props.registrationState.errorMessage}</div>)
                     }

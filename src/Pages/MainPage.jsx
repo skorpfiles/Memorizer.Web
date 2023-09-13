@@ -17,10 +17,10 @@ function MainPage() {
                     </div>
                 </div>
                 <div className="main-control-container display-flex">
-                    <button className="main-button full-width central-button--small-width font--main-for-controls increased-button-height" onClick={() => navigate("/train/select") }>Train questions</button>
+                    <button className="main-button border-radius-small full-width central-button--small-width font--main-for-controls increased-button-height" onClick={() => navigate("/train/select") }>Train questions</button>
                 </div>
                 <div className="main-control-container display-flex">
-                    <button className="main-button full-width central-button--small-width font--main-for-controls" onClick={() => window.open(process.env.REACT_APP_MANAGEMENT_URL, "_blank") }>Manage questionnaires</button>
+                    <button className="main-button border-radius-small full-width central-button--small-width font--main-for-controls" onClick={() => window.open(process.env.REACT_APP_MANAGEMENT_URL, "_blank") }>Manage questionnaires</button>
                 </div>
             </div>
         </div>

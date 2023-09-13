@@ -2,6 +2,7 @@ import { FormProvider } from 'react-hook-form';
 import InputWithValidation from '../Controls/InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import TrainingLengthOption from './TrainingLengthOption';
+import styles from './ConfigureTrainingShell.module.css';
 
 function ConfigureTrainingShell(props) {
 
@@ -37,8 +38,8 @@ function ConfigureTrainingShell(props) {
             </div>
             <FormProvider {...props.formMethods}>
                 <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
-                    <div className="display-flex group-inside-panel--2x-margin" style={{ alignItems: "baseline" }}>
-                        <div className="font--main-for-small-labels" style={{ marginRight: "0.5rem"}}>Name:</div>
+                    <div className="group-inside-panel--2x-margin row">
+                        <div className="font--main-for-small-labels row--label-before-textbox">Name:</div>
                         <InputWithValidation
                             inputType="text"
                             inputId="trainingName"
@@ -59,14 +60,14 @@ function ConfigureTrainingShell(props) {
                             }}
                         />
                     </div>
-                    <div className="display-flex group-inside-panel--2x-margin" style={{flexDirection:"column"}}>
-                        <div className="font--main-for-small-labels" style={{ marginBottom: "0.25rem" }}>Questionnaires:</div>
+                    <div className="group-inside-panel--2x-margin column">
+                        <div className="font--main-for-small-labels">Questionnaires:</div>
                         <QuestionnairesListForTrainingPanel
                             selectedQuestionnaires={props.trainingStatus.selectedQuestionnaires}
                             handleAddingAnotherQuestionnaire={props.handleAddingAnotherQuestionnaire}
                             handleDeleteQuestionnaire={props.handleDeleteQuestionnaire}
                         />
-                        <div className="central-text" style={{ marginTop: "0.25rem" }}>{statsText}</div>
+                        <div className={`central-text ${styles['stats-text']}`}>{statsText}</div>
                     </div>
                     <TrainingLengthOption
                         radioButtonId="questionsCountRadioButton"
@@ -91,7 +92,7 @@ function ConfigureTrainingShell(props) {
                         formMethods={props.formMethods}
                     />
                     <div className="group-inside-panel--2x-margin display-flex">
-                        <input type="submit" className="main-button increased-button-height central-button--small-width font--main-for-controls" disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value="Start Training!" />
+                        <input type="submit" className="main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big" disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value="Start Training!" />
                     </div>
                     <div className="group-inside-panel--2x-margin">
                         Add the next page to your bookmarks if you want to have a quick direct access to starting this training.

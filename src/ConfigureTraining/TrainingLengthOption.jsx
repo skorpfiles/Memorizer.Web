@@ -11,7 +11,7 @@ function TrainingLengthOption(props) {
 
     return (
         <div className="group-inside-panel--2x-margin">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            <div className="row">
                 <DotRadioButton
                     id={props.radioButtonId}
                     key={props.radioButtonId}
@@ -21,7 +21,7 @@ function TrainingLengthOption(props) {
                 />
                 <div className="font--main-for-small-labels">{props.title}</div>
             </div>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            <div className="row">
                 <input
                     className="main-text-box border-radius-small font--main-for-controls"
                     id={props.inputId}  
@@ -45,7 +45,7 @@ function TrainingLengthOption(props) {
                         }
                     })}
                 />
-                <div className="font--main-for-small-labels" style={{ marginLeft: "0.5rem" }}>{props.note}</div>
+                <div className="font--main-for-small-labels row--label-after-textbox">{props.note}</div>
             </div>
             {isInvalid && (
                 <div className="validation-label" key={props.inputId + "_errorMessage"}>{inputError.error.message}</div>

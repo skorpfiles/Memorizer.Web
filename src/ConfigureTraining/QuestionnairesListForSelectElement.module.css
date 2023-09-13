@@ -1,10 +1,8 @@
-.line-container {
-    display: flex;
-    align-items: baseline;
+.padding {
+    padding: 0.25rem 0.35rem;
 }
 
-.link-container {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.font--note-about-creator{
+    color: black;
+    font-size: 1rem;
 }

@@ -50,7 +50,7 @@ function AuthenticationPanel() {
                     disabled={isUserLogging}
                 />
                 <div className="main-control-container">
-                    <input className="main-button full-width font--main-for-controls" type="submit" id="LogIn" value="Log In" disabled={isUserLogging} />
+                    <input className="main-button border-radius-small full-width font--main-for-controls" type="submit" id="LogIn" value="Log In" disabled={isUserLogging} />
                     {isLoggingError && (
                         <div className="error-label">{loggingErrorMessage}</div>)
                     }

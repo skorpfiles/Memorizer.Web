@@ -1,0 +1,11 @@
+.browse-all-button-container{
+    margin-top: 0.7rem;
+}
+
+.browse-all-button {
+    color: #002060;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px dashed #002060;
+    display: inline;
+}

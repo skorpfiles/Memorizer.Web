@@ -4,21 +4,9 @@ function QuestionnairesListForSelectElement(props) {
 
     return (
         <li>
-            <div className={styles['line-container']}>
-                <button onClick={() => props.handleClick()} style={{
-                    fontSize: "1rem",
-                    color: "#002060",
-                    width: "100%",
-                    border: "0.15rem solid #8FAADC",
-                    backgroundImage: "linear-gradient(to bottom, white 0%, white 50%, #DAE3F3 100%)",
-                    textAlign: "left",
-                    padding: "0.25rem 0.35rem",
-                    marginBottom: "-0.15rem",
-                    cursor:"pointer"
-                }}>
-                    <span style={{ fontSize: "1.25rem" }}>{props.questionnaire.name} <span style={{ color: "black", fontSize: "0.9rem" }}>[Created by </span><span className="font--bold" style={{ fontSize: "0.9rem" }}>{props.questionnaire.ownerName}</span><span style={{fontSize:"0.9rem"}}>]</span></span>
-                </button>
-            </div>
+            <button onClick={() => props.handleClick()} className={`tight-list-element overflow-ellipsis font--main-for-lists ${styles['padding']}`}>
+                {props.questionnaire.name} <span className={styles['font--note-about-creator']}>[Created by </span><span className={`font--bold ${styles['font--note-about-creator']}`}>{props.questionnaire.ownerName}</span><span className={styles['font--note-about-creator']}>]</span>
+            </button>
         </li>
     )
 }

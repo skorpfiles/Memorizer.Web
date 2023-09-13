@@ -1,5 +1,6 @@
 import QuickTrainingsListPanelElement from "./QuickTrainingsListPanelElement";
 import { useEffect, useState } from 'react';
+import styles from './QuickTrainingsListPanel.module.css';
 
 function QuickTrainingsListPanel() {
 
@@ -90,9 +91,9 @@ function QuickTrainingsListPanel() {
     }
 
     return (
-        <div className="column-small display-flex" style={{flexDirection:"column"}}>
+        <div className="column column-small">
             {data}
-            <div className="central-text font--main-for-controls" style={{ marginTop: "0.7rem" }}><span style={{ color: "#002060", cursor: "pointer", textDecoration: "none", borderBottom: "1px dashed #002060", display: "inline" }}>Browse and manage all</span></div>
+            <div className={`central-text font--main-for-controls ${styles['browse-all-button-container']}`}><span className={styles['browse-all-button'] }>Browse and manage all</span></div>
         </div>
     );
 }

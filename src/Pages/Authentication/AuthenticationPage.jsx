@@ -1,7 +1,7 @@
 import AuthenticationPanel from '../../UserManagement/AuthenticationPanel';
 import MemorizerLogoWithSubtitle from './MemorizerLogoWithSubtitle';
 import { useEffect } from 'react';
-import style from './AuthenticationPage.module.css';
+import styles from './AuthenticationPage.module.css';
 import { useSelector } from 'react-redux';
 
 function AuthenticationPage() {
@@ -17,11 +17,11 @@ function AuthenticationPage() {
             <div className="vertical-center-column middle-vertical-align-block">
                 {
                     (emailConfirmationIsFinished && emailConfirmationIsSucceed) &&
-                    (<div className={style['success-message']}>Your email has been confirmed successfully.<br />Now you can log in.</div>)
+                    (<div className={styles['success-message']}>Your email has been confirmed successfully.<br />Now you can log in.</div>)
                 }
                 {
                     (emailConfirmationIsFinished && !emailConfirmationIsSucceed) &&
-                    (<div className={style['fail-message']}>Unable to confirm e-mail.<br />Log in to repeat.</div>)
+                    (<div className={styles['fail-message']}>Unable to confirm e-mail.<br />Log in to repeat.</div>)
                 }
                 <div className="column-small">
                     <MemorizerLogoWithSubtitle />

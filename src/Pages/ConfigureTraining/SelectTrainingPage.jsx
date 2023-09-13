@@ -19,7 +19,7 @@ function SelectTrainingPage() {
                 </div>
             </div>
             <div className="display-flex">
-                <button className="main-button full-width central-button--small-width font--main-for-controls" onClick={() => navigate("/train/configure") }>Create new training</button>
+                <button className="main-button border-radius-big full-width central-button--small-width font--main-for-controls" onClick={() => navigate("/train/configure") }>Create new training</button>
             </div>
         </div>
     );
