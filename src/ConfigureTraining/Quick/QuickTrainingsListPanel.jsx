@@ -77,7 +77,7 @@ function QuickTrainingsListPanel() {
     }
     else if (currentTrainingsList.isLoadingSuccessful) {
         if (currentTrainingsList.items !== null && currentTrainingsList.items.length > 0) {
-            data = (<ul className="font--main-for-lists tight-list">
+            data = (<ul className="font--main-for-lists tight-list" >
                 {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement key={item.id} training={item} />)}
             </ul>);
         }
@@ -92,7 +92,7 @@ function QuickTrainingsListPanel() {
     return (
         <div className="column-small display-flex panel border-radius-big">
             {data}
-            <div className="central-text font--default"><a href="#">Browse and manage all</a></div>
+            <div className="central-text font--default" style={{marginTop:"0.7rem"}}>Browse and manage all</div>
         </div>
     );
 }
