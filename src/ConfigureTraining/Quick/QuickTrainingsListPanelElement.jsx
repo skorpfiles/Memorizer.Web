@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import SettingsIcon from './settings.png';
 import IconButton from '../../Controls/IconButton';
 import styles from './QuickTrainingsListPanelElement.module.css';
 
 function QuickTrainingsListPanelElement(props) {
-    const [mouseOnElement, setMouseOnElement] = useState(false);
-
     return (<li>
         <div style={{
             color: "#002060",

@@ -22,9 +22,7 @@ function Questionnaire(props) {
                     <div className={styles['over-button-icon']}
                         onClick={props.deleteQuestionnaire}
                     >
-                        <a href="#">
-                            <img src={DeleteIcon} alt="Delete" width="12px" />
-                        </a>
+                        <img src={DeleteIcon} alt="Delete" width="12px" />
                     </div>
                 )
                 }
