@@ -18,7 +18,7 @@ function SelectTrainingPage() {
                     Or you can start a new training
                 </div>
             </div>
-            <div className="main-control-container display-flex">
+            <div className="display-flex">
                 <button className="main-button full-width central-button--small-width font--main-for-controls" onClick={() => navigate("/train/configure") }>Create new training</button>
             </div>
         </div>

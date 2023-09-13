@@ -38,7 +38,7 @@ function ConfigureTrainingShell(props) {
             <FormProvider {...props.formMethods}>
                 <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
                     <div className="display-flex group-inside-panel--2x-margin" style={{ alignItems: "baseline" }}>
-                        <div className="font--main-for-small-labels" style={{ marginRight: "0.5em"}}>Name:</div>
+                        <div className="font--main-for-small-labels" style={{ marginRight: "0.5rem"}}>Name:</div>
                         <InputWithValidation
                             inputType="text"
                             inputId="trainingName"
@@ -60,13 +60,13 @@ function ConfigureTrainingShell(props) {
                         />
                     </div>
                     <div className="display-flex group-inside-panel--2x-margin" style={{flexDirection:"column"}}>
-                        <div className="font--main-for-small-labels" style={{ marginBottom: "0.25em" }}>Questionnaires:</div>
+                        <div className="font--main-for-small-labels" style={{ marginBottom: "0.25rem" }}>Questionnaires:</div>
                         <QuestionnairesListForTrainingPanel
                             selectedQuestionnaires={props.trainingStatus.selectedQuestionnaires}
                             handleAddingAnotherQuestionnaire={props.handleAddingAnotherQuestionnaire}
                             handleDeleteQuestionnaire={props.handleDeleteQuestionnaire}
                         />
-                        <div className="central-text" style={{ marginTop: "0.25em" }}>{statsText}</div>
+                        <div className="central-text" style={{ marginTop: "0.25rem" }}>{statsText}</div>
                     </div>
                     <TrainingLengthOption
                         radioButtonId="questionsCountRadioButton"

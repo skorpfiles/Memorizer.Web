@@ -2,10 +2,10 @@ header {
     background-image: linear-gradient(#ABC0E4, #ABC0E4, white);
     display: flex;
     flex-direction: row;
-    padding: 0 1em;
+    padding: 0 1rem;
 }
 
 header .logo {
-    font-size: 4em;
+    font-size: 4rem;
     flex: 1 0 auto;
 }

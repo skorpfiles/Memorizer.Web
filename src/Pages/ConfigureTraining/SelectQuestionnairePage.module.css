@@ -5,11 +5,11 @@
 .left-filters-item {
     flex: 0 1 auto;
     width: 100%;
-    margin: 0 1em 0 10em;
+    margin: 0 1rem 0 10rem;
 }
 
 .right-filters-item {
     flex: 0 1 auto;
     width: 100%;
-    margin: 0 10em 0 1em;
+    margin: 0 10rem 0 1rem;
 }
