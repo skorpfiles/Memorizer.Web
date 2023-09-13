@@ -108,7 +108,7 @@ function QuestionnairesListForSelectPanel(props) {
     else if (questionnairesForSelectList.isLoadingSuccessful) {
         if (questionnairesForSelectList.items !== null && questionnairesForSelectList.items.length > 0) {
             data = (
-                <ul className="font--main-for-lists tight-list">
+                <ul className="tight-list">
                     {questionnairesForSelectList.items.map(item => <QuestionnairesListForSelectElement key={item.id} questionnaire={item} handleClick={() => props.handleConfirmingAddingQuestionnaire(item)} />)}
                 </ul>
             )
