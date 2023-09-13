@@ -1,9 +1,9 @@
 .container {
-    margin:1em;
+    margin:1rem;
     display:flex;
     align-items:baseline;
 }
 
 .container label {
-    margin-left:0.5em;
+    margin-left:0.5rem;
 }

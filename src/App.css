@@ -36,59 +36,59 @@
 }
 
 .column-small {
-    width: 20em;
+    width: 20rem;
     margin-left:auto;
     margin-right:auto;
 }
 
 .column-medium {
-    width: 50em;
+    width: 50rem;
 }
 
 .panel {
-    border: 0.15em solid black;
-    padding: 0.7em;
+    border: 0.15rem solid black;
+    padding: 0.7rem;
     flex-direction: column;
 }
 
 .panel-for-flex-wrap-elements {
-    border: 0.15em solid black;
-    padding: 0.35em;
+    border: 0.15rem solid black;
+    padding: 0.35rem;
     flex-wrap: wrap;
 }
 
 .border-radius-big {
-    border-radius: 1.5em;
+    border-radius: 1.5rem;
 }
 
 .border-radius-small {
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
 }
 
 .title-before-panel {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 0 0 1.5em 0;
+    margin: 0 0 0.7rem 0;
 }
 
 .title-between-panels {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 1.5em 0;
+    margin: 0.7rem 0;
 }
 
 .group-inside-panel {
-    margin: 0.7em 0;
+    margin: 0.7rem 0;
 }
 
 .group-inside-panel--2x-margin {
-    margin: 1.4em 0;
+    margin: 1.4rem 0;
 }
 
 .main-control-container {
-    margin: 0.7em;
+    margin: 0.7rem;
 }
 
 .route-element-with-return-button{
@@ -107,16 +107,16 @@
 }
 
 .main-text-box, .main-button, .error-label {
-    padding: 0.5em 0.7em;
+    padding: 0.5rem 0.7rem;
     box-sizing: border-box;
 }
 
 .text-box-without-panel {
-    padding: 0.5em 0.7em;
+    padding: 0.5rem 0.7rem;
 }
 
 .main-text-box {
-    border: 0.15em solid black;
+    border: 0.15rem solid black;
 }
 
 .full-width {
@@ -128,7 +128,7 @@
     font-weight: bold;
     cursor: pointer;
     background-color: #002060;
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
 }
 
 .main-button:disabled {
@@ -145,37 +145,37 @@
     color: white;
     cursor: pointer;
     background-color: #002060;
-    border-radius: 0.5em;
-    padding: 0.25em 0.35em;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.35rem;
     box-sizing: border-box;
 }
 
 .increased-button-height {
-    height:5em;
+    height:5rem;
 }
 
 .font--main-for-labels {
-    font-size:2em;
+    font-size:2rem;
 }
 
 .font--main-for-small-labels {
-    font-size:1.5em;
+    font-size:1.5rem;
 }
 
 .font--main-for-lists {
-    font-size:1.5em;
+    font-size:1.5rem;
 }
 
 .font--main-for-controls {
-    font-size:1em;
+    font-size:1rem;
 }
 
 .font--default {
-    font-size:0.9em;
+    font-size:0.9rem;
 }
 
 .font--notes {
-    font-size: 0.6em;
+    font-size: 0.6rem;
 }
 
 .font--bold {
@@ -187,44 +187,44 @@
 }
 
 .central-button {
-    width: 17.2em;
+    width: 17.2rem;
     margin-left: auto;
     margin-right: auto;
 }
 
 .central-button--small-width {
-    width: 14.4em;
+    width: 14.4rem;
     margin-left: auto;
     margin-right: auto;
 }
 
 .validation-label{
     color:red;
-    margin:0.2em 0.85em 0 0.85em;
-    font-size:0.8em;
+    margin:0.2rem 0.85rem 0 0.85rem;
+    font-size:0.8rem;
 }
 
 .error-label {
     background-color: #FFCDCD;
     color: red;
-    margin: 1.5em 0 0 0;
-    font-size: 0.8em;
-    border-radius: 0.5em;
+    margin: 1.5rem 0 0 0;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
 }
 
 ul.tight-list{
     list-style: none;
     padding-left:0;
-    margin:0.5em 0;
+    margin:0.5rem 0;
 }
 
     ul.tight-list li {
         position: relative;
-        padding: 0.15em 0 0.15em 1.5em;
+        padding: 0.15rem 0 0.15rem 1.5rem;
     }
 
         ul.tight-list li:before {
             content: "●";
             position: absolute;
-            left: 0.5em;
+            left: 0.5rem;
         }

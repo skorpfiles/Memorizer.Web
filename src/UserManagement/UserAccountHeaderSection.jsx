@@ -14,7 +14,7 @@ function UserAccountHeaderSection() {
     return (
         <div className={styles['container']}>
             <div>
-                <img src={userIcon} width="32em" alt="User" />
+                <img src={userIcon} width="32rem" alt="User" />
             </div>
             <div>
                 {userLoginSelector} (<span onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)}><a id="logout" href="#">log out</a></span>)

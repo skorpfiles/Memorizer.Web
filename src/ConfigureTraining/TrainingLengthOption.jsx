@@ -26,7 +26,7 @@ function TrainingLengthOption(props) {
                     className="main-text-box border-radius-small font--main-for-controls"
                     id={props.inputId}  
                     type="number"
-                    style={{ width: "5em" }}
+                    style={{ width: "5rem" }}
                     {...register(props.inputId, { disabled: props.isInputDisabled,
                         validate: {
                             required: value => {
@@ -45,7 +45,7 @@ function TrainingLengthOption(props) {
                         }
                     })}
                 />
-                <div className="font--main-for-small-labels" style={{ marginLeft: "0.5em" }}>{props.note}</div>
+                <div className="font--main-for-small-labels" style={{ marginLeft: "0.5rem" }}>{props.note}</div>
             </div>
             {isInvalid && (
                 <div className="validation-label" key={props.inputId + "_errorMessage"}>{inputError.error.message}</div>

@@ -3,9 +3,9 @@
 }
 
 .container input[type="radio"]:checked + input[type="button"] {
-    border: 0.3em solid #00B050;
+    border: 0.3rem solid #00B050;
 }
 
 .container input[type="button"] {
-    border: 0.3em solid white;
+    border: 0.3rem solid white;
 }
