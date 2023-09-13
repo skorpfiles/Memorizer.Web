@@ -25,7 +25,7 @@ function SelectQuestionnairePage(props) {
                 <TextBasedRadioButton containerClassName={styles['right-filters-item']} text="From other users" id="foreignFilter" checked={props.status.currentFilter === "foreignFilter"} onChange={(event) => setCurrentFilter(event.target.id)} />
             </div>
             <div className="group-inside-panel">
-                <input className="main-text-box text-box-without-panel full-width border-radius-small" type="text" placeholder="Search by name" onChange={(event) => setSearchTerm(event.target.value)} value={props.status.searchTerm} />
+                <input className="main-text-box text-box-without-panel full-width border-radius-small font--main-for-controls" type="text" placeholder="Search by name" onChange={(event) => setSearchTerm(event.target.value)} value={props.status.searchTerm} />
             </div>
             <QuestionnairesListForSelectPanel
                 currentOrigin={props.status.currentFilter === "foreignFilter" ? "foreign" : "own"}

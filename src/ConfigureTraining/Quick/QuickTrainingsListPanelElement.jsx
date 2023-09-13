@@ -8,7 +8,6 @@ function QuickTrainingsListPanelElement(props) {
 
     return (<li>
         <div style={{
-            fontSize: "1rem",
             color: "#002060",
             width: "100%",
             border: "0.15rem solid #8FAADC",
@@ -30,7 +29,7 @@ function QuickTrainingsListPanelElement(props) {
                 {props.training.name}
             </div>
             <div style={{ width: "0.025rem", height:"1rem", backgroundColor: "#8FAADC" }}></div>
-            <div style={{ padding: "0.25rem 0.35rem", cursor: "pointer" }}>
+            <div style={{ padding: "0.25rem 0.5rem", cursor: "pointer" }}>
                 <IconButton src={SettingsIcon} alt="Settings" title="Settings" />
             </div>
         </div>

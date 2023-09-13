@@ -16,7 +16,7 @@ function QuestionnairesListForSelectElement(props) {
                     marginBottom: "-0.15rem",
                     cursor:"pointer"
                 }}>
-                    <span style={{ fontSize: "1.25rem" }}>{props.questionnaire.name} <span className="font--notes" style={{ color: "black" }}>[Created by </span><span className="font--notes font--bold">{props.questionnaire.ownerName}</span><span className="font--notes">]</span></span>
+                    <span style={{ fontSize: "1.25rem" }}>{props.questionnaire.name} <span style={{ color: "black", fontSize: "0.9rem" }}>[Created by </span><span className="font--bold" style={{ fontSize: "0.9rem" }}>{props.questionnaire.ownerName}</span><span style={{fontSize:"0.9rem"}}>]</span></span>
                 </button>
             </div>
         </li>

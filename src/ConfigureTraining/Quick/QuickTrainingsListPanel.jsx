@@ -90,9 +90,9 @@ function QuickTrainingsListPanel() {
     }
 
     return (
-        <div className="column-small display-flex panel border-radius-big">
+        <div className="column-small display-flex" style={{flexDirection:"column"}}>
             {data}
-            <div className="central-text font--default" style={{marginTop:"0.7rem"}}>Browse and manage all</div>
+            <div className="central-text font--main-for-controls" style={{ marginTop: "0.7rem" }}><span style={{ color: "#002060", cursor: "pointer", textDecoration: "none", borderBottom: "1px dashed #002060", display: "inline" }}>Browse and manage all</span></div>
         </div>
     );
 }
