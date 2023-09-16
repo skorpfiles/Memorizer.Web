@@ -2,7 +2,7 @@ import styles from './PointerButton.module.css';
 
 function PointerButton(props) {
     return (
-        <input className={`main-button border-radius-big ${styles['pointer-button']}`} type='submit' id={props.id} value={props.value} onClick={props.onClick} disabled={props.disabled} />
+        <button className={`main-button border-radius-big ${styles['pointer-button']}`} id={props.id} onClick={props.onClick} disabled={props.disabled}>{props.value}</button>
     )
 }
 

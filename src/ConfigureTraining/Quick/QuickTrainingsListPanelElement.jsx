@@ -6,9 +6,9 @@ function QuickTrainingsListPanelElement(props) {
     return (
         <li>
             <div className='tight-list-element row border-box'>
-                <div className={`overflow-ellipsis ${styles['select-button']}`}>
+                <button className={`overflow-ellipsis font--main-for-lists ${styles['select-button']}`}>
                     {props.training.name}
-                </div>
+                </button>
                 <div className={styles['separator']}></div>
                 <div className={styles['settings-button'] }>
                     <IconButton src={SettingsIcon} alt='Settings' title='Settings' />

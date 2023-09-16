@@ -1,0 +1,28 @@
+header.container {
+    background-image: linear-gradient(#ABC0E4, #ABC0E4, white);
+    display: flex;
+    flex-direction: row;
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 4rem;
+    flex: 1 0 auto;
+}
+
+a.memorizer-href {
+    text-decoration: none;
+    color: black;
+}
+
+    a.memorizer-href:hover {
+        color: black;
+    }
+
+    a.memorizer-href:active {
+        color: black;
+    }
+
+    a.memorizer-href:visited {
+        color: black;
+    }

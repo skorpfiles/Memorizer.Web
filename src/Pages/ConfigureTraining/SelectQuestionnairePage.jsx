@@ -14,12 +14,10 @@ function SelectQuestionnairePage(props) {
     }));
 
     return (
-        <div className='column-medium vertical-full-height-column display-flex'>
-            <div className='title-before-panel'>
-                <div className='font--main-for-labels'>
-                    Find and select a questionnaire you like
-                </div>
-            </div>
+        <section className='column-medium vertical-full-height-column display-flex'>
+            <header className='title-before-panel font--main-for-labels'>
+                Find and select a questionnaire you like
+            </header>
             <div className={`group-inside-panel ${styles['filters-container']}`}>
                 <TextBasedRadioButton containerClassName={styles['left-filters-item']} text='My own' id='ownFilter' checked={props.status.currentFilter === 'ownFilter'} onChange={(event) => setCurrentFilter(event.target.id)} />
                 <TextBasedRadioButton containerClassName={styles['right-filters-item']} text='From other users' id='foreignFilter' checked={props.status.currentFilter === 'foreignFilter'} onChange={(event) => setCurrentFilter(event.target.id)} />
@@ -33,7 +31,7 @@ function SelectQuestionnairePage(props) {
                 handleConfirmingAddingQuestionnaire={props.handleConfirmingAddingQuestionnaire}
                 alreadySelectedQuestionnaires={props.alreadySelectedQuestionnaires}
             />
-        </div>
+        </section>
     );
 }
 

@@ -3,6 +3,7 @@ import { callApi } from '../Utils/GlobalUtils';
 import QuestionnairesListForSelectElement from './QuestionnairesListForSelectElement';
 import PageSwitcher from './PageSwitcher';
 import { useSelector } from 'react-redux';
+import styles from './QuestionnairesListForSelectPanel.module.css';
 
 function QuestionnairesListForSelectPanel(props) {
     const questionnairesForSelectListReducer = (state, action) => {
@@ -126,7 +127,9 @@ function QuestionnairesListForSelectPanel(props) {
             <div className='flex-all-free-space'>
                 {data}
             </div>
-            <PageSwitcher currentPage={questionnairesForSelectList.currentPage} totalPages={questionnairesForSelectList.totalPages} />
+            <footer className={styles['page-switcher'] }>
+                <PageSwitcher currentPage={questionnairesForSelectList.currentPage} totalPages={questionnairesForSelectList.totalPages} />
+            </footer>
         </div>
     );
 }

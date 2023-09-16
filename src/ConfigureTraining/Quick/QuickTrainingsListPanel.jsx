@@ -93,7 +93,7 @@ function QuickTrainingsListPanel() {
     return (
         <div className='column column-small'>
             {data}
-            <div className={`central-text font--main-for-controls ${styles['browse-all-button-container']}`}><span className={styles['browse-all-button'] }>Browse and manage all</span></div>
+            <button className={`central-text font--main-for-controls ${styles['browse-all-button-container']}`}><span className='link-button'>Browse and manage all</span></button>
         </div>
     );
 }

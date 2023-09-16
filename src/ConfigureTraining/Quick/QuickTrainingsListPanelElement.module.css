@@ -1,6 +1,8 @@
 .select-button {
     flex-grow: 1;
     padding: 0.25rem 0.35rem;
+    text-align: left;
+    cursor: pointer;
 }
 
 .separator {
@@ -10,5 +12,5 @@
 }
 
 .settings-button {
-    padding: 0.25rem 0.5rem
+    padding: 0.25rem 0.25rem
 }

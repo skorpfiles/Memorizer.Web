@@ -1,9 +1,8 @@
 .container{
-    margin:0.5rem auto;
     display:flex;
     align-items:baseline;
 }
 
-.container label{
+.page-number{
     margin:0 0.5rem;
 }

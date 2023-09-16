@@ -84,7 +84,7 @@ function App() {
         return (
             <div className='app'>
                 {header}
-                <section className='app-body'>
+                <main className='app-body'>
                     <Router>
                         <Routes>
                             <Route
@@ -132,7 +132,7 @@ function App() {
                             />
                         </Routes>
                     </Router>
-                </section>
+                </main>
                 <Footer />
             </div>);
     }

@@ -1,4 +1,4 @@
-footer {
+footer.container {
     background-image: linear-gradient(white, #ABC0E4, #ABC0E4);
     display: flex;
     flex-direction: row;
@@ -7,10 +7,10 @@ footer {
     height: 4rem;
 }
 
-footer .about-text {
+.about-text {
     flex: 1 0 auto;
 }
 
-footer .logo {
+.logo {
     text-shadow: 2px 2px 4px #000000;
 }

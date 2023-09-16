@@ -3,6 +3,11 @@
     height: 100%;
 }
 
+button, input[type="submit"] {
+    border: 0;
+    background-color: transparent;
+}
+
 .app {
     display: flex;
     flex-direction: column;
@@ -125,7 +130,7 @@
     flex: 1 0 auto;
 }
 
-.main-text-box, .main-button, .error-label {
+.main-text-box, .main-button, input[type="submit"].main-button, .error-label {
     padding: 0.5rem 0.7rem;
     box-sizing: border-box;
 }
@@ -142,17 +147,17 @@
     width: 100%;
 }
 
-.main-button {
+.main-button, input[type="submit"].main-button {
     color: white;
     font-weight: bold;
     cursor: pointer;
     background-color: #002060;
 }
 
-.main-button:disabled {
-    background-color: #BDD7EE;
-    border-color:transparent;
-}
+    .main-button:disabled, input[type="submit"].main-button:disabled {
+        background-color: #BDD7EE;
+        border-color: transparent;
+    }
 
 .main-text-box:disabled {
     border-color: #BDD7EE;
@@ -256,13 +261,10 @@
     box-sizing: border-box;
 }
 
-/*    ul.tight-list li {
-        position: relative;
-        padding: 0.15em 0 0.15em 1.5em;
-    }*/
-
-/*        ul.tight-list li:before {
-            content: "●";
-            position: absolute;
-            left: 0.5em;
-        }*/
+.link-button {
+    color: #002060;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px dashed #002060;
+    display: inline;
+}

@@ -8,7 +8,7 @@ function ReturnToPage(props) {
     return (
         <div className={styles['container']}>
             <PointerButton id='Back' value='<' onClick={handleClick} />
-            <label className='font--main-for-controls' onClick={handleClick} ><a href='#'>{props.text}</a></label>
+            <div className={`font--main-for-controls ${styles['labelled-button']}`}><span className='link-button' onClick={handleClick}>{props.text}</span></div>
         </div>
     )
 }

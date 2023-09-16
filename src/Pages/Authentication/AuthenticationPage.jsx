@@ -23,10 +23,12 @@ function AuthenticationPage() {
                     (emailConfirmationIsFinished && !emailConfirmationIsSucceed) &&
                     (<div className={styles['fail-message']}>Unable to confirm e-mail.<br />Log in to repeat.</div>)
                 }
-                <div className='column-small'>
-                    <MemorizerLogoWithSubtitle />
+                <section className='column-small'>
+                    <header>
+                        <MemorizerLogoWithSubtitle />
+                    </header>
                     <AuthenticationPanel/>
-                </div>
+                </section>
             </div>
         </div>
     )

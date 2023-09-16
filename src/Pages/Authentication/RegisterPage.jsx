@@ -7,17 +7,15 @@ function RegisterPage(props) {
     });
     return (
         <div className='middle-vertical-align-container'>
-            <div className='middle-vertical-align-block column-small'>
-                <div className='title-before-panel'>
-                    <div className='font--main-for-labels'>
+            <section className='middle-vertical-align-block column-small'>
+                <header className='title-before-panel font--main-for-labels'>
                         Register a new account
-                    </div>
-                </div>
+                </header>
                 <RegisterPanel
                     registrationState={props.registrationState}
                     handleRegister={props.handleRegister}
                 />
-            </div>
+            </section>
         </div>
     )
 }

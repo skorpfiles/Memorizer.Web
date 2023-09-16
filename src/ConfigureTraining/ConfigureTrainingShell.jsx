@@ -30,16 +30,14 @@ function ConfigureTrainingShell(props) {
     }
 
     return (
-        <div className='column-medium vertical-full-height-column display-flex'>
-            <div className='title-before-panel'>
-                <div className='font--main-for-labels'>
-                    Configure your training
-                </div>
-            </div>
+        <section className='column-medium vertical-full-height-column display-flex'>
+            <header className='title-before-panel font--main-for-labels'>
+                Configure your training
+            </header>
             <FormProvider {...props.formMethods}>
                 <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
                     <div className='group-inside-panel--2x-margin row'>
-                        <div className='font--main-for-small-labels row--label-before-textbox'>Name:</div>
+                        <label htmlFor='trainingName' className='font--main-for-small-labels row--label-before-textbox'>Name:</label>
                         <InputWithValidation
                             inputType='text'
                             inputId='trainingName'
@@ -61,7 +59,7 @@ function ConfigureTrainingShell(props) {
                         />
                     </div>
                     <div className='group-inside-panel--2x-margin column'>
-                        <div className='font--main-for-small-labels'>Questionnaires:</div>
+                        <label htmlFor='questionnairesListForTrainingPanel' className='font--main-for-small-labels'>Questionnaires:</label>
                         <QuestionnairesListForTrainingPanel
                             selectedQuestionnaires={props.trainingStatus.selectedQuestionnaires}
                             handleAddingAnotherQuestionnaire={props.handleAddingAnotherQuestionnaire}
@@ -99,7 +97,7 @@ function ConfigureTrainingShell(props) {
                     </div>
                 </form>
             </FormProvider>
-        </div>
+        </section>
     )
 }
 

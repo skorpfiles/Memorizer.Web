@@ -19,11 +19,11 @@ function Questionnaire(props) {
                 )
                 }
                 {(mouseOnElement) && (
-                    <div className={styles['over-button-icon']}
+                    <button className={styles['over-button-icon']}
                         onClick={props.deleteQuestionnaire}
                     >
                         <img src={DeleteIcon} alt='Delete' width='12px' />
-                    </div>
+                    </button>
                 )
                 }
             </div>
