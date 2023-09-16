@@ -3,251 +3,270 @@
     height: 100%;
 }
 
-.App {
+button, input[type="submit"] {
+    border: 0;
+    background-color: transparent;
+}
+
+.app {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.App-body {
+.app-body {
     flex: 1 0 auto;
 }
 
-.MiddleVerticalAlignContainer {
+.middle-vertical-align-container {
     display:flex;
     justify-content:center;
     height:100%;
 }
 
-.MiddleVerticalAlignBlock {
+.middle-vertical-align-block {
     margin: auto;
 }
 
-.FullscreenColumnAlignmentByWidth {
-    width:100%;
-}
-
-.VerticalCenterColumn {
+.vertical-center-column {
     margin: auto;
     flex-direction: column;
 }
 
-.VerticalFullHeightColumn {
+.vertical-full-height-column {
     margin-left: auto;
     margin-right: auto;
     flex-direction: column;
     height:100%;
 }
 
-.Column-small {
-    width: 20em;
+.column {
+    display: flex;
+    flex-direction:column;
+}
+
+.column-small {
+    width: 20rem;
     margin-left:auto;
     margin-right:auto;
 }
 
-.Column-medium {
-    width: 50em;
+.column-medium {
+    width: 50rem;
 }
 
-.Panel {
-    border: 0.15em solid black;
-    padding: 0.7em;
+.row {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+}
+
+.row--label-before-textbox {
+    margin-right: 0.5rem;
+}
+
+.row--label-after-textbox {
+    margin-left: 0.5rem;
+}
+
+.panel {
+    border: 0.15rem solid black;
+    padding: 0.7rem;
     flex-direction: column;
+    background-color: white;
 }
 
-.PanelForFlexWrapElements {
-    border: 0.15em solid black;
-    padding: 0.35em;
+.panel-for-flex-wrap-elements {
+    border: 0.15rem solid black;
+    padding: 0.35rem;
     flex-wrap: wrap;
 }
 
-.BigBorderRadius {
-    border-radius: 1.5em;
+.border-radius-big {
+    border-radius: 1.5rem;
 }
 
-.SmallBorderRadius {
-    border-radius: 0.5em;
+.border-radius-small {
+    border-radius: 0.5rem;
 }
 
-.TitleBeforePanel {
+.title-before-panel {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 0 0 1.5em 0;
+    margin: 0 0 0.7rem 0;
 }
 
-.TitleBetweenPanels {
+.title-between-panels {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 1.5em 0;
+    margin: 0.7rem 0;
 }
 
-.GroupInsidePanel {
-    margin: 0.7em 0;
+.group-inside-panel {
+    margin: 0.7rem 0;
 }
 
-.GroupInsidePanel-2xMargin {
-    margin: 1.4em 0;
+.group-inside-panel--2x-margin {
+    margin: 1.4rem 0;
 }
 
-.MainControlContainer {
-    margin: 0.7em;
+.main-control-container {
+    margin: 0.7rem;
 }
 
-.RouteElementWithReturnButton{
+.route-element-with-return-button{
     width:100%;
     height:100%;
     display:flex;
     flex-direction:column;
 }
 
-.DisplayFlex {
+.display-flex {
     display: flex;
 }
 
-.FlexAllFreeSpace {
+.flex-all-free-space {
     flex: 1 0 auto;
 }
 
-.MainTextBox, .MainButton, .ErrorLabel {
-    padding: 0.5em 0.7em;
+.main-text-box, .main-button, input[type="submit"].main-button, .error-label {
+    padding: 0.5rem 0.7rem;
     box-sizing: border-box;
 }
 
-.TextBoxWithoutPanel {
-    padding: 0.5em 0.7em;
+.text-box-without-panel {
+    padding: 0.5rem 0.7rem;
 }
 
-.MainTextBox {
-    border: 0.15em solid black;
+.main-text-box {
+    border: 0.15rem solid black;
 }
 
-.FullWidth {
+.full-width {
     width: 100%;
 }
 
-.FullHeight {
-    flex: 1 0 auto;
-}
-
-.MainButton {
+.main-button, input[type="submit"].main-button {
     color: white;
     font-weight: bold;
     cursor: pointer;
     background-color: #002060;
-    border-radius: 0.5em;
+    border: 0.15rem solid #002060;
 }
 
-.MainButton:disabled {
-    background-color: #BDD7EE;
-    border-color:transparent;
-}
+    .main-button:disabled, input[type="submit"].main-button:disabled {
+        background-color: #BDD7EE;
+        border-color: transparent;
+    }
 
-.MainTextBox:disabled {
+.main-text-box:disabled {
     border-color: #BDD7EE;
     color:lightgray;
 }
 
-.MainFlexWrapLabel {
+.main-flex-wrap-label {
     color: white;
     cursor: pointer;
     background-color: #002060;
-    border-radius: 0.5em;
-    padding: 0.25em 0.35em;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.35rem;
     box-sizing: border-box;
 }
 
-.IncreaseButtonHeight {
-    height:5em;
+.increased-button-height {
+    height:5rem;
 }
 
-.Font-MainForLabels {
-    font-size:2em;
+.font--main-for-labels {
+    font-size:2rem;
 }
 
-.Font-MainForSmallLabels {
-    font-size:1.5em;
+.font--main-for-small-labels {
+    font-size:1.5rem;
 }
 
-.Font-MainForLists {
-    font-size:1.5em;
+.font--main-for-lists {
+    font-size:1.5rem;
 }
 
-.Font-MainForControls {
-    font-size:1em;
+.font--main-for-controls {
+    font-size:1rem;
 }
 
-.Font-Default {
-    font-size:0.9em;
+.font--default {
+    font-size:0.9rem;
 }
 
-.Font-Notes {
-    font-size: 0.6em;
+.font--notes {
+    font-size: 0.6rem;
 }
 
-.Font-Bold {
+.font--bold {
     font-weight: bold;
 }
 
-.CenterText {
+.central-text {
     text-align:center;
 }
 
-.RightText {
-    text-align: right;
-}
-
-.CentralButton {
-    width: 17.2em;
+.central-button {
+    width: 17.2rem;
     margin-left: auto;
     margin-right: auto;
 }
 
-.CentralButton-SmallWidth {
-    width: 14.4em;
+.central-button--small-width {
+    width: 14.4rem;
     margin-left: auto;
     margin-right: auto;
 }
 
-.ValidationLabel{
+.validation-label{
     color:red;
-    margin:0.2em 0.85em 0 0.85em;
-    font-size:0.8em;
+    margin:0.2rem 0.85rem 0 0.85rem;
+    font-size:0.8rem;
 }
 
-.ErrorLabel {
+.error-label {
     background-color: #FFCDCD;
     color: red;
-    margin: 1.5em 0 0 0;
-    font-size: 0.8em;
-    border-radius: 0.5em;
+    margin: 1.5rem 0 0 0;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
 }
 
-ul.TightList{
+.tight-list{
     list-style: none;
     padding-left:0;
-    margin:0.5em 0;
+    margin:0;
 }
 
-    ul.TightList li {
-        position: relative;
-        padding: 0.15em 0 0.15em 1.5em;
-    }
-
-        ul.TightList li:before {
-            content: "●";
-            position: absolute;
-            left: 0.5em;
-        }
-
-.EllipsisList-LineContainer {
-    display: flex;
-    align-items: baseline;
+.tight-list-element {
+    color: #002060;
+    width: 100%;
+    border: 0.15rem solid #8FAADC;
+    background-image: linear-gradient(to bottom, white 0%, white 50%, #DAE3F3 100%);
+    text-align: left;
+    margin-bottom: -0.15rem;
+    cursor: pointer;
 }
 
-.EllipsisList-Label {
+.overflow-ellipsis {
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: hidden; 
+    text-overflow: ellipsis
+}
+
+.border-box {
+    box-sizing: border-box;
+}
+
+.link-button {
+    color: #002060;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px dashed #002060;
+    display: inline;
 }

@@ -1,0 +1,8 @@
+.container{
+    display:flex;
+    align-items:baseline;
+}
+
+.page-number{
+    margin:0 0.5rem;
+}
