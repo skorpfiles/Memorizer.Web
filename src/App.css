@@ -152,6 +152,7 @@ button, input[type="submit"] {
     font-weight: bold;
     cursor: pointer;
     background-color: #002060;
+    border: 0.15rem solid #002060;
 }
 
     .main-button:disabled, input[type="submit"].main-button:disabled {

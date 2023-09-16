@@ -47,6 +47,7 @@ export async function logIn(login, password, dispatch, userActions, emailSending
 
 export async function logOut(accessToken, dispatch, userActions, emailConfirmationStateActions) {
     try {
+        dispatch(userActions.setAuthenticationInProcess());
         const response = await callApi('/Account/Logout', 'POST', accessToken);
         if (response.ok) {
             dispatch(userActions.setLogOut());

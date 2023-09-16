@@ -14,12 +14,8 @@ const userSlice = createSlice({
     reducers: {
         setAuthenticationInProcess(state) {
             state.isUserLogging = true;
-            state.isUserLogged = false;
-            state.userLogin = null;
-            state.accessToken = null;
             state.isLoggingError = false;
             state.loggingErrorMessage = null;
-            state.isEmailConfirmationRequired = false;
         },
         setAuthenticationIsSuccessful(state, action) {
             state.isUserLogging = false;
