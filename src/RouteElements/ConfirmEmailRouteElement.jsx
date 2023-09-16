@@ -17,7 +17,7 @@ function ConfirmEmailRouteElement() {
         }
         else {
             confirmEmailPage = (
-                <Navigate replace to="/" />
+                <Navigate replace to='/' />
             );
         }
     }

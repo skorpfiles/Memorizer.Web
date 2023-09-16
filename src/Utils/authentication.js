@@ -6,7 +6,7 @@ export async function logIn(login, password, dispatch, userActions, emailSending
         dispatch(userActions.setAuthenticationInProcess());
 
         const response =
-            await callApi("/Account/Token", "POST", null, JSON.stringify({ login, password }));
+            await callApi('/Account/Token', 'POST', null, JSON.stringify({ login, password }));
 
         if (response.ok) {
             const result = await response.json();
@@ -15,8 +15,8 @@ export async function logIn(login, password, dispatch, userActions, emailSending
                 let expirationDate1 = new Date();
                 expirationDate1.setDate(expirationDate1.getDate() + CookiesExpireDays);
 
-                document.cookie = "accessToken=" + result.accessToken + "; expires=" + expirationDate1 + "; ";
-                document.cookie = "userLogin=" + result.login + "; expires=" + expirationDate1 + "; ";
+                document.cookie = 'accessToken=' + result.accessToken + '; expires=' + expirationDate1 + '; ';
+                document.cookie = 'userLogin=' + result.login + '; expires=' + expirationDate1 + '; ';
 
                 dispatch(userActions.setAuthenticationIsSuccessful({
                     userLogin: result.login,
@@ -40,19 +40,19 @@ export async function logIn(login, password, dispatch, userActions, emailSending
     catch (error) {
         console.log(error);
         dispatch(userActions.setAuthenticationError({
-            loggingErrorMessage: "Error: Unable to connect to the API"
+            loggingErrorMessage: 'Error: Unable to connect to the API'
         }));
     }
 }
 
 export async function logOut(accessToken, dispatch, userActions, emailConfirmationStateActions) {
     try {
-        const response = await callApi("/Account/Logout", "POST", accessToken);
+        const response = await callApi('/Account/Logout', 'POST', accessToken);
         if (response.ok) {
             dispatch(userActions.setLogOut());
 
-            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            document.cookie = "userLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+            document.cookie = 'userLogin=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
         }
         else {
             const result = await response.json();
@@ -71,7 +71,7 @@ export async function confirmRegistration(userId, confirmationCode, dispatch, em
             dispatch(emailConfirmationStateActions.setInProcess());
 
             const response =
-                await callApi("/Account/ConfirmRegistration", "POST", null, JSON.stringify({ userId, confirmationCode }));
+                await callApi('/Account/ConfirmRegistration', 'POST', null, JSON.stringify({ userId, confirmationCode }));
 
             if (response.ok) {
                 dispatch(emailConfirmationStateActions.setSuccess());
@@ -96,7 +96,7 @@ export async function sendConfirmationEmail(accessToken, dispatch, emailSendingS
         dispatch(emailSendingStateActions.setInProcess());
 
         const response =
-            await callApi("/Account/RepeatEmailConfirmation", "POST", accessToken);
+            await callApi('/Account/RepeatEmailConfirmation', 'POST', accessToken);
 
         if (response.ok) {
             dispatch(emailSendingStateActions.setSuccessfulSending());

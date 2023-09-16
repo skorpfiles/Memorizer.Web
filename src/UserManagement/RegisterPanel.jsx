@@ -15,19 +15,19 @@ function RegisterPanel(props) {
 
     return (
         <FormProvider {...methods}>
-            <form className="panel display-flex border-radius-big" onSubmit={methods.handleSubmit(onSubmit)}>
+            <form className='panel display-flex border-radius-big' onSubmit={methods.handleSubmit(onSubmit)}>
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputId="Email"
-                    inputName="email"
-                    inputType="text"
-                    inputPlaceholder="E-mail"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputId='Email'
+                    inputName='email'
+                    inputType='text'
+                    inputPlaceholder='E-mail'
+                    validationLabelClassName='validation-label'
                     inputValidation={{
                         required: {
                             value: true,
-                            message: "E-mail is required."
+                            message: 'E-mail is required.'
                         },
                         pattern: {
                             value:
@@ -37,46 +37,46 @@ function RegisterPanel(props) {
                     }}
                 />
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputId="Username"
-                    inputName="username"
-                    inputType="text"
-                    inputPlaceholder="Username"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputId='Username'
+                    inputName='username'
+                    inputType='text'
+                    inputPlaceholder='Username'
+                    validationLabelClassName='validation-label'
                     inputValidation={{
                         required: {
                             value: true,
-                            message: "Username is required."
+                            message: 'Username is required.'
                         },
                         maxLength: {
                             value: 100,
-                            message: "Username must have maximum 100 symbols."
+                            message: 'Username must have maximum 100 symbols.'
                         }
                     }}
                 />
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputId="Password"
-                    inputName="password"
-                    inputType="password"
-                    inputPlaceholder="Password"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputId='Password'
+                    inputName='password'
+                    inputType='password'
+                    inputPlaceholder='Password'
+                    validationLabelClassName='validation-label'
                     inputValidation={PasswordValidations}
                 />
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputId="RepeatPassword"
-                    inputName="repeatPassword"
-                    inputType="password"
-                    inputPlaceholder="Repeat the password"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputId='RepeatPassword'
+                    inputName='repeatPassword'
+                    inputType='password'
+                    inputPlaceholder='Repeat the password'
+                    validationLabelClassName='validation-label'
                     inputValidation={{
                         validate: (val) => {
                             if (methods.watch('password') !== val) {
-                                return "The passwords must be the same.";
+                                return 'The passwords must be the same.';
                             }
                         },
                     }}
@@ -85,17 +85,17 @@ function RegisterPanel(props) {
                     <ReCAPTCHA
                         ref={captchaRef}
                         sitekey={siteKey}
-                        size="compact"
+                        size='compact'
                         onChange={(token) => setIsCaptchaConfirmed(token!==null)}
                     />
                 </div>
-                <div className="main-control-container">
-                    <input className="main-button border-radius-small full-width font--main-for-controls" type="submit" id="registerButton" value="Register" disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
+                <div className='main-control-container'>
+                    <input className='main-button border-radius-small full-width font--main-for-controls' type='submit' id='registerButton' value='Register' disabled={!isCaptchaConfirmed || props.registrationState.isExecuting} />
                     {(props.registrationState.isError) && (
-                        <div className="error-label">{props.registrationState.errorMessage}</div>)
+                        <div className='error-label'>{props.registrationState.errorMessage}</div>)
                     }
                 </div>
-                <div className="central-text font--default"><a href="/">I already have an account</a></div>
+                <div className='central-text font--default'><a href='/'>I already have an account</a></div>
             </form>
         </FormProvider>
     );

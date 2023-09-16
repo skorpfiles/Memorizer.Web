@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 function ConfigureTrainingPage() {
     const [trainingStatus, setTrainingStatus] = useState({
-        name: "My Training",
+        name: 'My Training',
         selectedQuestionnaires: [],
         trainingLengthAsQuestionsCount: true
     });
@@ -71,13 +71,13 @@ function ConfigureTrainingPage() {
     const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(true); //defines if the SelectQuestionnairePage component is shown in this moment instead of ConfigureTrainingShell.
 
     const [selectQuestionnairePageStatus, setSelectQuestionnairePageStatus] = useState({
-        currentFilter: "ownFilter",
-        searchTerm: ""
+        currentFilter: 'ownFilter',
+        searchTerm: ''
     });
 
     const defaultValues = {
-        trainingLengthRadioGroup: "questionsCountRadioButton",
-        trainingName: "My Training"
+        trainingLengthRadioGroup: 'questionsCountRadioButton',
+        trainingName: 'My Training'
     };
 
     const methods = useForm({defaultValues});
@@ -116,7 +116,7 @@ function ConfigureTrainingPage() {
             //refresh stats for unfilled items
             const processQuestionnaireStatsItem = async (questionnaireStatsItem) => {
                 if (!questionnaireStatsItem.filled) {
-                    const response = await callApi(`/Repository/Questionnaire/${questionnaireStatsItem.id}?calculateTime=true`, "GET", accessToken);
+                    const response = await callApi(`/Repository/Questionnaire/${questionnaireStatsItem.id}?calculateTime=true`, 'GET', accessToken);
                     if (response.ok) {
                         const result = await response.json();
                         return ({
@@ -126,7 +126,7 @@ function ConfigureTrainingPage() {
                         });
                     }
                     else {
-                        throw new Error("Unable to get questionnaire stats.");
+                        throw new Error('Unable to get questionnaire stats.');
                     }
                 }
                 else {
@@ -186,7 +186,7 @@ function ConfigureTrainingPage() {
     const handleSettingTrainingLength = (value) => {
         setTrainingStatus(prevState => ({
             ...prevState,
-            trainingLengthAsQuestionsCount: value ==="questionsCountRadioButton"
+            trainingLengthAsQuestionsCount: value ==='questionsCountRadioButton'
         }));
     }
 
@@ -198,8 +198,8 @@ function ConfigureTrainingPage() {
     }
 
     let result = selectQuestionnairePageIsShown ? (
-        <div className="route-element-with-return-button">
-            <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text="Return to the training page" />
+        <div className='route-element-with-return-button'>
+            <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text='Return to the training page' />
             <SelectQuestionnairePage
                 alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
                 handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
@@ -208,8 +208,8 @@ function ConfigureTrainingPage() {
             />
         </div>
     ) : (
-        <div className="route-element-with-return-button">
-            <ReturnToPage path="/" text="Return to the main page" />
+        <div className='route-element-with-return-button'>
+            <ReturnToPage path='/' text='Return to the main page' />
             <ConfigureTrainingShell
                     trainingStatus={trainingStatus}
                     handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}

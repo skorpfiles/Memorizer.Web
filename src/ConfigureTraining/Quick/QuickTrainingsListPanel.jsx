@@ -1,4 +1,4 @@
-import QuickTrainingsListPanelElement from "./QuickTrainingsListPanelElement";
+import QuickTrainingsListPanelElement from './QuickTrainingsListPanelElement';
 import { useEffect, useState } from 'react';
 import styles from './QuickTrainingsListPanel.module.css';
 
@@ -16,7 +16,7 @@ function QuickTrainingsListPanel() {
         try {
             const getTrainingListFunc = async () => {
                 //const response =
-                //    await callApi("/Repository/Trainings?pageNumber=1&pageSize=4", "GET", props.currentUser.accessToken);
+                //    await callApi('/Repository/Trainings?pageNumber=1&pageSize=4', 'GET', props.currentUser.accessToken);
                 //if (response.ok) {
                 //    const result = await response.json();
                 //    setCurrentTrainingsList({
@@ -40,16 +40,16 @@ function QuickTrainingsListPanel() {
                 setCurrentTrainingsList({
                     items: [
                         {
-                            id: "1",
-                            name: "Training 1"
+                            id: '1',
+                            name: 'Training 1'
                         },
                         {
-                            id: "2",
-                            name: "Training 2"
+                            id: '2',
+                            name: 'Training 2'
                         },
                         {
-                            id: "3",
-                            name: "Very Very Very Very Very Very Very Very Very Long Training Name"
+                            id: '3',
+                            name: 'Very Very Very Very Very Very Very Very Very Long Training Name'
                         }
                     ],
                     isLoading: false,
@@ -67,31 +67,31 @@ function QuickTrainingsListPanel() {
                 isLoading: false,
                 isLoadingSuccessful: false,
                 isLoadingError: true,
-                loadingErrorMessage: "Error: Unable to connect to the API."
+                loadingErrorMessage: 'Error: Unable to connect to the API.'
             });
         }
     },[]);
 
     var data;
     if (currentTrainingsList.isLoading) {
-        data = (<div className="central-text">Loading...</div>);
+        data = (<div className='central-text'>Loading...</div>);
     }
     else if (currentTrainingsList.isLoadingSuccessful) {
         if (currentTrainingsList.items !== null && currentTrainingsList.items.length > 0) {
-            data = (<ul className="font--main-for-lists tight-list" >
+            data = (<ul className='font--main-for-lists tight-list' >
                 {currentTrainingsList.items.map(item => <QuickTrainingsListPanelElement key={item.id} training={item} />)}
             </ul>);
         }
         else {
-            data = (<div className="central-text">No items</div>);
+            data = (<div className='central-text'>No items</div>);
         }
     }
     else {
-        data = (<div className="central-text">Error: {currentTrainingsList.loadingErrorMessage}</div>);
+        data = (<div className='central-text'>Error: {currentTrainingsList.loadingErrorMessage}</div>);
     }
 
     return (
-        <div className="column column-small">
+        <div className='column column-small'>
             {data}
             <div className={`central-text font--main-for-controls ${styles['browse-all-button-container']}`}><span className={styles['browse-all-button'] }>Browse and manage all</span></div>
         </div>

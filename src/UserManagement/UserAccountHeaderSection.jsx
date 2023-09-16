@@ -14,11 +14,11 @@ function UserAccountHeaderSection() {
 
     return (
         <div className={styles['container']}>
-            <img src={userIcon} width="16rem" alt="User" />
+            <img src={userIcon} width='16rem' alt='User' />
             <div className={styles['userName']}>
                 {userLoginSelector}
             </div>
-            <img src={logoutIcon} width="16rem" alt="Log Out" title="Log Out" className={styles['logOutButton']} onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)} />
+            <img src={logoutIcon} width='16rem' alt='Log Out' title='Log Out' className={styles['logOutButton']} onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)} />
         </div>
     )
 }

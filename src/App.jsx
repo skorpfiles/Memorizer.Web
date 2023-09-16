@@ -38,13 +38,13 @@ function App() {
             }
             else if (!isUserLogged) {
                 const accessTokenFromCookies = getAccessTokenFromCookies();
-                if (accessTokenFromCookies != null && accessTokenFromCookies !== "") {
+                if (accessTokenFromCookies != null && accessTokenFromCookies !== '') {
                     const userLoginFromCookies = getUserLoginFromCookies();
 
                     const refreshCurrentUserFunc = async () => {
                         try {
                             const response =
-                                await callApi("/Account/Check", "GET", accessTokenFromCookies);
+                                await callApi('/Account/Check', 'GET', accessTokenFromCookies);
 
                             if (response.ok) {
                                 dispatch(userActions.setAuthenticationIsSuccessful({
@@ -82,26 +82,26 @@ function App() {
     }
     else {
         return (
-            <div className="app">
+            <div className='app'>
                 {header}
-                <section className="app-body">
+                <section className='app-body'>
                     <Router>
                         <Routes>
                             <Route
-                                path="/"
+                                path='/'
                                 element={
                                     <MainRouteElement/>
                                 }
                             />
                             <Route
-                                path="register"
+                                path='register'
                                 element={
                                     <RegisterRouteElement/>
                                 }
                             />
                             {!isUserLogged && (
                                 <Route
-                                    path="confirm_email"
+                                    path='confirm_email'
                                     element={
                                         <ConfirmEmailRouteElement/>
                                     }
@@ -109,7 +109,7 @@ function App() {
                             )}
                             {isUserLogged && (
                                 <Route
-                                    path="train/select"
+                                    path='train/select'
                                     element={
                                         <SelectTrainingRouteElement/>
                                     }
@@ -117,14 +117,14 @@ function App() {
                             )}
                             {isUserLogged && (
                                 <Route
-                                    path="train/configure"
+                                    path='train/configure'
                                     element={
                                         <ConfigureTrainingRouteElement/>
                                     }
                                 />
                             )}
                             <Route
-                                path="*"
+                                path='*'
                                 status={404}
                                 element={
                                     <MainRouteElement/>

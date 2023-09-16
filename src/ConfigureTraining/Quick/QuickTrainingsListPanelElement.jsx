@@ -11,7 +11,7 @@ function QuickTrainingsListPanelElement(props) {
                 </div>
                 <div className={styles['separator']}></div>
                 <div className={styles['settings-button'] }>
-                    <IconButton src={SettingsIcon} alt="Settings" title="Settings" />
+                    <IconButton src={SettingsIcon} alt='Settings' title='Settings' />
                 </div>
             </div>
         </li>);

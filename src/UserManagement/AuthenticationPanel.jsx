@@ -19,43 +19,43 @@ function AuthenticationPanel() {
     return (
         <FormProvider {...methods}>
             <form
-                className="panel display-flex border-radius-big"
+                className='panel display-flex border-radius-big'
                 onSubmit={methods.handleSubmit(onSubmit)}
             >
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputName="username"
-                    inputId="Username"
-                    inputType="text"
-                    inputPlaceholder="Username"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputName='username'
+                    inputId='Username'
+                    inputType='text'
+                    inputPlaceholder='Username'
+                    validationLabelClassName='validation-label'
                     inputValidation={{
                         required: {
                             value: true,
-                            message: "Username is required."
+                            message: 'Username is required.'
                         }
                     }}
                     disabled={isUserLogging}
                 />
                 <InputWithValidation
-                    containerClassName="main-control-container"
-                    inputClassName="main-text-box full-width font--main-for-controls border-radius-small"
-                    inputName="password"
-                    inputId="Password"
-                    inputType="password"
-                    inputPlaceholder="Password"
-                    validationLabelClassName="validation-label"
+                    containerClassName='main-control-container'
+                    inputClassName='main-text-box full-width font--main-for-controls border-radius-small'
+                    inputName='password'
+                    inputId='Password'
+                    inputType='password'
+                    inputPlaceholder='Password'
+                    validationLabelClassName='validation-label'
                     inputValidation={PasswordValidations}
                     disabled={isUserLogging}
                 />
-                <div className="main-control-container">
-                    <input className="main-button border-radius-small full-width font--main-for-controls" type="submit" id="LogIn" value="Log In" disabled={isUserLogging} />
+                <div className='main-control-container'>
+                    <input className='main-button border-radius-small full-width font--main-for-controls' type='submit' id='LogIn' value='Log In' disabled={isUserLogging} />
                     {isLoggingError && (
-                        <div className="error-label">{loggingErrorMessage}</div>)
+                        <div className='error-label'>{loggingErrorMessage}</div>)
                     }
                 </div>
-                <div className="central-text font--default">or {!isUserLogging && (<a href="/Register">register</a>)}{isUserLogging && "register"}</div>
+                <div className='central-text font--default'>or {!isUserLogging && (<a href='/Register'>register</a>)}{isUserLogging && 'register'}</div>
             </form>
         </FormProvider>
     );

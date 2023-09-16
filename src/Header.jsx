@@ -6,7 +6,7 @@ function Header() {
     const userIsLogged = useSelector(state => state.user.isUserLogged);
     return (
         <header>
-            <div className="logo">Memorizer</div>
+            <div className='logo'>Memorizer</div>
             {userIsLogged && (<UserAccountHeaderSection />)}
         </header>
     );

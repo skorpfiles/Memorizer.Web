@@ -18,7 +18,7 @@ function InputWithValidation(props) {
                 {...register(props.inputName, { disabled: props.disabled, ...props.inputValidation })}
             />
             {isInvalid && (
-                <div className={props.validationLabelClassName} key={props.inputId+"_errorMessage"}>{inputError.error.message}</div>
+                <div className={props.validationLabelClassName} key={props.inputId+'_errorMessage'}>{inputError.error.message}</div>
             )}
         </div>
     );

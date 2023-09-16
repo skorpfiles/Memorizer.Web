@@ -81,7 +81,7 @@ function RegisterRouteElement() {
             }
             else {
                 registerPage = (
-                    <Navigate replace to="/" />
+                    <Navigate replace to='/' />
                 );
             }
         }
@@ -98,7 +98,7 @@ async function registerUser(dispatchRegistrationState, email, login, password, r
             dispatchRegistrationState({ type: 'setIsLoading' });
 
             const response =
-                await callApi("/Account/Register", "PUT", null, JSON.stringify({ email, login, password, captchaToken }));
+                await callApi('/Account/Register', 'PUT', null, JSON.stringify({ email, login, password, captchaToken }));
 
             const result = await response.json();
 

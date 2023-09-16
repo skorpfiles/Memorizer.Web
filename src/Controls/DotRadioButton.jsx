@@ -7,7 +7,7 @@ function DotRadioButton(props) {
 
     return (
         <div className={styles['dot-radio-button']} >
-            <input type="radio" id={props.id} value={props.value} {...register(props.name, {onChange:(event)=>props.onChange(event.target.value)})} />
+            <input type='radio' id={props.id} value={props.value} {...register(props.name, {onChange:(event)=>props.onChange(event.target.value)})} />
             <label for={props.id}></label>
         </div>
     );

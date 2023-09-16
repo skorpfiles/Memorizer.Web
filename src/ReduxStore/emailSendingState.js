@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const emailSendingStateSlice = createSlice({
-    name: "emailSendingStateSlice",
+    name: 'emailSendingStateSlice',
     initialState: {
         isModeActive: false,
         accessToken: null,

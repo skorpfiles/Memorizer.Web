@@ -10,8 +10,8 @@ function TrainingLengthOption(props) {
     const isInvalid = isFormInvalid(inputError);
 
     return (
-        <div className="group-inside-panel--2x-margin">
-            <div className="row">
+        <div className='group-inside-panel--2x-margin'>
+            <div className='row'>
                 <DotRadioButton
                     id={props.radioButtonId}
                     key={props.radioButtonId}
@@ -19,14 +19,14 @@ function TrainingLengthOption(props) {
                     value={props.radioButtonId}
                     onChange={props.handleSettingRadioButton}
                 />
-                <div className="font--main-for-small-labels">{props.title}</div>
+                <div className='font--main-for-small-labels'>{props.title}</div>
             </div>
-            <div className="row">
+            <div className='row'>
                 <input
-                    className="main-text-box border-radius-small font--main-for-controls"
+                    className='main-text-box border-radius-small font--main-for-controls'
                     id={props.inputId}  
-                    type="number"
-                    style={{ width: "5rem" }}
+                    type='number'
+                    style={{ width: '5rem' }}
                     {...register(props.inputId, { disabled: props.isInputDisabled,
                         validate: {
                             required: value => {
@@ -45,10 +45,10 @@ function TrainingLengthOption(props) {
                         }
                     })}
                 />
-                <div className="font--main-for-small-labels row--label-after-textbox">{props.note}</div>
+                <div className='font--main-for-small-labels row--label-after-textbox'>{props.note}</div>
             </div>
             {isInvalid && (
-                <div className="validation-label" key={props.inputId + "_errorMessage"}>{inputError.error.message}</div>
+                <div className='validation-label' key={props.inputId + '_errorMessage'}>{inputError.error.message}</div>
             )}
         </div>
     )

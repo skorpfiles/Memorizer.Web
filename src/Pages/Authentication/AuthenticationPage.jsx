@@ -9,12 +9,12 @@ function AuthenticationPage() {
     const emailConfirmationIsSucceed = useSelector(state => state.emailConfirmationState.isSucceed);
 
     useEffect(() => {
-        document.title = "Memorizer";
+        document.title = 'Memorizer';
     });
 
     return (
-        <div className="middle-vertical-align-container">
-            <div className="vertical-center-column middle-vertical-align-block">
+        <div className='middle-vertical-align-container'>
+            <div className='vertical-center-column middle-vertical-align-block'>
                 {
                     (emailConfirmationIsFinished && emailConfirmationIsSucceed) &&
                     (<div className={styles['success-message']}>Your email has been confirmed successfully.<br />Now you can log in.</div>)
@@ -23,7 +23,7 @@ function AuthenticationPage() {
                     (emailConfirmationIsFinished && !emailConfirmationIsSucceed) &&
                     (<div className={styles['fail-message']}>Unable to confirm e-mail.<br />Log in to repeat.</div>)
                 }
-                <div className="column-small">
+                <div className='column-small'>
                     <MemorizerLogoWithSubtitle />
                     <AuthenticationPanel/>
                 </div>

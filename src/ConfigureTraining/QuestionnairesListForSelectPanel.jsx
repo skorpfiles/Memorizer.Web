@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { callApi } from '../Utils/GlobalUtils';
-import QuestionnairesListForSelectElement from "./QuestionnairesListForSelectElement";
-import PageSwitcher from "./PageSwitcher";
+import QuestionnairesListForSelectElement from './QuestionnairesListForSelectElement';
+import PageSwitcher from './PageSwitcher';
 import { useSelector } from 'react-redux';
 
 function QuestionnairesListForSelectPanel(props) {
@@ -64,13 +64,13 @@ function QuestionnairesListForSelectPanel(props) {
 
             try {
                 const getUsersAndQuestionnairesListFunc = async () => {
-                    let url = "/Repository/Questionnaires?origin=" + props.currentOrigin;
+                    let url = '/Repository/Questionnaires?origin=' + props.currentOrigin;
                     if (props.currentSearchTerm) {
-                        url += "&partOfName=" + encodeURIComponent(props.currentSearchTerm);
+                        url += '&partOfName=' + encodeURIComponent(props.currentSearchTerm);
                     }
 
                     const response =
-                        await callApi(url, "GET", accessToken);
+                        await callApi(url, 'GET', accessToken);
                     if (response.ok) {
                         const result = await response.json();
                         dispatchQuestionnairesForSelectList({
@@ -99,7 +99,7 @@ function QuestionnairesListForSelectPanel(props) {
     let data;
     if (questionnairesForSelectList.isLoading) {
         if (questionnairesForSelectList.isFirstLoading) {
-            data = (<div className="central-text">Loading...</div>);
+            data = (<div className='central-text'>Loading...</div>);
         }
         else {
             data = null;
@@ -108,22 +108,22 @@ function QuestionnairesListForSelectPanel(props) {
     else if (questionnairesForSelectList.isLoadingSuccessful) {
         if (questionnairesForSelectList.items !== null && questionnairesForSelectList.items.length > 0) {
             data = (
-                <ul className="tight-list">
+                <ul className='tight-list'>
                     {questionnairesForSelectList.items.map(item => <QuestionnairesListForSelectElement key={item.id} questionnaire={item} handleClick={() => props.handleConfirmingAddingQuestionnaire(item)} />)}
                 </ul>
             )
         }
         else {
-            data = (<div className="central-text">No items</div>);
+            data = (<div className='central-text'>No items</div>);
         }
     }
     else {
-        data = (<div className="central-text">{questionnairesForSelectList.loadingErrorMessage}</div>);
+        data = (<div className='central-text'>{questionnairesForSelectList.loadingErrorMessage}</div>);
     }
 
     return (
-        <div className="group-inside-panel panel display-flex border-radius-small flex-all-free-space">
-            <div className="flex-all-free-space">
+        <div className='group-inside-panel panel display-flex border-radius-small flex-all-free-space'>
+            <div className='flex-all-free-space'>
                 {data}
             </div>
             <PageSwitcher currentPage={questionnairesForSelectList.currentPage} totalPages={questionnairesForSelectList.totalPages} />
