@@ -1,5 +1,4 @@
 header.container {
-    background-image: linear-gradient(#ABC0E4, #ABC0E4, white);
     display: flex;
     flex-direction: row;
     padding: 0 1rem;

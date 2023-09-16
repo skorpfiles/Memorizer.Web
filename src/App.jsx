@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmRegistration } from './Utils/authentication';
 
 function App() {
-    let [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
+    const [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
 
     const dispatch = useDispatch();
     const isUserLogged = useSelector(state => state.user.isUserLogged);
@@ -75,7 +75,7 @@ function App() {
         }
     }, [dispatch, isUserLogged]);
 
-    let header = (window.location.pathname === '/Register' || window.location.pathname === '/confirm_email' || isUserLogged) && (<Header/>);
+    let header = (window.location.pathname === '/Register' || window.location.pathname === '/confirm_email' || isUserLogged) && (<Header />);
 
     if (!firstLoadingIsCompleted) {
         return (<div>Loading...</div>);
@@ -90,7 +90,7 @@ function App() {
                             <Route
                                 path='/'
                                 element={
-                                    <MainRouteElement/>
+                                    <MainRouteElement />
                                 }
                             />
                             <Route

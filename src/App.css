@@ -73,6 +73,7 @@ button, input[type="submit"] {
     border: 0.15rem solid black;
     padding: 0.7rem;
     flex-direction: column;
+    background-color: white;
 }
 
 .panel-for-flex-wrap-elements {

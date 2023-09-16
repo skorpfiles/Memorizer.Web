@@ -1,14 +1,20 @@
 import {
     Navigate
 } from 'react-router-dom';
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import RegisterPage from '../Pages/Authentication/RegisterPage';
 import WeSentEmailPage from '../Pages/Authentication/WeSentEmailPage';
 import { callApi } from '../Utils/GlobalUtils';
 import { useSelector, useDispatch } from 'react-redux';
 import { emailSendingStateActions } from '../ReduxStore/emailSendingState';
+import { useWallpaperViewDispatcher } from '../hooks/useWallpaperViewDispatcher';
 
 function RegisterRouteElement() {
+    const [enableWallpaperView,] = useWallpaperViewDispatcher();
+
+    useEffect(() => {
+        enableWallpaperView();
+    }, [enableWallpaperView]);
 
     const registrationStateReducer = (state, action) => {
         switch (action.type) {
