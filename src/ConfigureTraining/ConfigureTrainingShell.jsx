@@ -3,10 +3,16 @@ import InputWithValidation from '../Controls/InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import TrainingLengthOption from './TrainingLengthOption';
 import styles from './ConfigureTrainingShell.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function ConfigureTrainingShell(props) {
 
-    const onSubmit = data => console.info(data);
+    const navigate = useNavigate();
+
+    const onSubmit = data => {
+        console.info(data);
+        navigate('/train');
+    }
 
     let statsText, questionsCountRadioButtonNote = '', timeRadioButtonNote = '(minutes)';
 
@@ -90,7 +96,10 @@ function ConfigureTrainingShell(props) {
                         formMethods={props.formMethods}
                     />
                     <div className='group-inside-panel--2x-margin display-flex'>
-                        <input type='submit' className='main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big' disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value='Start Training!' />
+                        <input type='submit'
+                            className='main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big'
+                            disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length === 0}
+                            value='Start Training!' />
                     </div>
                     <div className='group-inside-panel--2x-margin'>
                         Add the next page to your bookmarks if you want to have a quick direct access to starting this training.

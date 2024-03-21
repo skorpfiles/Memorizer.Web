@@ -11,4 +11,10 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\Pages\Training\" />
+    <Folder Include="src\Training\ControlPanel\TrainingProgressSection\" />
+    <Folder Include="src\Training\ControlPanel\QuestionPropertiesSection\" />
+    <Folder Include="src\Training\ControlPanel\QuestionStageSection\" />
+  </ItemGroup>
 </Project>
