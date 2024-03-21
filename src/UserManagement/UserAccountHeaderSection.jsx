@@ -15,13 +15,11 @@ function UserAccountHeaderSection() {
     const dispatch = useDispatch();
 
     return (
-        <div className={styles['container']}>
-            <img src={userIcon} width='16rem' alt='User' />
-            <div className={styles['userName']}>
-                {userLoginSelector}
-            </div>
-            <button onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)}>
-                {!authenticationInProcess && <img src={logoutIcon} width='16rem' alt='Log Out' title='Log Out' className={styles['logOutButton']} />}
+        <div className={`border-radius-small ${styles['container']}`}>
+            <img src={userIcon} width='16rem' alt='User' title={userLoginSelector} />
+            <div className={styles['separator']}></div>
+            <button className={styles['logOutButton']} onClick={() => logOut(accessToken, dispatch, userActions, emailConfirmationStateActions)}>
+                {!authenticationInProcess && <img src={logoutIcon} width='16rem' alt='Log Out' title='Log Out' className={styles['logOutButtonImage']} />}
                 {authenticationInProcess && <img src={waitIcon} width='16rem' alt='Please wait' />}
             </button>
         </div>
