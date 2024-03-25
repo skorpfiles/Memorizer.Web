@@ -4,7 +4,7 @@ import StopwatchSection from "./TrainingProgressSection/StopwatchSection";
 
 function TrainingProgressSection() {
     return (
-        <div style={{ "display": "flex", "flexDirection": "row" }}>
+        <div style={{ "display": "flex", "flexDirection": "row", "borderTop":"0.1rem solid black" }}>
             <StopwatchSection />
             <ProgressSection />
             <CorrectPercentSection/>
