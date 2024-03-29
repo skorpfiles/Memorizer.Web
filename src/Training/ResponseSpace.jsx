@@ -1,6 +1,12 @@
+import ButtonsSection from './ResponseSpace/ButtonsSection';
+import NoteSection from './ResponseSpace/NoteSection';
+
 function ResponseSpace() {
     return (
-        <div style={{ "border": "1px solid black" }}>ResponseSpace</div>
+        <div className='column' style={{ "border": "1px solid black", "minHeight": "7.5rem", "alignItems": "center", "justifyContent": "center" }}>
+            <NoteSection />
+            <ButtonsSection questionType='task' trainingStage='train' />
+        </div>
     )
 }
 
