@@ -1,9 +1,10 @@
 import blockIcon from './block.png';
+import iconAndValueStyles from '../IconAndValue.module.css';
 function PenaltyPoints(props) {
     return (
-        <div style={{ "display": "flex", "flexDirection": "row", "flexGrow": "1" }}>
+        <div className='row flex-all-free-space'>
             <img src={blockIcon} width='16rem' alt='PP' title='Penalty Points' />
-            <div style={{ "flexGrow": "1", "marginLeft": "0.15rem" }}>{props.value}</div>
+            <div className={`flex-all-free-space ${iconAndValueStyles['value']}`}>{props.value}</div>
         </div>
     )
 }

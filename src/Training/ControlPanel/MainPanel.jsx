@@ -1,9 +1,10 @@
 import QuestionStageSection from './QuestionStageSection';
 import QuestionPropertiesSection from './QuestionPropertiesSection';
 import TrainingProgressSection from './TrainingProgressSection';
+import styles from './MainPanel.module.css';
 function MainPanel() {
     return (
-        <div style={{ "border":"0.1rem solid black", "display": "flex", "flexDirection": "column", "backgroundImage": "linear-gradient(to bottom, white, #ABC0E4 74%, #ABC0E4 83%, #C7D5ED)" }}>
+        <div className={`column ${styles['content']}`}>
             <QuestionStageSection/>
             <QuestionPropertiesSection/>
             <TrainingProgressSection/>

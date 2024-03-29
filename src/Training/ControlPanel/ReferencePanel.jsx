@@ -1,7 +1,8 @@
+import styles from './ReferencePanel.module.css';
 function ReferencePanel(props) {
     return (
-        <div className='font--notes' style={{ "backgroundImage": "linear-gradient(to bottom, white, #C7D5ED)" }}>
-            <div style={{"margin":"0.25rem"}}>Reference: {props.reference}</div>
+        <div className={`font--notes ${styles['container']}`}>
+            <div className={`overflow-ellipsis ${styles['content']}`} title={props.reference}>Reference: {props.reference}</div>
         </div>
     )
 }

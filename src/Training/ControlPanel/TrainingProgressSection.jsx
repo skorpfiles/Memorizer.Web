@@ -1,18 +1,20 @@
-import CorrectPercentSection from "./TrainingProgressSection/CorrectPercentSection";
 import ProgressSection from "./TrainingProgressSection/ProgressSection";
-import StopwatchSection from "./TrainingProgressSection/StopwatchSection";
+import OuterSection from "./TrainingProgressSection/OuterSection";
+import alarmIcon from './TrainingProgressSection/alarm.png';
+import checkIcon from './TrainingProgressSection/check.png';
+import styles from './TrainingProgressSection.module.css';
 
 function TrainingProgressSection() {
     return (
-        <div className='font--main-for-controls' style={{ "display": "flex", "flexDirection": "row", "borderTop": "0.1rem solid black" }}>
-            <div style={{"flex":"1 0 0"}}>
-                <StopwatchSection />
+        <div className={`font--main-for-controls row ${styles['container']}`}>
+            <div className={styles['outer-section-container']}>
+                <OuterSection position='left' icon={alarmIcon} iconAlt='QLT' iconTitle='Question Learning Time' text='0:08' />
             </div>
-            <div style={{ "flex": "4 0 0" }}>
+            <div className={styles['progress-section-container']}>
                 <ProgressSection />
             </div>
-            <div style={{ "flex": "1 0 0" }}>
-                <CorrectPercentSection />
+            <div className={styles['outer-section-container']}>
+                <OuterSection position='right' icon={checkIcon} iconAlt='Percent' iconTitle='Current Right Answers Percent' text='94%' />
             </div>
         </div>
     )

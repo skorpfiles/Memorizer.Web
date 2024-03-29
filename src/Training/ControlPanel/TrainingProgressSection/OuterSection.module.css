@@ -1,0 +1,23 @@
+.outer-container {
+    min-height: 100%;
+}
+
+.inner-container {
+    margin: 0.2rem;
+    min-height: 100%;
+}
+
+.border-style-for-left-section {
+    border-right: 0.1rem solid black;
+}
+
+.border-style-for-right-section {
+    border-left: 0.1rem solid black;
+}
+
+.text {
+    margin-left: 0.15rem;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+}

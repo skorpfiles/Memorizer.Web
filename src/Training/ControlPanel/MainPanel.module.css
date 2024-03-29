@@ -1,0 +1,4 @@
+.content {
+    border: 0.1rem solid black;
+    background-image: linear-gradient(to bottom, white, #ABC0E4 74%, #ABC0E4 83%, #C7D5ED);
+}

@@ -1,8 +1,9 @@
-﻿function Stage(props) {
+﻿import styles from './Stage.module.css';
+function Stage(props) {
     return props.isActive ? (
-        <div class="font--notes font--bold" style={{ "backgroundColor": "white", "padding": "0.2rem 0.5rem" }}>{`► ${props.name}`}</div>
+        <div class={`font--notes font--bold ${styles['content']} ${styles['active']}`}>{`► ${props.name}`}</div>
     ) : (
-            <div class="font--notes" style={{ "padding": "0.2rem 0.5rem" }} >{props.name}</div>
+            <div class={`font--notes ${styles['content']}`}>{props.name}</div>
     );
 }
 

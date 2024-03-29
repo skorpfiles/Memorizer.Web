@@ -1,9 +1,10 @@
 import chartIcon from './chart.png';
+import iconAndValueStyles from '../IconAndValue.module.css';
 function Rating(props) {
     return (
-        <div style={{ "display": "flex", "flexDirection": "row", "flexGrow": "1" }}>
+        <div className='row flex-all-free-space'>
             <img src={chartIcon} width='16rem' alt='Rating' title='Rating' />
-            <div style={{ "flexGrow": "1", "marginLeft": "0.15rem" }}>{props.isNew ? 'N' : props.value}</div>
+            <div className={`flex-all-free-space ${iconAndValueStyles['value']}`}>{props.isNew ? 'N' : props.value}</div>
         </div>
     )
 }

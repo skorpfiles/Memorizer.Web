@@ -1,11 +1,12 @@
 import MainPanel from './ControlPanel/MainPanel';
 import ReferencePanel from './ControlPanel/ReferencePanel';
+import styles from './ControlPanel.module.css';
 function ControlPanel() {
     return (
-        <div style={{ "display": "flex", "flexDirection": "column", "width": "30rem", "margin": "1rem auto" }}>
+        <div className={`column ${styles['container']}`}>
             <MainPanel />
-            <div style={{ "height": "1rem" }}></div>
-            <ReferencePanel reference='Test Reference' />
+            <div className={styles['separator']}></div>
+            <ReferencePanel reference='Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference' />
         </div>
     )
 }

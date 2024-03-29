@@ -1,9 +1,10 @@
 import bookIcon from './book.png';
+import iconAndValueStyles from '../IconAndValue.module.css';
 function Questionnaire(props) {
     return (
-        <div style={{ "display": "flex", "flexDirection": "row", "flexGrow":"1" }}>
+        <div className='row' style={{"width":"100%"}}>
             <img src={bookIcon} width='16rem' alt='Questionnaire' title='Questionnaire' />
-            <div style={{"flexGrow":"1","marginLeft":"0.15rem"}}>{props.name}</div>
+            <div className={`overflow-ellipsis ${iconAndValueStyles['value']}`}>{props.name}</div>
         </div>
     )
 }

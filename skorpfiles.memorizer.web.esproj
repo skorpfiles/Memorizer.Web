@@ -14,7 +14,6 @@
   <ItemGroup>
     <Folder Include="src\Pages\Training\" />
     <Folder Include="src\Training\ControlPanel\TrainingProgressSection\" />
-    <Folder Include="src\Training\ControlPanel\QuestionPropertiesSection\" />
     <Folder Include="src\Training\ControlPanel\QuestionStageSection\" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
+import styles from './NewQuestionSignal.module.css';
+
 function NewQuestionSignal() {
     return (
-        <div className="font--notes font--bold" style={{ "borderRight":"0.1rem solid black","backgroundColor":"yellow","padding":"0.2rem"}}>
+        <div className={`font--notes font--bold ${styles['content']}`}>
             This is a new question!
         </div>
     )
