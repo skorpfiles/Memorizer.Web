@@ -1,3 +1,7 @@
 .training-space-width {
     width: 30rem;
 }
+
+.font--main-for-training-questions {
+    font-size: 1.5rem;
+}

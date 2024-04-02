@@ -1,12 +1,27 @@
+import { useState } from 'react';
 import QASpace from '../../Training/QASpace';
 import ResponseSpace from '../../Training/ResponseSpace';
 import ControlPanel from '../../Training/ControlPanel';
 function TrainingPage() {
+    const [testTrainingState, setTestTrainingState] = useState({
+        questionType: 'task',
+        trainingStage: 'learn',
+        typedAnswersCheckResultMode: 'incorrect'
+    });
+
     return (
-        <div className='flex-all-free-space' style={{ "display": "flex", "flexDirection":"column" }} >
-            <QASpace />
-            <ResponseSpace />
-            <ControlPanel />
+        <div className='flex-all-free-space' style={{ "display": "flex", "flexDirection": "column" }} >
+            <QASpace
+                questionType={testTrainingState.questionType}
+                trainingStage={testTrainingState.trainingStage} />
+            <ResponseSpace
+                questionType={testTrainingState.questionType}
+                trainingStage={testTrainingState.trainingStage}
+                typedAnswersCheckResultMode={testTrainingState.typedAnswersCheckResultMode}
+            />
+            <ControlPanel
+                questionType={testTrainingState.questionType}
+                trainingStage={testTrainingState.trainingStage} />
         </div>
     )
 }
