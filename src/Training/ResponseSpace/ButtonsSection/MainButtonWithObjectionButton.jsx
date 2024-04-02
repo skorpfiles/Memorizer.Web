@@ -1,9 +1,10 @@
+import styles from './MainButtonWithObjectionButton.module.css';
 function MainButtonWithObjectionButton() {
     return (
-        <div className='row' style={{ "width": "100%", "alignItems":"stretch" }}>
-            <button className='main-button border-radius-small font--main-for-controls' style={{ "flex": "6 0 0" }}>Next</button>
-            <div style={{"width":"0.5rem"}} />
-            <button className='main-button border-radius-small font--notes' style={{ "flex": "1 0 0" }}>It was correct!</button>
+        <div className={`row ${styles['container']}`}>
+            <button className={`main-button border-radius-small font--main-for-controls ${styles['main-button']}`}>Next</button>
+            <div className={styles['separator']} />
+            <button className={`main-button border-radius-small font--notes ${styles['objection-button']}`}>It was correct!</button>
         </div>
     );
 }

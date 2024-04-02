@@ -1,6 +1,7 @@
 import SingleButton from './ButtonsSection/SingleButton';
 import TrueFalseButtons from './ButtonsSection/TrueFalseButtons';
 import MainButtonWithObjectionButton from './ButtonsSection/MainButtonWithObjectionButton';
+import styles from './ButtonsSection.module.css';
 
 function ButtonsSection(props) {
     let selectedComponent;
@@ -40,7 +41,7 @@ function ButtonsSection(props) {
         default: break;
     }
     return (
-        <div style={{ "margin": "0.25rem", "width":"30rem" }}>
+        <div className={styles['container']}>
             {selectedComponent}
         </div>
     )

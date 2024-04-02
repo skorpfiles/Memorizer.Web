@@ -1,11 +1,13 @@
 import ButtonsSection from './ResponseSpace/ButtonsSection';
 import NoteSection from './ResponseSpace/NoteSection';
+import styles from './ResponseSpace.module.css';
+import './TrainingSpace.css';
 
 function ResponseSpace() {
     return (
-        <div className='column' style={{ "border": "1px solid black", "minHeight": "7.5rem", "alignItems": "center", "justifyContent": "center" }}>
-            <NoteSection questionType='typedAnswers' trainingStage='check' />
-            <ButtonsSection questionType='typedAnswers' trainingStage='check' typedAnswersCheckResultMode='incorrect' />
+        <div className={`column training-space-width ${styles['container']}`}>
+            <NoteSection questionType='task' trainingStage='train' />
+            <ButtonsSection questionType='task' trainingStage='train' typedAnswersCheckResultMode='incorrect' />
         </div>
     )
 }

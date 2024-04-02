@@ -1,5 +1,5 @@
+import styles from './NoteSection.module.css';
 function NoteSection(props) {
-    let text;
     let resultComponent;
     switch (props.questionType) {
         case 'task': {
@@ -31,7 +31,7 @@ function NoteSection(props) {
     }
 
     return (
-        <div className='font--default' style={{ "margin": "0.25rem", "textAlign": "center" }}>{resultComponent}</div>
+        <div className={`font--default ${styles['content']}`}>{resultComponent}</div>
     );
 }
 
