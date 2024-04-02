@@ -8,7 +8,7 @@ function ButtonsSection(props) {
         case 'task': {
             switch (props.trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Done' />); break;
-                case 'train': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No' />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No' />); break;
                 default: break;
             }
             break;
@@ -16,7 +16,7 @@ function ButtonsSection(props) {
         case 'untypedAnswer': {
             switch (props.trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Train the question' />); break;
-                case 'train': selectedComponent = (<SingleButton text='Check the answer' />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text='Check the answer' />); break;
                 case 'check': selectedComponent = (<TrueFalseButtons trueText='Correct' falseText='Incorrect' />); break;
                 default: break;
             }
@@ -40,7 +40,7 @@ function ButtonsSection(props) {
         default: break;
     }
     return (
-        <div style={{ "margin": "0.25rem" }}>
+        <div style={{ "margin": "0.25rem", "width":"30rem" }}>
             {selectedComponent}
         </div>
     )
