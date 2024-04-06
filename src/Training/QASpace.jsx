@@ -2,7 +2,7 @@ import MainText from './QASpace/MainText';
 import NeutralQuestionAndAnswer from './QASpace/NeutralQuestionAndAnswer';
 import QuestionAndCorrectUntypedAnswer from './QASpace/QuestionAndCorrectUntypedAnswer';
 import QuestionAndTypedAnswerResults from './QASpace/QuestionAndTypedAnswerResults';
-import TypingAnswerPanel from './QASpace/TypingAnswerPanel';
+import QuestionWithTypingAnswer from './QASpace/QuestionWithTypingAnswer';
 import './TrainingSpace.css';
 
 function QASpace(props) {
@@ -24,8 +24,8 @@ function QASpace(props) {
         case 'typedAnswers': {
             switch (props.trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
-                case 'train': case 'trainAfterLearning': selectedComponent = (<TypingAnswerPanel />); break;
-                case 'check': selectedComponent = (<QuestionAndTypedAnswerResults />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<QuestionWithTypingAnswer />); break;
+                case 'check': selectedComponent = (<QuestionAndTypedAnswerResults typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
                 default: break;
             }
             break;

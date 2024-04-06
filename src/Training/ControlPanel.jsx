@@ -2,10 +2,10 @@ import MainPanel from './ControlPanel/MainPanel';
 import ReferencePanel from './ControlPanel/ReferencePanel';
 import styles from './ControlPanel.module.css';
 import './TrainingSpace.css';
-function ControlPanel() {
+function ControlPanel(props) {
     return (
         <div className={`column training-space-width ${styles['container']}`}>
-            <MainPanel />
+            <MainPanel trainingStage={props.trainingStage} />
             <div className={styles['separator']}></div>
             <ReferencePanel reference='Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference' />
         </div>

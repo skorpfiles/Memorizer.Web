@@ -2,10 +2,10 @@ import QuestionStageSection from './QuestionStageSection';
 import QuestionPropertiesSection from './QuestionPropertiesSection';
 import TrainingProgressSection from './TrainingProgressSection';
 import styles from './MainPanel.module.css';
-function MainPanel() {
+function MainPanel(props) {
     return (
         <div className={`column ${styles['content']}`}>
-            <QuestionStageSection/>
+            <QuestionStageSection trainingStage={props.trainingStage} />
             <QuestionPropertiesSection/>
             <TrainingProgressSection/>
         </div>
