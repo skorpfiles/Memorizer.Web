@@ -11,6 +11,7 @@ function Header() {
     return (
         <header className={styles['container']} style={{ backgroundImage }}>
             <div className={styles['logo']}><a className={styles['memorizer-href']} href='/'>Memorizer</a></div>
+            <div className={`flex-all-free-space font--main-for-controls font--bold ${styles['training-title']}`}>Training "Piano Exercises"</div>
             {userIsLogged && (<UserAccountHeaderSection />)}
         </header>
     );

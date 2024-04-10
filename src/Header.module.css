@@ -6,7 +6,12 @@ header.container {
 
 .logo {
     font-size: 2rem;
-    flex: 1 0 auto;
+}
+
+.training-title {
+    align-content: center;
+    text-align: center;
+    color: #2F5597;
 }
 
 a.memorizer-href {
