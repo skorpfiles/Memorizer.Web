@@ -3,9 +3,8 @@ import SkorpFilesLogo from './SkorP Files Logo.png';
 import { useSelector } from 'react-redux';
 
 function Footer() {
-    const isWallpaperView = useSelector(state => state.wallpaperView.isWallpaperView);
     const currentWallpaperView = useSelector(state => state.wallpaperView.currentWallpaperView);
-    const backgroundImage = (!isWallpaperView ? 'linear-gradient(transparent, #ABC0E4, #ABC0E4)' : null);
+    const backgroundImage = (currentWallpaperView === 'none' ? 'linear-gradient(transparent, #ABC0E4, #ABC0E4)' : null);
 
     return (
         <footer className={styles['container']} style={{ backgroundImage }}>
