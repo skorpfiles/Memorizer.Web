@@ -1,8 +1,8 @@
 import MainText from './QASpace/MainText';
 import NeutralQuestionAndAnswer from './QASpace/NeutralQuestionAndAnswer';
-import QuestionAndCorrectUntypedAnswer from './QASpace/QuestionAndCorrectUntypedAnswer';
-import QuestionAndTypedAnswerResults from './QASpace/QuestionAndTypedAnswerResults';
+import QuestionResults from './QASpace/QuestionResults';
 import QuestionWithTypingAnswer from './QASpace/QuestionWithTypingAnswer';
+import styles from './QASpace.module.css';
 import './TrainingSpace.css';
 
 function QASpace(props) {
@@ -16,7 +16,7 @@ function QASpace(props) {
             switch (props.trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer/>); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<MainText />); break;
-                case 'check': selectedComponent = (<QuestionAndCorrectUntypedAnswer/>); break;
+                case 'check': selectedComponent = (<QuestionResults questionType={props.questionType} typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
                 default: break;
             }
             break;
@@ -25,7 +25,7 @@ function QASpace(props) {
             switch (props.trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<QuestionWithTypingAnswer />); break;
-                case 'check': selectedComponent = (<QuestionAndTypedAnswerResults typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
+                case 'check': selectedComponent = (<QuestionResults questionType={props.questionType} typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
                 default: break;
             }
             break;
@@ -33,7 +33,7 @@ function QASpace(props) {
         default: break;
     }
     return (
-        <div className='flex-all-free-space training-space-width' style={{ "alignItems": "center", "justifyContent":"center","margin":"auto" }}>
+        <div className={`flex-all-free-space training-space-width ${styles['content']}`}>
             {selectedComponent}
         </div>
     )

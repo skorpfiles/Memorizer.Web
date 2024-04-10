@@ -5,12 +5,12 @@ import ControlPanel from '../../Training/ControlPanel';
 function TrainingPage() {
     const [testTrainingState, setTestTrainingState] = useState({
         questionType: 'typedAnswers',
-        trainingStage: 'check',
+        trainingStage: 'train',
         typedAnswersCheckResultMode: 'correct'
     });
 
     return (
-        <div className='flex-all-free-space' style={{ "display": "flex", "flexDirection": "column" }} >
+        <div className='flex-all-free-space column'>
             <QASpace
                 questionType={testTrainingState.questionType}
                 trainingStage={testTrainingState.trainingStage}

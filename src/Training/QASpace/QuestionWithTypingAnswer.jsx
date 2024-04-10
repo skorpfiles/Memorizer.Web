@@ -1,10 +1,11 @@
 import TypingAnswerPanel from './TypingAnswerPanel';
+import styles from './QuestionWithTypingAnswer.module.css';
 function QuestionWithTypingAnswer() {
     return (
-        <div className='column' style={{ "alignItems": "center", "justifyContent": "center", "height":"100%", "width":"100%" }} >
-            <div className='column' style={{ "alignItems": "stretch", "height": "15rem", "justifyContent": "space-around", "width": "100%" }}>
-                <div className='font--main-for-training-questions' style={{"margin":"auto"}}>table</div>
-                <div className='column' style={{ "width": "100%" }}>
+        <div className={`column ${styles['outer-container']}`}>
+            <div className={`column ${styles['inner-container']}`}>
+                <div className={`font--main-for-training-questions ${styles['question']}`}>table</div>
+                <div className='column full-width'>
                     <TypingAnswerPanel />
                 </div>
             </div>
