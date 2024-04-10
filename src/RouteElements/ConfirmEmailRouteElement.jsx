@@ -10,11 +10,11 @@ function ConfirmEmailRouteElement() {
     const isUserLogged = useSelector(state => state.user.isUserLogged);
     const emailConfirmationIsFinished = useSelector(state => state.emailConfirmationState.isFinished);
 
-    const [enableWallpaperView,] = useWallpaperViewDispatcher();
+    const setWallpaperView = useWallpaperViewDispatcher();
 
     useEffect(() => {
-        enableWallpaperView();
-    }, [enableWallpaperView]);
+        setWallpaperView('mainWallpaper');
+    }, [setWallpaperView]);
 
     let confirmEmailPage;
 

@@ -10,13 +10,13 @@ function MainRouteElement() {
     const isUserLogged = useSelector(state => state.user.isUserLogged);
     const isEmailSendingModeActive = useSelector(state => state.emailSendingState.isModeActive);
     const isEmailSendingFinished = useSelector(state => state.emailSendingState.isFinished);
-    const [enableWallpaperView, ] = useWallpaperViewDispatcher();
+    const setWallpaperView = useWallpaperViewDispatcher();
 
     let mainPage;
 
     useEffect(() => {
-        enableWallpaperView();
-    }, [enableWallpaperView]);
+        setWallpaperView('mainWallpaper');
+    }, [setWallpaperView]);
 
     if (isUserLogged) {
         mainPage = (

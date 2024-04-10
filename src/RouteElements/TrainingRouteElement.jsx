@@ -3,11 +3,11 @@ import TrainingPage from '../Pages/Training/TrainingPage';
 import { useWallpaperViewDispatcher } from '../hooks/useWallpaperViewDispatcher';
 import { useEffect } from 'react';
 function TrainingRouteElement() {
-    const [, disableWallpaperView] = useWallpaperViewDispatcher();
+    const setWallpaperView = useWallpaperViewDispatcher();
 
     useEffect(() => {
-        disableWallpaperView();
-    }, [disableWallpaperView]);
+        setWallpaperView('trainingWallpaper');
+    }, [setWallpaperView]);
 
     return (
         <div className='route-element-with-return-button'>

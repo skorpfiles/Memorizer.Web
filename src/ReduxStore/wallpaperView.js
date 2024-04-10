@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const wallpaperViewSlice = createSlice({
     name: 'wallpaperViewSlice',
     initialState: {
-        isWallpaperView: true
+        isWallpaperView: true,
+        currentWallpaperView: 'mainWallpaper'
     },
     reducers: {
         enableWallpaperView(state) {
@@ -11,6 +12,9 @@ const wallpaperViewSlice = createSlice({
         },
         disableWallpaperView(state) {
             state.isWallpaperView = false;
+        },
+        setWallpaperView(state, newView) {
+            state.currentWallpaperView = newView; 
         }
     }
 });
