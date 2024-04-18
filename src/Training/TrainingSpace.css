@@ -2,6 +2,10 @@
     width: 30rem;
 }
 
+.training-space-narrow-width {
+    width: 20rem;
+}
+
 .font--main-for-training-questions {
     font-size: 1.5rem;
 }
