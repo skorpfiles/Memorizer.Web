@@ -9,10 +9,10 @@ import { useSearchParams } from 'react-router-dom';
 import { callApi } from '../Utils/GlobalUtils';
 import { trainingStateActions } from '../ReduxStore/training';
 
-function TrainingRouteElement(props) {
+function TrainingRouteElement() {
     const setWallpaperView = useWallpaperViewDispatcher();
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams,] = useSearchParams();
 
     const questionsForTrainingReducer = (state, action) => {
         switch (action.type) {
@@ -45,7 +45,7 @@ function TrainingRouteElement(props) {
         }
     }
 
-    const [isTrainingIdCorrect, setIsTrainingIdCorrect] = useState(null);
+    const [, setIsTrainingIdCorrect] = useState(null);
 
     const [questionsForTrainingState, dispatchQuestionsForTrainingState] = useReducer(questionsForTrainingReducer, {
         isLoading: false,
@@ -77,8 +77,8 @@ function TrainingRouteElement(props) {
                     const response = await callApi(url, 'GET', accessToken);
                     if (response.ok) {
                         const result = await response.json();
-                        dispatch(trainingStateActions.setTrainingId(trainingId));
-                        dispatch(trainingStateActions.setNewQuestionsList({
+                        dispatch(trainingStateActions.startTraining({
+                            trainingId,
                             questions: result.questions,
                             questionsCount: result.questions.length
                         }));

@@ -2,27 +2,44 @@ import { useState } from 'react';
 import QASpace from '../../Training/QASpace';
 import ResponseSpace from '../../Training/ResponseSpace';
 import ControlPanel from '../../Training/ControlPanel';
+
+import { useSelector } from 'react-redux';
+
+
 function TrainingPage() {
-    const [testTrainingState, setTestTrainingState] = useState({
-        questionType: 'typedAnswers',
-        trainingStage: 'train',
-        typedAnswersCheckResultMode: 'correct'
-    });
+    //const [testTrainingState, setTestTrainingState] = useState({
+    //    questionType: 'task',
+    //    trainingStage: 'train',
+    //    typedAnswersCheckResultMode: 'correct'
+    //});
+
+    const currentQuestion = useSelector(state => state.trainingState.currentQuestion);
+    const trainingStage = useSelector(state => state.trainingState.trainingStage);
+    const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
+
+    let typedAnswersCheckResultMode;
+    if (trainingStage === 'typedAnswers') {
+        typedAnswersCheckResultMode = trainingStageParameters[0];
+    }
+    else {
+        typedAnswersCheckResultMode = null;
+    }
 
     return (
         <div className='flex-all-free-space column'>
             <QASpace
-                questionType={testTrainingState.questionType}
-                trainingStage={testTrainingState.trainingStage}
-                typedAnswersCheckResultMode={testTrainingState.typedAnswersCheckResultMode} />
+                questionType={currentQuestion.type}
+                trainingStage={trainingStage}
+                typedAnswersCheckResultMode={typedAnswersCheckResultMode}
+            />
             <ResponseSpace
-                questionType={testTrainingState.questionType}
-                trainingStage={testTrainingState.trainingStage}
-                typedAnswersCheckResultMode={testTrainingState.typedAnswersCheckResultMode}
+                questionType={currentQuestion.type}
+                trainingStage={trainingStage}
+                typedAnswersCheckResultMode={typedAnswersCheckResultMode}
             />
             <ControlPanel
-                questionType={testTrainingState.questionType}
-                trainingStage={testTrainingState.trainingStage} />
+                trainingStage={trainingStage}
+            />
         </div>
     )
 }

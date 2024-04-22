@@ -1,13 +1,18 @@
 import NewQuestionSignal from './QuestionStageSection/NewQuestionSignal';
 import Stage from './QuestionStageSection/Stage';
 import styles from './QuestionStageSection.module.css';
-function QuestionStageSection(props) {
+
+import { useSelector } from 'react-redux';
+
+function QuestionStageSection() {
+    const trainingStage = useSelector(state => state.trainingState.trainingStage);
+
     return (
         <div className={`row ${styles['content']}`}>
             <NewQuestionSignal />
-            <Stage name="Learn" isActive={ (props.trainingStage === 'learn') } />
-            <Stage name="Train" isActive={ (props.trainingStage === 'train') } />
-            <Stage name="Check" isActive={ (props.trainingStage === 'check') } />
+            <Stage name="Learn" isActive={ (trainingStage === 'learn') } />
+            <Stage name="Train" isActive={ (trainingStage === 'train') } />
+            <Stage name="Check" isActive={ (trainingStage === 'check') } />
         </div>
     )
 }
