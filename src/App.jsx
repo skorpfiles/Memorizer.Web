@@ -6,7 +6,7 @@ import { callApi, getAccessTokenFromCookies, getUserLoginFromCookies } from './U
 import {
     BrowserRouter as Router,
     Routes,
-    Route
+    Route,
 } from 'react-router-dom';
 
 import MainRouteElement from './RouteElements/MainRouteElement';
@@ -128,7 +128,7 @@ function App() {
                                 <Route
                                     path='train'
                                     element={
-                                        <TrainingRouteElement/>
+                                        <TrainingRouteElement />
                                     }
                                 />
                             )}

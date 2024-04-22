@@ -3,13 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
     initialState: {
-        //trainingQuestions: {
-        //    areLoading: false,
-        //    loadingFinished: false,
-        //    loadingSucceed: false,
-        //    items: null,
-        //    itemsCount: null
-        //},
         trainingId: null,
         questions: null,
         questionsCount: null,
@@ -20,11 +13,6 @@ const trainingStateSlice = createSlice({
         currentQuestionTimeSeconds: 0,
         correctAnswersPercent: 100,
         isTrainingResultReady: false
-        //uploadingResults: {
-        //    areUploading: false,
-        //    finished: false,
-        //    succeed: false
-        //}
     },
     reducers: {
         setDefault(state) {
@@ -44,7 +32,7 @@ const trainingStateSlice = createSlice({
         },
         setNewQuestionsList(state, action) {
             state.questions = action.payload.questions;
-            state.questionsCount = action.payload.questions.length;
+            state.questionsCount = action.payload.questionsCount;
         }
     }
 });

@@ -5,11 +5,14 @@ import TrainingLoadingPage from '../Pages/Training/TrainingLoadingPage';
 import { useWallpaperViewDispatcher } from '../hooks/useWallpaperViewDispatcher';
 import { useState, useEffect, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { callApi } from '../Utils/GlobalUtils';
-import { trainingActions } from '../ReduxStore/training';
+import { trainingStateActions } from '../ReduxStore/training';
 
 function TrainingRouteElement(props) {
     const setWallpaperView = useWallpaperViewDispatcher();
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const questionsForTrainingReducer = (state, action) => {
         switch (action.type) {
@@ -54,6 +57,8 @@ function TrainingRouteElement(props) {
 
     const accessToken = useSelector(state => state.user.accessToken);
 
+    const isTrainingResultReady = useSelector(state => state.trainingState.isTrainingResultReady);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -61,42 +66,56 @@ function TrainingRouteElement(props) {
     }, [setWallpaperView]);
 
     useEffect(() => {
-        if (props.trainingId !== null) {
+        const trainingId = searchParams.get('id');
+        if (trainingId !== null) {
             setIsTrainingIdCorrect(true);
-            dispatch(trainingActions.setDefault());
-            dispatchQuestionsForTrainingState('setIsLoading');
+            dispatch(trainingStateActions.setDefault());
+            dispatchQuestionsForTrainingState({ type: 'setIsLoading' });
             try {
                 const loadingQuestionsListFunc = async () => {
-                    const url = '/Repository/Questionnaires/' + props.trainingId;
+                    let url = '/Training/Start?id=' + trainingId;
                     const response = await callApi(url, 'GET', accessToken);
                     if (response.ok) {
                         const result = await response.json();
-                        dispatch(trainingActions.setTrainingId(props.trainingId));
+                        dispatch(trainingStateActions.setTrainingId(trainingId));
+                        dispatch(trainingStateActions.setNewQuestionsList({
+                            questions: result.questions,
+                            questionsCount: result.questions.length
+                        }));
+                        dispatchQuestionsForTrainingState({ type: 'setSuccess' });
+                    }
+                    else {
+                        const result = await response.json();
+                        dispatchQuestionsForTrainingState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
                     }
                 }
-
-
-
-
-
-
-
-
-                dispatch(trainingActions.setNewQuestionsList());
+                loadingQuestionsListFunc().catch(console.error);
             }
-            catch(error) {
+            catch (error) {
                 console.log(error);
-                dispatchQuestionsForTrainingState('setError', 'Error: Unable to connect to the API.');
+                dispatchQuestionsForTrainingState({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
             }
         }
-    })
+        else {
+            dispatchQuestionsForTrainingState({ type: 'setError', errorMessage: 'Incorrect training ID.' });
+        }
+    }, [searchParams, dispatch, accessToken]);
+
+    let mainContent = null;
+    if (!questionsForTrainingState.loadingSucceed) {
+        mainContent = (<TrainingLoadingPage hasErrorResult={questionsForTrainingState.loadingError} />);
+    }
+    else if (!isTrainingResultReady) {
+        mainContent = (<TrainingPage />);
+    }
+    else {
+        mainContent = (<TrainingResultPage />);
+    }
 
     return (
         <div className='route-element-with-return-button'>
-            {/*<ReturnToPage path='/' text='Return to the main page' />*/}
-            <TrainingPage />
-            {/*<TrainingResultPage/>*/}
-            {/*<TrainingLoadingPage/>*/}
+            {!isTrainingResultReady && (<ReturnToPage path='/' text='Return to the main page' />)}
+            {mainContent}
         </div>
     );
 }

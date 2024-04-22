@@ -1,4 +1,4 @@
-import LoadingAnimation from '../LoadingAnimation';
+import LoadingWidget from '../LoadingWidget';
 import styles from './LoaderSection.module.css';
 function LoaderSection(props) {
     let content;
@@ -6,7 +6,7 @@ function LoaderSection(props) {
     if (props.isLoading) {
         content = (
             <div>
-                <LoadingAnimation />
+                <LoadingWidget hasErrorResult={true} errorMessage='Loading error. Please try again.' />
             </div>
         );
     }
