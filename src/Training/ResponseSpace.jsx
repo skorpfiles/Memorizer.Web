@@ -1,5 +1,6 @@
 import ButtonsSection from './ResponseSpace/ButtonsSection';
 import NoteSection from './ResponseSpace/NoteSection';
+import LoaderSection from './ResponseSpace/LoaderSection';
 import styles from './ResponseSpace.module.css';
 import './TrainingSpace.css';
 
@@ -14,6 +15,7 @@ function ResponseSpace(props) {
                     questionType={props.questionType}
                     trainingStage={props.trainingStage}
                     typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />
+                <LoaderSection isLoading={true} />
             </div>
         );
     }
