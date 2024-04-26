@@ -12,6 +12,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\TestData\" />
     <Folder Include="src\Pages\Training\" />
     <Folder Include="src\Training\ControlPanel\TrainingProgressSection\" />
     <Folder Include="src\Training\ControlPanel\QuestionStageSection\" />

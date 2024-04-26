@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { callApi } from '../Utils/GlobalUtils';
 import { trainingStateActions } from '../ReduxStore/training';
+import { GetTrainingQuestionsForEveryType, DEMO_QUESTIONS_MODE } from '../TestData/TrainingDataForTest';
 
 function TrainingRouteElement() {
     const setWallpaperView = useWallpaperViewDispatcher();
@@ -76,7 +77,7 @@ function TrainingRouteElement() {
                     let url = '/Training/Start?id=' + trainingId;
                     const response = await callApi(url, 'GET', accessToken);
                     if (response.ok) {
-                        const result = await response.json();
+                        const result = resultSelector(await response.json());
                         dispatch(trainingStateActions.startTraining({
                             trainingId,
                             questions: result.questions
@@ -117,6 +118,10 @@ function TrainingRouteElement() {
             {mainContent}
         </div>
     );
+}
+
+function resultSelector(realResult) {
+    return DEMO_QUESTIONS_MODE ? GetTrainingQuestionsForEveryType() : realResult;
 }
 
 export default TrainingRouteElement;

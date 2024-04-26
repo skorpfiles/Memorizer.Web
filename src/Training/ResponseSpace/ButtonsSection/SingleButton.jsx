@@ -1,8 +1,9 @@
 import styles from './SingleButton.module.css';
+
 function SingleButton(props) {
     return (
         <div className='column'>
-            <button className={`main-button border-radius-small font--main-for-controls ${styles['content']}`}>{props.text}</button>
+            <button className={`main-button border-radius-small font--main-for-controls ${styles['content']}`} onClick={() => props.handleClick() }>{props.text}</button>
         </div>
     );
 }

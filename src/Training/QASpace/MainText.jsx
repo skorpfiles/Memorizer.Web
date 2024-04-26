@@ -1,8 +1,11 @@
 import styles from './MainText.module.css';
+import { useSelector } from 'react-redux';
+
 function MainText() {
+    const questionText = useSelector(state => state.trainingState.currentQuestion.text);
     return (
         <div className={`column ${styles['container']}`}>
-            <div className='font--main-for-training-questions'>Perform the Mozart's Symphony No. 40.</div>
+            <div className='font--main-for-training-questions'>{questionText}</div>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { emailSendingStateReducer } from './emailSendingState';
 import { emailConfirmationStateReducer } from './emailConfirmationState';
 import { wallpaperViewReducer } from './wallpaperView';
 import { trainingStateReducer } from './training';
+import { answerSendingStateReducer } from './answerSendingState';
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         emailSendingState: emailSendingStateReducer,
         emailConfirmationState: emailConfirmationStateReducer,
         wallpaperView: wallpaperViewReducer,
-        trainingState: trainingStateReducer
+        trainingState: trainingStateReducer,
+        answerSendingState: answerSendingStateReducer
     }
 });

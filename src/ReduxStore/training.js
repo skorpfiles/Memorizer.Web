@@ -50,6 +50,7 @@ const trainingStateSlice = createSlice({
             //start training current question
             state.currentQuestionTimeSeconds = 0;
             state.correctAnswersPercent = 0;
+            state.currentQuestion.trainingStartTime = new Date().toISOString();
 
             //set training stage
             const nextState = goNextInTrainingQuestion(state.currentQuestion, null, null);
@@ -73,23 +74,24 @@ const trainingStateSlice = createSlice({
             let nextState = goNextInTrainingQuestion(state.currentQuestion, {
                 trainingStage: state.trainingStage,
                 trainingStageParameters: state.trainingStageParameters
-            }, [...action.payload.parameters]);
+            }, [...(action.payload.parameters || [])]);
 
             if (nextState.switchToNextQuestion) {
                 if (state.currentQuestionIndex + 1 < state.questionsCount) {
                     state.currentQuestionIndex++;
                     state.currentQuestion = state.questions[state.currentQuestionIndex];
+                    state.currentQuestion.trainingStartTime = new Date().toISOString();
                     nextState = goNextInTrainingQuestion(state.currentQuestion, null, null);
-                    state.trainingStage = nextState.newTrainingStage;
-                    state.trainingStageParameters = nextState.newTrainingStageParameters;
+                    state.trainingStage = nextState.trainingStage;
+                    state.trainingStageParameters = nextState.trainingStageParameters;
                 }
                 else {
                     state.isTrainingResultReady = true;
                 }
             }
             else {
-                state.trainingStage = nextState.newTrainingStage;
-                state.trainingStageParameters = nextState.newTrainingStageParameters;
+                state.trainingStage = nextState.trainingStage;
+                state.trainingStageParameters = nextState.trainingStageParameters;
             }
         },
         answerCurrentQuestionAndSetTrainingStage(state, action) {

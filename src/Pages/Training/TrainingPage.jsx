@@ -7,12 +7,6 @@ import { useSelector } from 'react-redux';
 
 
 function TrainingPage(props) {
-    //const [testTrainingState, setTestTrainingState] = useState({
-    //    questionType: 'task',
-    //    trainingStage: 'train',
-    //    typedAnswersCheckResultMode: 'correct'
-    //});
-
     const currentQuestion = useSelector(state => state.trainingState.currentQuestion);
     const trainingStage = useSelector(state => state.trainingState.trainingStage);
     const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
