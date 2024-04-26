@@ -15,7 +15,7 @@ function ResponseSpace(props) {
                     questionType={props.questionType}
                     trainingStage={props.trainingStage}
                     typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />
-                <LoaderSection isLoading={true} />
+                <LoaderSection isLoading={props.questionsForTrainingState.isLoading} hasErrorResult={props.questionsForTrainingState.loadingError} />
             </div>
         );
     }

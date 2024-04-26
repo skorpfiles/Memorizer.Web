@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { goNextInTrainingQuestion } from '../Utils/TrainingUtils.js';
 
 const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
@@ -33,7 +34,12 @@ const trainingStateSlice = createSlice({
 
             //set new questions list
             state.questions = action.payload.questions;
-            state.questionsCount = action.payload.questionsCount;
+            if (state.questions !== null) {
+                state.questionsCount = action.payload.questions.length;
+            }
+            else {
+                state.questionsCount = null;
+            }
 
             //move to first question
             if (state.questionsCount > 0) {
@@ -44,10 +50,47 @@ const trainingStateSlice = createSlice({
             //start training current question
             state.currentQuestionTimeSeconds = 0;
             state.correctAnswersPercent = 0;
+
+            //set training stage
+            const nextState = goNextInTrainingQuestion(state.currentQuestion, null, null);
+            state.trainingStage = nextState.trainingStage;
+            state.trainingStageParameters = nextState.trainingStageParameters;
         },
         setTrainingStage(state, action) {
             state.trainingStage = action.payload.newTrainingStage;
             state.trainingStageParameters = action.payload.newTrainingStageParameters;
+        },
+        goNext(state, action) {
+            if (action.payload.gotAnswer) {
+                state.currentQuestion.givenTypedAnswers = action.payload.givenTypedAnswers;
+                state.currentQuestion.isAnswerCorrect = action.payload.isAnswerCorrect;
+                state.currentQuestion.timeSeconds = action.payload.timeSeconds;
+                state.currentQuestion.myStatus.rating = action.payload.newRating;
+                state.currentQuestion.myStatus.penaltyPoints = action.payload.newPenaltyPoints;
+                state.correctAnswersPercent = action.payload.resultCorrectAnswersPercent;
+            }
+
+            let nextState = goNextInTrainingQuestion(state.currentQuestion, {
+                trainingStage: state.trainingStage,
+                trainingStageParameters: state.trainingStageParameters
+            }, [...action.payload.parameters]);
+
+            if (nextState.switchToNextQuestion) {
+                if (state.currentQuestionIndex + 1 < state.questionsCount) {
+                    state.currentQuestionIndex++;
+                    state.currentQuestion = state.questions[state.currentQuestionIndex];
+                    nextState = goNextInTrainingQuestion(state.currentQuestion, null, null);
+                    state.trainingStage = nextState.newTrainingStage;
+                    state.trainingStageParameters = nextState.newTrainingStageParameters;
+                }
+                else {
+                    state.isTrainingResultReady = true;
+                }
+            }
+            else {
+                state.trainingStage = nextState.newTrainingStage;
+                state.trainingStageParameters = nextState.newTrainingStageParameters;
+            }
         },
         answerCurrentQuestionAndSetTrainingStage(state, action) {
             //answer

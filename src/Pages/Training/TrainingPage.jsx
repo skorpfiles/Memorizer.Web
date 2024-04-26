@@ -6,7 +6,7 @@ import ControlPanel from '../../Training/ControlPanel';
 import { useSelector } from 'react-redux';
 
 
-function TrainingPage() {
+function TrainingPage(props) {
     //const [testTrainingState, setTestTrainingState] = useState({
     //    questionType: 'task',
     //    trainingStage: 'train',
@@ -36,6 +36,7 @@ function TrainingPage() {
                 questionType={currentQuestion.type}
                 trainingStage={trainingStage}
                 typedAnswersCheckResultMode={typedAnswersCheckResultMode}
+                questionsForTrainingState={props.questionsForTrainingState}
             />
             <ControlPanel
                 trainingStage={trainingStage}

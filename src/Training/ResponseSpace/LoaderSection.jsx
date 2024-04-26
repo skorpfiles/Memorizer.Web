@@ -6,7 +6,7 @@ function LoaderSection(props) {
     if (props.isLoading) {
         content = (
             <div>
-                <LoadingWidget hasErrorResult={true} errorMessage='Loading error. Please try again.' />
+                <LoadingWidget hasErrorResult={props.hasErrorResult} errorMessage='Loading error. Please try again.' />
             </div>
         );
     }

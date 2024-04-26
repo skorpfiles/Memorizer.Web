@@ -1,8 +1,11 @@
 import styles from './ReferencePanel.module.css';
-function ReferencePanel(props) {
+import { useSelector } from 'react-redux';
+
+function ReferencePanel() {
+    const reference = useSelector(state => state.trainingState.currentQuestion.reference);
     return (
         <div className={`font--notes ${styles['container']}`}>
-            <div className={`overflow-ellipsis ${styles['content']}`} title={props.reference}>Reference: {props.reference}</div>
+            <div className={`overflow-ellipsis ${styles['content']}`} title={reference}>Reference: {reference}</div>
         </div>
     )
 }

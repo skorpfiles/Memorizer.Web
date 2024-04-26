@@ -79,8 +79,7 @@ function TrainingRouteElement() {
                         const result = await response.json();
                         dispatch(trainingStateActions.startTraining({
                             trainingId,
-                            questions: result.questions,
-                            questionsCount: result.questions.length
+                            questions: result.questions
                         }));
                         dispatchQuestionsForTrainingState({ type: 'setSuccess' });
                     }
@@ -106,7 +105,7 @@ function TrainingRouteElement() {
         mainContent = (<TrainingLoadingPage hasErrorResult={questionsForTrainingState.loadingError} />);
     }
     else if (!isTrainingResultReady) {
-        mainContent = (<TrainingPage />);
+        mainContent = (<TrainingPage questionsForTrainingState={questionsForTrainingState} />);
     }
     else {
         mainContent = (<TrainingResultPage />);
