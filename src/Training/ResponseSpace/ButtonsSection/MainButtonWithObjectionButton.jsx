@@ -1,10 +1,10 @@
 import styles from './MainButtonWithObjectionButton.module.css';
-function MainButtonWithObjectionButton() {
+function MainButtonWithObjectionButton(props) {
     return (
         <div className={`row ${styles['container']}`}>
-            <button className={`main-button border-radius-small font--main-for-controls ${styles['main-button']}`}>Next</button>
+            <button className={`main-button border-radius-small font--main-for-controls ${styles['main-button']}`} onClick={() => props.handleMainButtonClick()}>Next</button>
             <div className={styles['separator']} />
-            <button className={`main-button border-radius-small font--notes ${styles['objection-button']}`}>It was correct!</button>
+            <button className={`main-button border-radius-small font--notes ${styles['objection-button']}`} onClick={() => props.handleObjectionButtonClick()}>It was correct!</button>
         </div>
     );
 }

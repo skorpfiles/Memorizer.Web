@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { goNextInTrainingQuestion } from '../Utils/TrainingUtils.js';
+import { goNextInTrainingQuestion, challengeIncorrectness, checkIfAnswerIsCorrect, getCorrectAnswersPercent } from '../Utils/TrainingUtils.js';
 
 const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
@@ -49,7 +49,7 @@ const trainingStateSlice = createSlice({
 
             //start training current question
             state.currentQuestionTimeSeconds = 0;
-            state.correctAnswersPercent = 0;
+            state.correctAnswersPercent = 100;
             state.currentQuestion.trainingStartTime = new Date().toISOString();
 
             //set training stage
@@ -57,18 +57,16 @@ const trainingStateSlice = createSlice({
             state.trainingStage = nextState.trainingStage;
             state.trainingStageParameters = nextState.trainingStageParameters;
         },
-        setTrainingStage(state, action) {
-            state.trainingStage = action.payload.newTrainingStage;
-            state.trainingStageParameters = action.payload.newTrainingStageParameters;
-        },
         goNext(state, action) {
             if (action.payload.gotAnswer) {
-                state.currentQuestion.givenTypedAnswers = action.payload.givenTypedAnswers;
-                state.currentQuestion.isAnswerCorrect = action.payload.isAnswerCorrect;
+                const newAnswerState = checkIfAnswerIsCorrect(state.currentQuestion, action.payload.givenTypedAnswers, action.payload.isAnswerCorrect);
+                state.currentQuestion.gotAnswer = true;
+                state.currentQuestion.givenTypedAnswers = newAnswerState.givenTypedAnswers;
+                state.currentQuestion.isAnswerCorrect = newAnswerState.isAnswerCorrect;
                 state.currentQuestion.timeSeconds = action.payload.timeSeconds;
                 state.currentQuestion.myStatus.rating = action.payload.newRating;
                 state.currentQuestion.myStatus.penaltyPoints = action.payload.newPenaltyPoints;
-                state.correctAnswersPercent = action.payload.resultCorrectAnswersPercent;
+                state.correctAnswersPercent = getCorrectAnswersPercent(state.questions);
             }
 
             let nextState = goNextInTrainingQuestion(state.currentQuestion, {
@@ -94,24 +92,8 @@ const trainingStateSlice = createSlice({
                 state.trainingStageParameters = nextState.trainingStageParameters;
             }
         },
-        answerCurrentQuestionAndSetTrainingStage(state, action) {
-            //answer
-            state.currentQuestion.givenTypedAnswers = action.payload.givenTypedAnswers;
-            state.currentQuestion.isAnswerCorrect = action.payload.isAnswerCorrect;
-            state.currentQuestion.timeSeconds = action.payload.timeSeconds;
-            state.currentQuestion.myStatus.rating = action.payload.newRating;
-            state.currentQuestion.myStatus.penaltyPoints = action.payload.newPenaltyPoints;
-            state.correctAnswersPercent = action.payload.resultCorrectAnswersPercent;
-
-            //switch to the next training stage
-            state.trainingStage = action.payload.newTrainingStage;
-            state.trainingStageParameters = action.payload.newTrainingStageParameters;
-        },
-        moveToNextQuestion(state) {
-            if (state.currentQuestionIndex + 1 < state.questionsCount) {
-                state.currentQuestionIndex++;
-                state.currentQuestion = state.questions[state.currentQuestionIndex];
-            }
+        challengeIncorrectness(state) {
+            state.trainingStageParameters = challengeIncorrectness(state.currentQuestion, state.trainingStage, state.trainingStageParameters);
         },
         setTrainingResult(state) {
             state.isTrainingResultReady = true;

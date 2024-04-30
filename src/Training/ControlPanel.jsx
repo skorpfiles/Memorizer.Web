@@ -7,7 +7,7 @@ function ControlPanel(props) {
         <div className={`column training-space-width ${styles['container']}`}>
             <MainPanel trainingStage={props.trainingStage} />
             <div className={styles['separator']}></div>
-            <ReferencePanel reference='Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference Very Long Reference' />
+            <ReferencePanel/>
         </div>
     )
 }

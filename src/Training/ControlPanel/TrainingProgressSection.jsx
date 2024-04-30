@@ -3,8 +3,9 @@ import OuterSection from "./TrainingProgressSection/OuterSection";
 import alarmIcon from './TrainingProgressSection/alarm.png';
 import checkIcon from './TrainingProgressSection/check.png';
 import styles from './TrainingProgressSection.module.css';
-
+import { useSelector } from 'react-redux';
 function TrainingProgressSection() {
+    const correctAnswersPercent = useSelector(state => state.trainingState.correctAnswersPercent);
     return (
         <div className={`font--main-for-controls row ${styles['container']}`}>
             <div className={styles['outer-section-container']}>
@@ -14,7 +15,7 @@ function TrainingProgressSection() {
                 <ProgressSection />
             </div>
             <div className={styles['outer-section-container']}>
-                <OuterSection position='right' icon={checkIcon} iconAlt='Percent' iconTitle='Current Right Answers Percent' text='94%' />
+                <OuterSection position='right' icon={checkIcon} iconAlt='Percent' iconTitle='Current Right Answers Percent' text={`${correctAnswersPercent} %`} />
             </div>
         </div>
     )
