@@ -1,4 +1,4 @@
-export function goNextInTrainingQuestion(question, previousState, parameters) {
+export function goNextInTrainingQuestion(question, previousState) {
     let result;
     if (previousState === null) { //start training question
         if (question.myStatus.isNew) {
@@ -24,7 +24,7 @@ export function goNextInTrainingQuestion(question, previousState, parameters) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'trainAfterLearning',
-                            trainingStageParameters: []
+                            trainingStageParameters: previousState.trainingStageParameters
                         }; break;
                     case 'train': case 'trainAfterLearning':
                         result = {
@@ -41,13 +41,13 @@ export function goNextInTrainingQuestion(question, previousState, parameters) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
-                            trainingStageParameters: []
+                            trainingStageParameters: previousState.trainingStageParameters
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
-                            trainingStageParameters: []
+                            trainingStageParameters: previousState.trainingStageParameters
                         }; break;
                     case 'check':
                         result = {
@@ -64,13 +64,13 @@ export function goNextInTrainingQuestion(question, previousState, parameters) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
-                            trainingStageParameters: []
+                            trainingStageParameters: previousState.trainingStageParameters
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
-                            trainingStageParameters: [...parameters]
+                            trainingStageParameters: previousState.trainingStageParameters,
                         }; break;
                     case 'check':
                         result = {

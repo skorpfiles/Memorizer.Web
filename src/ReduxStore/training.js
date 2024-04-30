@@ -56,6 +56,7 @@ const trainingStateSlice = createSlice({
             state.trainingStageParameters = nextState.trainingStageParameters;
         },
         goNext(state, action) {
+            let nextState;
             if (action.payload.gotAnswer) {
                 const newAnswerState = checkIfAnswerIsCorrect(state.questions[state.currentQuestionIndex], action.payload.givenTypedAnswers, action.payload.isAnswerCorrect);
                 state.questions[state.currentQuestionIndex].gotAnswer = true;
@@ -64,17 +65,21 @@ const trainingStateSlice = createSlice({
                 state.questions[state.currentQuestionIndex].timeSeconds = action.payload.timeSeconds;
                 state.questions[state.currentQuestionIndex].myStatus.rating = action.payload.newRating;
                 state.questions[state.currentQuestionIndex].myStatus.penaltyPoints = action.payload.newPenaltyPoints;
+                nextState = goNextInTrainingQuestion(state.questions[state.currentQuestionIndex], {
+                    trainingStage: state.trainingStage,
+                    trainingStageParameters: [newAnswerState.isCorrect ? 'correct' : 'incorrect']
+                });
             }
-
-            let nextState = goNextInTrainingQuestion(state.questions[state.currentQuestionIndex], {
-                trainingStage: state.trainingStage,
-                trainingStageParameters: state.trainingStageParameters
-            }, [...(action.payload.parameters || [])]);
+            else {
+                nextState = goNextInTrainingQuestion(state.questions[state.currentQuestionIndex], {
+                    trainingStage: state.trainingStage,
+                    trainingStageParameters: state.trainingStageParameters
+                });
+            }
 
             if (nextState.switchToNextQuestion) {
                 if (state.currentQuestionIndex + 1 < state.questionsCount) {
                     state.currentQuestionIndex++;
-                    //state.currentQuestion = state.questions[state.currentQuestionIndex];
                     state.questions[state.currentQuestionIndex].trainingStartTime = new Date().toISOString();
                     nextState = goNextInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
                     state.trainingStage = nextState.trainingStage;

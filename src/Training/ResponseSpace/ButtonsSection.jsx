@@ -2,31 +2,20 @@ import SingleButton from './ButtonsSection/SingleButton';
 import TrueFalseButtons from './ButtonsSection/TrueFalseButtons';
 import MainButtonWithObjectionButton from './ButtonsSection/MainButtonWithObjectionButton';
 import styles from './ButtonsSection.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { trainingStateActions } from '../../ReduxStore/training';
-import { useSendQuestionAnswer } from '../../hooks/useSendQuestionAnswer';
+import { useGoingNext } from '../../hooks/useGoingNext';
 
 function ButtonsSection(props) {
     const dispatch = useDispatch();
-    const sendQuestionAnswer = useSendQuestionAnswer();
-    const questionId = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].id);
-    const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
-    const answerTimeMilliseconds = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].answerTimeMilliseconds);
+    const goNext = useGoingNext();
 
     const handleGoNext = () => {
-        dispatch(trainingStateActions.goNext({ gotAnswer: false }));
+        goNext(false);
     }
 
     const handleAnswer = (isAnswerCorrect, givenTypedAnswers) => {
-        sendQuestionAnswer({
-            questionId,
-            trainingStartTime,
-            givenTypedAnswers,
-            isAnswerCorrect,
-            answerTimeMilliseconds
-        });
-        dispatch(trainingStateActions.goNext({ gotAnswer: true, isAnswerCorrect, givenTypedAnswers }));
-        dispatch(trainingStateActions.updateCorrectAnswersPercent());
+        goNext(true, isAnswerCorrect, givenTypedAnswers);
     }
 
     const handleChallengingIncorrectness = () => {
