@@ -2,10 +2,10 @@ import QuestionIcon from './question.png';
 import styles from './NeutralQuestionAndAnswer.module.css';
 import { useSelector } from 'react-redux';
 function NeutralQuestionAndAnswer() {
-    const questionText = useSelector(state => state.trainingState.currentQuestion.text);
-    const questionType = useSelector(state => state.trainingState.currentQuestion.type);
-    const untypedAnswer = useSelector(state => state.trainingState.currentQuestion.untypedAnswer);
-    const typedAnswers = useSelector(state => state.trainingState.currentQuestion.typedAnswers);
+    const questionText = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].text);
+    const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
+    const untypedAnswer = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].untypedAnswer);
+    const typedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].typedAnswers);
 
     const resultAnswer = questionType === 'typedAnswers' ? typedAnswers.map(ans=>ans.text).join('; ') : untypedAnswer;
 

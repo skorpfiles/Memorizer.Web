@@ -132,9 +132,8 @@ export function checkIfAnswerIsCorrect(question, givenTypedAnswers, isAnswerCorr
 }
 
 export function getCorrectAnswersPercent(questions) {
-    const questionsWithAnswers = questions.filter(question => question.gotAnswer === true);
-    const numberOfQuestionsWithAnswers = questionsWithAnswers.length;
-    const numberOfCorrectAnswers = questionsWithAnswers.filter(question => question.isAnswerCorrect).length;
+    const numberOfQuestions = questions.length;
+    const numberOfCorrectAnswers = questions.filter(question => question.isAnswerCorrect).length;
 
-    return numberOfCorrectAnswers / numberOfQuestionsWithAnswers * 100;
+    return numberOfCorrectAnswers / numberOfQuestions * 100;
 }

@@ -9,11 +9,9 @@ import { useSendQuestionAnswer } from '../../hooks/useSendQuestionAnswer';
 function ButtonsSection(props) {
     const dispatch = useDispatch();
     const sendQuestionAnswer = useSendQuestionAnswer();
-    const questionId = useSelector(state => state.trainingState.currentQuestion.id);
-    const trainingStartTime = useSelector(state => state.trainingState.currentQuestion.trainingStartTime);
-    const givenTypedAnswers = useSelector(state => state.trainingState.currentQuestion.givenTypedAnswers);
-    const isAnswerCorrect = useSelector(state => state.trainingState.currentQuestion.isAnswerCorrect);
-    const answerTimeMilliseconds = useSelector(state => state.trainingState.currentQuestion.answerTimeMilliseconds);
+    const questionId = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].id);
+    const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
+    const answerTimeMilliseconds = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].answerTimeMilliseconds);
 
     const handleGoNext = () => {
         dispatch(trainingStateActions.goNext({ gotAnswer: false }));
@@ -28,6 +26,7 @@ function ButtonsSection(props) {
             answerTimeMilliseconds
         });
         dispatch(trainingStateActions.goNext({ gotAnswer: true, isAnswerCorrect, givenTypedAnswers }));
+        dispatch(trainingStateActions.updateCorrectAnswersPercent());
     }
 
     const handleChallengingIncorrectness = () => {

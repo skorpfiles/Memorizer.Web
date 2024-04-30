@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 
 function QuestionStageSection() {
     const trainingStage = useSelector(state => state.trainingState.trainingStage);
-    const isQuestionNew = useSelector(state => state.trainingState.currentQuestion.myStatus.isNew);
-    const questionType = useSelector(state => state.trainingState.currentQuestion.type);
+    const isQuestionNew = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].myStatus.isNew);
+    const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
 
     const trainingStagesInfoForShowing = getTitlesOfTrainingStagesOnQuestionType(questionType);
     const trainingStagesInfoForCurrentNewStatus = isQuestionNew

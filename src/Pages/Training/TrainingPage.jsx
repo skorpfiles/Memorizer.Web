@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 function TrainingPage(props) {
-    const currentQuestion = useSelector(state => state.trainingState.currentQuestion);
+    const currentQuestion = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex]);
     const trainingStage = useSelector(state => state.trainingState.trainingStage);
     const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
 

@@ -15,7 +15,7 @@ function TrainingProgressSection() {
                 <ProgressSection />
             </div>
             <div className={styles['outer-section-container']}>
-                <OuterSection position='right' icon={checkIcon} iconAlt='Percent' iconTitle='Current Right Answers Percent' text={`${correctAnswersPercent} %`} />
+                <OuterSection position='right' icon={checkIcon} iconAlt='Percent' iconTitle='Current Right Answers Percent' text={`${Math.round(correctAnswersPercent)} %`} />
             </div>
         </div>
     )
