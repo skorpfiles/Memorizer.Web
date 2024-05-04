@@ -5,27 +5,31 @@ import QuestionWithTypingAnswer from './QASpace/QuestionWithTypingAnswer';
 import styles from './QASpace.module.css';
 import './TrainingSpace.css';
 
-function QASpace(props) {
+import { useSelector } from 'react-redux';
+
+function QASpace() {
+    const trainingStage = useSelector(state => state.trainingState.trainingStage);
+    const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
     let selectedComponent;
-    switch (props.questionType) {
+    switch (questionType) {
         case 'task': {
             selectedComponent = (<MainText />);
             break;
         }
         case 'untypedAnswer': {
-            switch (props.trainingStage) {
+            switch (trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer/>); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<MainText />); break;
-                case 'check': selectedComponent = (<QuestionResults questionType={props.questionType} typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
+                case 'check': selectedComponent = (<QuestionResults />); break;
                 default: break;
             }
             break;
         }
         case 'typedAnswers': {
-            switch (props.trainingStage) {
+            switch (trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<QuestionWithTypingAnswer />); break;
-                case 'check': selectedComponent = (<QuestionResults questionType={props.questionType} typedAnswersCheckResultMode={props.typedAnswersCheckResultMode} />); break;
+                case 'check': selectedComponent = (<QuestionResults />); break;
                 default: break;
             }
             break;

@@ -5,7 +5,7 @@ import './TrainingSpace.css';
 function ControlPanel(props) {
     return (
         <div className={`column training-space-width ${styles['container']}`}>
-            <MainPanel trainingStage={props.trainingStage} />
+            <MainPanel/>
             <div className={styles['separator']}></div>
             <ReferencePanel/>
         </div>

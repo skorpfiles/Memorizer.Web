@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import TypingAnswerInputContainerWithValidation from './TypingAnswerInputContainerWithValidation';
 import { useSelector } from 'react-redux';
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import { useGoingNext } from '../../hooks/useGoingNext';
 
 function TypingAnswerPanel() {
@@ -10,12 +10,7 @@ function TypingAnswerPanel() {
     const onSubmit = data => {
         console.log(data);
         dispatchTyping({ type: 'push', newAnswer: data.typedAnswer });
-        if (typing.currentAnswerIndex === typedAnswersLength) {
-            goNext({ gotAnswer: true, isAnswerCorrect: null, givenTypedAnswers: typing.resultAnswers });
-        }
-        else {
-            methods.setValue('typedAnswer', '');
-        }
+        methods.setValue('typedAnswer', '');
     }
 
     const typedAnswersLength = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].typedAnswers.length);
@@ -36,6 +31,12 @@ function TypingAnswerPanel() {
         resultAnswers: [],
         currentAnswerIndex: 1
     });
+
+    useEffect(() => {
+        if (typing.currentAnswerIndex > typedAnswersLength) {
+            goNext(true, null, typing.resultAnswers);
+        }
+    }, [goNext, typedAnswersLength, typing.currentAnswerIndex, typing.resultAnswers]);
 
     return (
         <FormProvider {...methods}>

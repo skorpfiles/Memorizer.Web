@@ -103,17 +103,17 @@ export function checkIfAnswerIsCorrect(question, givenTypedAnswers, isAnswerCorr
     if (question.type === 'typedAnswers') {
         const correctAnswersTexts = question.typedAnswers.map(ans => ans.text);
         let appliedAnswersTexts = [];
-        for (let i = 0; i < givenTypedAnswers; i++) {
-            if (correctAnswersTexts.includes(givenTypedAnswers[i].text) && !appliedAnswersTexts.includes(givenTypedAnswers[i].text)) {
+        for (let i = 0; i < givenTypedAnswers.length; i++) {
+            if (correctAnswersTexts.includes(givenTypedAnswers[i]) && !appliedAnswersTexts.includes(givenTypedAnswers[i])) {
                 newGivenTypedAnswers.push({
-                    text: givenTypedAnswers.text,
+                    text: givenTypedAnswers[i],
                     isCorrect: true
                 });
-                appliedAnswersTexts.push(givenTypedAnswers[i].text);
+                appliedAnswersTexts.push(givenTypedAnswers[i]);
             }
             else {
                 newGivenTypedAnswers.push({
-                    text: givenTypedAnswers.text,
+                    text: givenTypedAnswers[i],
                     isCorrect: false
                 });
                 isAnswerCorrectAutomatic = false;

@@ -106,7 +106,7 @@ function TrainingRouteElement() {
         mainContent = (<TrainingLoadingPage hasErrorResult={questionsForTrainingState.loadingError} />);
     }
     else if (!isTrainingResultReady) {
-        mainContent = (<TrainingPage questionsForTrainingState={questionsForTrainingState} />);
+        mainContent = (<TrainingPage questionsIsLoading={questionsForTrainingState.isLoading} questionsLoadingError={questionsForTrainingState.loadingError} />);
     }
     else {
         mainContent = (<TrainingResultPage />);

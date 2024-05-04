@@ -2,13 +2,17 @@ import SingleButton from './ButtonsSection/SingleButton';
 import TrueFalseButtons from './ButtonsSection/TrueFalseButtons';
 import MainButtonWithObjectionButton from './ButtonsSection/MainButtonWithObjectionButton';
 import styles from './ButtonsSection.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { trainingStateActions } from '../../ReduxStore/training';
 import { useGoingNext } from '../../hooks/useGoingNext';
 
-function ButtonsSection(props) {
+function ButtonsSection() {
     const dispatch = useDispatch();
     const goNext = useGoingNext();
+
+    const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
+    const trainingStage = useSelector(state => state.trainingState.trainingStage);
+    const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
 
     const handleGoNext = () => {
         goNext(false);
@@ -23,9 +27,9 @@ function ButtonsSection(props) {
     }
 
     let selectedComponent;
-    switch (props.questionType) {
+    switch (questionType) {
         case 'task': {
-            switch (props.trainingStage) {
+            switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Done' handleClick={()=>handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No'
                     handleTrueClick={() => handleAnswer(true, [])} handleFalseClick={() => handleAnswer(false, [])} />); break;
@@ -34,7 +38,7 @@ function ButtonsSection(props) {
             break;
         }
         case 'untypedAnswer': {
-            switch (props.trainingStage) {
+            switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text='Check the answer' handleClick={() => handleGoNext()} />); break;
                 case 'check': selectedComponent = (<TrueFalseButtons trueText='Correct' falseText='Incorrect'
@@ -44,11 +48,11 @@ function ButtonsSection(props) {
             break;
         }
         case 'typedAnswers': {
-            switch (props.trainingStage) {
+            switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing
                 case 'check': {
-                    switch (props.typedAnswersCheckResultMode) {
+                    switch (trainingStageParameters[0]) {
                         case 'incorrect': selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!'
                             handleMainButtonClick={() => handleAnswer(null, [])} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />); break;
                         case 'correct': selectedComponent = (<SingleButton text='Next' handleClick={() => handleGoNext()} />); break;
