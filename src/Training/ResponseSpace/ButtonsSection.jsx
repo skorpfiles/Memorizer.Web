@@ -12,14 +12,16 @@ function ButtonsSection() {
 
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
     const trainingStage = useSelector(state => state.trainingState.trainingStage);
-    const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
+
+    const isAnswerCorrect = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].isAnswerCorrect);
+    const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
 
     const handleGoNext = () => {
         goNext(false);
     }
 
-    const handleAnswer = (isAnswerCorrect, givenTypedAnswers) => {
-        goNext(true, isAnswerCorrect, givenTypedAnswers);
+    const handleAnswer = (isResponsedAnswerCorrect, givenTypedAnswers) => {
+        goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
     }
 
     const handleChallengingIncorrectness = () => {
@@ -52,11 +54,12 @@ function ButtonsSection() {
                 case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing
                 case 'check': {
-                    switch (trainingStageParameters[0]) {
-                        case 'incorrect': selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!'
-                            handleMainButtonClick={() => handleAnswer(null, [])} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />); break;
-                        case 'correct': selectedComponent = (<SingleButton text='Next' handleClick={() => handleGoNext()} />); break;
-                        default: break;
+                    if (isAnswerCorrect || iDontKnow) {
+                        selectedComponent = (<SingleButton text='Next' handleClick={() => handleGoNext()} />);
+                    }
+                    else {
+                        selectedComponent = selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!'
+                            handleMainButtonClick={() => handleAnswer(null, [])} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />);
                     }
                     break;
                 }

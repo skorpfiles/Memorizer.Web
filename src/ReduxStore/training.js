@@ -65,6 +65,7 @@ const trainingStateSlice = createSlice({
                 state.questions[state.currentQuestionIndex].timeSeconds = action.payload.timeSeconds;
                 state.questions[state.currentQuestionIndex].myStatus.rating = action.payload.newRating;
                 state.questions[state.currentQuestionIndex].myStatus.penaltyPoints = action.payload.newPenaltyPoints;
+                state.questions[state.currentQuestionIndex].iDontKnow = action.payload.iDontKnow ?? false;
                 nextState = goNextInTrainingQuestion(state.questions[state.currentQuestionIndex], {
                     trainingStage: state.trainingStage,
                     trainingStageParameters: [newAnswerState.isCorrect ? 'correct' : 'incorrect']
@@ -95,7 +96,7 @@ const trainingStateSlice = createSlice({
             }
         },
         challengeIncorrectness(state) {
-            state.trainingStageParameters = challengeIncorrectness(state.questions[state.currentQuestionIndex], state.trainingStage, state.trainingStageParameters);
+            state.questions[state.currentQuestionIndex].isAnswerCorrect = true;
         },
         updateCorrectAnswersPercent(state) {
             state.correctAnswersPercent = getCorrectAnswersPercent(state.questions);

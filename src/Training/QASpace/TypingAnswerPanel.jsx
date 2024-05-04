@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import TypingAnswerInputContainerWithValidation from './TypingAnswerInputContainerWithValidation';
 import { useSelector } from 'react-redux';
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import { useGoingNext } from '../../hooks/useGoingNext';
 
 function TypingAnswerPanel() {
@@ -32,11 +32,13 @@ function TypingAnswerPanel() {
         currentAnswerIndex: 1
     });
 
+    const [iDontKnow, setIDontKnow] = useState(false);
+
     useEffect(() => {
-        if (typing.currentAnswerIndex > typedAnswersLength) {
-            goNext(true, null, typing.resultAnswers);
+        if (typing.currentAnswerIndex > typedAnswersLength || iDontKnow) {
+            goNext(true, iDontKnow ? false : null, typing.resultAnswers, iDontKnow);
         }
-    }, [goNext, typedAnswersLength, typing.currentAnswerIndex, typing.resultAnswers]);
+    }, [goNext, typedAnswersLength, typing.currentAnswerIndex, typing.resultAnswers, iDontKnow]);
 
     return (
         <FormProvider {...methods}>
@@ -52,8 +54,8 @@ function TypingAnswerPanel() {
                     }}
                 />
                 <div className='row' style={{ "margin": "0.25rem 0" }}>
-                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK'/>
-                    <button className='main-button border-radius-small font--main-for-controls' style={{ "marginLeft": "0.5rem" }}>I don't know</button>
+                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK' />
+                    <button className='main-button border-radius-small font--main-for-controls' style={{ "marginLeft": "0.5rem" }} onClick={() => setIDontKnow(true)}>I don't know</button>
                 </div>
             </form>
         </FormProvider>

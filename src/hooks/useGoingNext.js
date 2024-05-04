@@ -9,7 +9,7 @@ export const useGoingNext = () => {
     const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
     const answerTimeMilliseconds = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].answerTimeMilliseconds);
 
-    return (gotAnswer, isAnswerCorrect, givenTypedAnswers) => {
+    return (gotAnswer, isAnswerCorrect, givenTypedAnswers, iDontKnow) => {
         if (gotAnswer) {
             sendQuestionAnswer({
                 questionId,
@@ -19,7 +19,7 @@ export const useGoingNext = () => {
                 answerTimeMilliseconds
             });
         }
-        dispatch(trainingStateActions.goNext({ gotAnswer, isAnswerCorrect, givenTypedAnswers }));
+        dispatch(trainingStateActions.goNext({ gotAnswer, isAnswerCorrect, givenTypedAnswers, iDontKnow }));
         if (gotAnswer) {
             dispatch(trainingStateActions.updateCorrectAnswersPercent());
         }

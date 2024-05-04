@@ -87,16 +87,6 @@ export function goNextInTrainingQuestion(question, previousState) {
     return result;
 }
 
-export function challengeIncorrectness(question, trainingStage, trainingStageParameters) {
-    let resultTrainingStageParameters = trainingStageParameters;
-    if (question.type === 'typedAnswers' && trainingStage === 'check' && trainingStageParameters[0] === 'incorrect') {
-        resultTrainingStageParameters[0] = 'correct';
-    }
-    return {
-        trainingStageParameters: resultTrainingStageParameters
-    };
-}
-
 export function checkIfAnswerIsCorrect(question, givenTypedAnswers, isAnswerCorrectManual) {
     let isAnswerCorrectAutomatic = true;
     const newGivenTypedAnswers = [];
