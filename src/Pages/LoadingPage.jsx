@@ -1,7 +1,7 @@
-import '../../Training/TrainingSpace.css';
-import LoadingWidget from '../../Training/LoadingWidget';
-import styles from './TrainingLoadingPage.module.css';
-function TrainingLoadingPage(props) {
+import LoadingWidget from '../Controls/LoadingWidget';
+import styles from './LoadingPage.module.css';
+
+function LoadingPage(props) {
     return (
         <div className='column middle-vertical-align-block central-content'>
             <div className={`font--main-for-small-labels ${styles['message']}`}>Loading, please wait...</div>
@@ -10,4 +10,4 @@ function TrainingLoadingPage(props) {
     );
 }
 
-export default TrainingLoadingPage;
+export default LoadingPage;

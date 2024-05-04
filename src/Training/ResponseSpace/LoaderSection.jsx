@@ -1,4 +1,4 @@
-import LoadingWidget from '../LoadingWidget';
+import LoadingWidget from '../../Controls/LoadingWidget';
 import styles from './LoaderSection.module.css';
 function LoaderSection(props) {
     let content;

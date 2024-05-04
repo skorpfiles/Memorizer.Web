@@ -1,7 +1,7 @@
 import ReturnToPage from '../ReturnToPage';
 import TrainingPage from '../Pages/Training/TrainingPage';
 import TrainingResultPage from '../Pages/Training/TrainingResultPage';
-import TrainingLoadingPage from '../Pages/Training/TrainingLoadingPage';
+import LoadingPage from '../Pages/LoadingPage';
 import { useWallpaperViewDispatcher } from '../hooks/useWallpaperViewDispatcher';
 import { useState, useEffect, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -104,7 +104,7 @@ function TrainingRouteElement() {
 
     let mainContent = null;
     if (!questionsForTrainingState.loadingSucceed) {
-        mainContent = (<TrainingLoadingPage hasErrorResult={questionsForTrainingState.loadingError} />);
+        mainContent = (<LoadingPage hasErrorResult={questionsForTrainingState.loadingError} />);
     }
     else if (!isTrainingResultReady) {
         mainContent = (<TrainingPage questionsIsLoading={questionsForTrainingState.isLoading} questionsLoadingError={questionsForTrainingState.loadingError} />);

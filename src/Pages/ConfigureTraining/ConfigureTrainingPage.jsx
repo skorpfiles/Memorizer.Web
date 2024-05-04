@@ -1,10 +1,12 @@
 import ConfigureTrainingShell from '../../ConfigureTraining/ConfigureTrainingShell';
-import { useState, useReducer } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import { callApi } from '../../Utils/GlobalUtils';
 import SelectQuestionnairePage from './SelectQuestionnairePage';
 import ReturnToPage from '../../ReturnToPage';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import LoadingPage from '../LoadingPage';
 
 function ConfigureTrainingPage() {
     const [trainingStatus, setTrainingStatus] = useState({
@@ -197,30 +199,129 @@ function ConfigureTrainingPage() {
         }));
     }
 
-    let result = selectQuestionnairePageIsShown ? (
-        <div className='route-element-with-return-button'>
-            <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text='Return to the training page' />
-            <SelectQuestionnairePage
-                alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
-                handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
-                status={selectQuestionnairePageStatus}
-                setStatus={setSelectQuestionnairePageStatus}
-            />
-        </div>
-    ) : (
-        <div className='route-element-with-return-button'>
-            <ReturnToPage path='/' text='Return to the main page' />
-            <ConfigureTrainingShell
+    const createTrainingReducer = (state, action) => {
+        switch (action.type) {
+            case 'setIsLoading':
+                return {
+                    readyForLoading: true,
+                    isLoading: true,
+                    loadingFinished: false,
+                    loadingSucceed: false,
+                    loadingError: false,
+                    loadingErrorMessage: null,
+                    resultTrainingId: null
+                };
+            case 'setSuccess':
+                return {
+                    readyForLoading: true,
+                    isLoading: false,
+                    loadingFinished: true,
+                    loadingSucceed: true,
+                    loadingError: false,
+                    loadingErrorMessage: null,
+                    resultTrainingId: action.resultTrainingId
+                };
+            case 'setError':
+                return {
+                    readyForLoading: true,
+                    isLoading: false,
+                    loadingFinished: true,
+                    loadingSucceed: false,
+                    loadingError: true,
+                    loadingErrorMessage: action.errorMessage,
+                    resultTrainingId: null
+                };
+            default:
+                return { ...state };
+        }
+    }
+
+    const [createTrainingState, dispatchCreateTrainingState] = useReducer(createTrainingReducer, {
+        readyForLoadingId: false,
+        isLoading: false,
+        loadingFinished: false,
+        loadingSucceed: false,
+        resultTraining: null,
+        loadingError: false,
+        loadingErrorMessage: null
+    });
+
+    const processCreateTraining = async (data) => {
+        dispatchCreateTrainingState('setIsLoading');
+
+        const body = {
+            name: data.trainingName,
+            lengthType: (data.trainingLengthRadioGroup === 'questionsCountRadioButton' ? 'questionsCount' : (data.trainingLengthRadioGroup === 'timeRadioButton' ? 'time' : null)),
+            questionsCount: data.questionsCount ? parseInt(data.questionsCount, 10) : 0,
+            timeMinutes: data.time ? parseInt(data.time, 10) : 0,
+            newQuestionsFraction: 0.25,
+            penaltyQuestionsFraction: 0.25,
+            questionnairesIds: trainingStatus.selectedQuestionnaires.map(q => q.id)
+        };
+
+        const response = await callApi(`/Repository/Training`, 'PUT', accessToken, JSON.stringify(body));
+        if (response.ok) {
+            const result = await response.json();
+            dispatchCreateTrainingState({ type: 'setSuccess', resultTrainingId: result.id });
+        }
+        else {
+            const result = await response.json();
+            dispatchCreateTrainingState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
+        }
+    }
+
+    const navigate = useNavigate();
+
+    const handleStartTraining = async (data) => {
+        console.info(data);
+        try {
+            processCreateTraining(data).catch(console.error);
+            
+        }
+        catch (error) {
+            console.log(error);
+            dispatchCreateTrainingState({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
+        }
+    }
+
+    useEffect(() => {
+        if (createTrainingState.loadingSucceed) {
+            navigate(`/train?id=${createTrainingState.resultTrainingId}`);
+        }
+    }, [createTrainingState.loadingSucceed, createTrainingState.resultTrainingId, navigate]);
+
+    let result;
+
+    if (createTrainingState.readyForLoading && createTrainingState.loadingSucceed) {
+        result = (<LoadingPage hasErrorResult={createTrainingState.loadingError} />);
+    }
+    else {
+        result = selectQuestionnairePageIsShown ? (
+            <div className='route-element-with-return-button'>
+                <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text='Return to the training page' />
+                <SelectQuestionnairePage
+                    alreadySelectedQuestionnaires={trainingStatus.selectedQuestionnaires}
+                    handleConfirmingAddingQuestionnaire={handleConfirmingAddingQuestionnaire}
+                    status={selectQuestionnairePageStatus}
+                    setStatus={setSelectQuestionnairePageStatus}
+                />
+            </div>
+        ) : (
+            <div className='route-element-with-return-button'>
+                <ReturnToPage path='/' text='Return to the main page' />
+                <ConfigureTrainingShell
                     trainingStatus={trainingStatus}
                     handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
                     handleDeleteQuestionnaire={handleDeleteQuestionnaire}
                     handleSettingTrainingLength={handleSettingTrainingLength}
+                    handleStartTraining={handleStartTraining}
                     setName={handleSettingTrainingName}
                     formMethods={methods}
                     questionnairesStats={questionnairesStats}
-            />
-        </div>
-    );
+                />
+            </div>
+        );
+    }
 
     return result;
 }

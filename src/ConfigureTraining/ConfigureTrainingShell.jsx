@@ -3,17 +3,8 @@ import InputWithValidation from '../Controls/InputWithValidation';
 import QuestionnairesListForTrainingPanel from './QuestionnairesListPanel/QuestionnairesListForTrainingPanel';
 import TrainingLengthOption from './TrainingLengthOption';
 import styles from './ConfigureTrainingShell.module.css';
-import { useNavigate } from 'react-router-dom';
 
 function ConfigureTrainingShell(props) {
-
-    const navigate = useNavigate();
-
-    const onSubmit = data => {
-        console.info(data);
-        navigate('/train');
-    }
-
     let statsText, questionsCountRadioButtonNote = '', timeRadioButtonNote = '(minutes)';
 
     if (props.questionnairesStats.isLoading) {
@@ -41,7 +32,7 @@ function ConfigureTrainingShell(props) {
                 Configure your training
             </header>
             <FormProvider {...props.formMethods}>
-                <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
+                <form onSubmit={props.formMethods.handleSubmit(props.handleStartTraining)}>
                     <div className='group-inside-panel--2x-margin row'>
                         <label htmlFor='trainingName' className='font--main-for-small-labels row--label-before-textbox'>Name:</label>
                         <InputWithValidation
