@@ -5,6 +5,7 @@ const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
     initialState: {
         trainingId: null,
+        trainingName: null,
         questions: null,
         questionsCount: null,
         currentQuestionIndex: null,
@@ -17,6 +18,7 @@ const trainingStateSlice = createSlice({
     reducers: {
         setDefault(state) {
             state.trainingId = null;
+            state.trainingName = null;
             state.questions = null;
             state.questionsCount = null;
             state.currentQuestionIndex = null;
@@ -27,8 +29,9 @@ const trainingStateSlice = createSlice({
             state.isTrainingResultReady = false;
         },
         startTraining(state, action) {
-            //set training id
-            state.trainingId = action.payload.trainingId
+            //set training info
+            state.trainingId = action.payload.trainingId;
+            state.trainingName = action.payload.trainingName;
 
             //set new questions list
             state.questions = action.payload.questions;

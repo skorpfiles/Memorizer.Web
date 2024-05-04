@@ -3,6 +3,7 @@ import TypingAnswerInputContainerWithValidation from './TypingAnswerInputContain
 import { useSelector } from 'react-redux';
 import { useReducer, useEffect, useState } from 'react';
 import { useGoingNext } from '../../hooks/useGoingNext';
+import styles from './TypingAnswerPanel.module.css';
 
 function TypingAnswerPanel() {
     const methods = useForm();
@@ -53,9 +54,9 @@ function TypingAnswerPanel() {
                         }
                     }}
                 />
-                <div className='row' style={{ "margin": "0.25rem 0" }}>
+                <div className={`row ${styles['buttons-line']}`}>
                     <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK' />
-                    <button className='main-button border-radius-small font--main-for-controls' style={{ "marginLeft": "0.5rem" }} onClick={() => setIDontKnow(true)}>I don't know</button>
+                    <button className={`main-button border-radius-small font--main-for-controls ${styles['i-dont-know-button']}`} onClick={() => setIDontKnow(true)}>I don't know</button>
                 </div>
             </form>
         </FormProvider>

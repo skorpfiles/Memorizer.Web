@@ -80,6 +80,7 @@ function TrainingRouteElement() {
                         const result = resultSelector(await response.json());
                         dispatch(trainingStateActions.startTraining({
                             trainingId,
+                            trainingName: result.name,
                             questions: result.questions
                         }));
                         dispatchQuestionsForTrainingState({ type: 'setSuccess' });

@@ -1,9 +1,9 @@
 import QuestionIcon from './question.png';
 import styles from './QuestionResults.module.css';
 import { useSelector } from 'react-redux';
+
 function QuestionResults() {
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
-    const trainingStageParameters = useSelector(state => state.trainingState.trainingStageParameters);
     const questionText = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].text);
     const untypedAnswer = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].untypedAnswer);
     const typedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].typedAnswers);
@@ -19,7 +19,7 @@ function QuestionResults() {
     if (typedAnswersMode) {
         givenTypedAnswersTexts = givenTypedAnswers.map(ans => ans.text);
         for (let i = 0; i < typedAnswers.length; i++) {
-            htmlAnswers.push(givenTypedAnswersTexts.includes(typedAnswers[i].text) ? (<span key={typedAnswers[i].text}>{typedAnswers[i].text}</span>) : (<span style={{ "color": "red" }} key={typedAnswers[i].text}>{typedAnswers[i].text}</span>));
+            htmlAnswers.push(givenTypedAnswersTexts.includes(typedAnswers[i].text) ? (<span key={typedAnswers[i].text}>{typedAnswers[i].text}</span>) : (<span className={styles['red-font-color']} key={typedAnswers[i].text}>{typedAnswers[i].text}</span>));
             if (i < typedAnswers.length - 1) {
                 htmlAnswers.push('; ');
             }
@@ -55,7 +55,7 @@ function QuestionResults() {
             <div className={`font--main-for-training-questions border-radius-small ${styles['answer']}`}>{typedAnswersMode ?
                 htmlAnswers.map(ans => ans) :
                 untypedAnswer}</div>
-            {typedAnswersMode && !isAnswerCorrect && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+            {typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
             {resultMessage}
         </div>
     );

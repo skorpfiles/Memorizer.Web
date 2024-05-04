@@ -32,6 +32,7 @@ export function GetTrainingQuestionsForEveryType() {
     };
 
     return {
+        name: 'Test Training',
         questions:
             [
                 {
