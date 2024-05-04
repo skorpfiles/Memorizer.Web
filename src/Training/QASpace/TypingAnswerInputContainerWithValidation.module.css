@@ -16,3 +16,8 @@
     padding: 0.5rem;
     box-sizing: border-box;
 }
+
+    .answer-input:focus {
+        border: none;
+        outline: none;
+    }

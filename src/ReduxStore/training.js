@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { goNextInTrainingQuestion, challengeIncorrectness, checkIfAnswerIsCorrect, getCorrectAnswersPercent } from '../Utils/TrainingUtils.js';
+import { goNextInTrainingQuestion, checkIfAnswerIsCorrect, getCorrectAnswersPercent } from '../Utils/TrainingUtils.js';
 
 const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
