@@ -237,17 +237,17 @@ function ConfigureTrainingPage() {
     }
 
     const [createTrainingState, dispatchCreateTrainingState] = useReducer(createTrainingReducer, {
-        readyForLoadingId: false,
+        readyForLoading: false,
         isLoading: false,
         loadingFinished: false,
         loadingSucceed: false,
-        resultTraining: null,
+        resultTrainingId: null,
         loadingError: false,
         loadingErrorMessage: null
     });
 
     const processCreateTraining = async (data) => {
-        dispatchCreateTrainingState('setIsLoading');
+        dispatchCreateTrainingState({ type: 'setIsLoading' });
 
         const body = {
             name: data.trainingName,
@@ -272,11 +272,10 @@ function ConfigureTrainingPage() {
 
     const navigate = useNavigate();
 
-    const handleStartTraining = async (data) => {
+    const handleStartTraining = (data) => {
         console.info(data);
         try {
             processCreateTraining(data).catch(console.error);
-            
         }
         catch (error) {
             console.log(error);
@@ -292,8 +291,13 @@ function ConfigureTrainingPage() {
 
     let result;
 
-    if (createTrainingState.readyForLoading && createTrainingState.loadingSucceed) {
-        result = (<LoadingPage hasErrorResult={createTrainingState.loadingError} />);
+    if (createTrainingState.readyForLoading && !createTrainingState.loadingSucceed) {
+        result = (
+            <div className='route-element-with-return-button'>
+                <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text='Return to the training page' />
+                <LoadingPage hasErrorResult={createTrainingState.loadingError} />
+            </div>
+        );
     }
     else {
         result = selectQuestionnairePageIsShown ? (
