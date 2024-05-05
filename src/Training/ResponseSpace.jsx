@@ -6,21 +6,19 @@ import './TrainingSpace.css';
 
 import { useSelector } from 'react-redux';
 
-function ResponseSpace(props) {
+function ResponseSpace() {
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
     const trainingStage = useSelector(state => state.trainingState.trainingStage);
-    if (questionType !== 'typedAnswers' || trainingStage === 'learn' || trainingStage === 'check') {
-        return (
-            <div className={`column training-space-width ${styles['container']}`}>
-                <NoteSection/>
-                <ButtonsSection/>
-                <LoaderSection isLoading={props.questionsIsLoading} hasErrorResult={props.questionsLoadingError} />
-            </div>
-        );
-    }
-    else {
-        return null;
-    }
+    const answerIsSending = useSelector(state => state.answerSendingState.isExecuting);
+    const answerSendingIsInError = useSelector(state => state.answerSendingState.isError);
+
+    return (
+        <div className={`column training-space-width ${styles['container']}`}>
+            {(questionType !== 'typedAnswers' || trainingStage === 'learn' || trainingStage === 'check') && (<NoteSection />)}
+            {(questionType !== 'typedAnswers' || trainingStage === 'learn' || trainingStage === 'check') && (<ButtonsSection />)}
+            <LoaderSection isLoading={answerIsSending} hasErrorResult={answerSendingIsInError} />
+        </div>
+    );
 }
 
 export default ResponseSpace;

@@ -9,9 +9,9 @@ export const useGoingNext = () => {
     const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
     const answerTimeMilliseconds = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].answerTimeMilliseconds);
 
-    return (gotAnswer, isAnswerCorrect, givenTypedAnswers, iDontKnow) => {
+    return async (gotAnswer, isAnswerCorrect, givenTypedAnswers, iDontKnow) => {
         if (gotAnswer) {
-            sendQuestionAnswer({
+            await sendQuestionAnswer({
                 questionId,
                 trainingStartTime,
                 givenTypedAnswers,
