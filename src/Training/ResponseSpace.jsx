@@ -14,8 +14,8 @@ function ResponseSpace() {
 
     return (
         <div className={`column training-space-width ${styles['container']}`}>
-            {(questionType !== 'typedAnswers' || trainingStage === 'learn' || trainingStage === 'check') && (<NoteSection />)}
-            {(questionType !== 'typedAnswers' || trainingStage === 'learn' || trainingStage === 'check') && (<ButtonsSection />)}
+            {((questionType !== 'typedAnswers' && questionType !== 'untypedAndTypedAnswers') || trainingStage === 'learn' || trainingStage === 'check') && (<NoteSection />)}
+            {((questionType !== 'typedAnswers' && questionType !== 'untypedAndTypedAnswers') || trainingStage === 'learn' || trainingStage === 'check') && (<ButtonsSection />)}
             <LoaderSection isLoading={answerIsSending} hasErrorResult={answerSendingIsInError} />
         </div>
     );

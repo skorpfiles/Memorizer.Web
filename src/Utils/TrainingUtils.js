@@ -1,4 +1,4 @@
-export function goNextInTrainingQuestion(question, previousState) {
+export function getNextStateInTrainingQuestion(question, previousState) {
     let result;
     if (previousState === null) { //start training question
         if (question.myStatus.isNew) {
@@ -58,7 +58,7 @@ export function goNextInTrainingQuestion(question, previousState) {
                     default: result = null; break;
                 }; break;
             }
-            case 'typedAnswers': {
+            case 'typedAnswers': case 'untypedAndTypedAnswers': {
                 switch (previousState.trainingStage) {
                     case 'learn':
                         result = {
@@ -90,7 +90,7 @@ export function goNextInTrainingQuestion(question, previousState) {
 export function checkIfAnswerIsCorrect(question, givenTypedAnswers, isAnswerCorrectManual) {
     let isAnswerCorrectAutomatic = true;
     const newGivenTypedAnswers = [];
-    if (question.type === 'typedAnswers') {
+    if (question.type === 'typedAnswers' || question.type === 'untypedAndTypedAnswers') {
         const correctAnswersTexts = question.typedAnswers.map(ans => ans.text);
         let appliedAnswersTexts = [];
         for (let i = 0; i < givenTypedAnswers.length; i++) {

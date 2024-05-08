@@ -13,3 +13,12 @@
 .font--question-above-answer {
     font-size: 1.1rem;
 }
+
+.iconic-question--icon {
+    float:left;
+    margin-right:0.25rem;
+}
+
+.iconic-question--text {
+    line-height:1.4;
+}

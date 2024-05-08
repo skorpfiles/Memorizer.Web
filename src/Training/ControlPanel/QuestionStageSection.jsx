@@ -43,6 +43,7 @@ function getTitlesOfTrainingStagesOnQuestionType(questionType) {
             ];
         case 'untypedAnswer':
         case 'typedAnswers':
+        case 'untypedAndTypedAnswers':
             return [
                 {
                     title: 'Learn',

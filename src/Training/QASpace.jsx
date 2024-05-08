@@ -25,7 +25,7 @@ function QASpace() {
             }
             break;
         }
-        case 'typedAnswers': {
+        case 'typedAnswers': case 'untypedAndTypedAnswers': {
             switch (trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<QuestionWithTypingAnswer />); break;

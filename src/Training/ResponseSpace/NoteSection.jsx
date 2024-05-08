@@ -20,7 +20,7 @@ function NoteSection(props) {
             }
             break;
         }
-        case 'typedAnswers': {
+        case 'typedAnswers': case 'untypedAndTypedAnswers': {
             switch (props.trainingStage) {
                 case 'learn': resultComponent = (<div>Please learn these answers, and then click "Train the question".<br/>You will need to type the answers.</div>); break;
                 default: break;

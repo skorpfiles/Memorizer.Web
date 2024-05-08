@@ -49,7 +49,7 @@ function ButtonsSection() {
             }
             break;
         }
-        case 'typedAnswers': {
+        case 'typedAnswers': case 'untypedAndTypedAnswers': {
             switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing

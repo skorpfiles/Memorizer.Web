@@ -11,7 +11,7 @@ function QuestionResults() {
     const isAnswerCorrect = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].isAnswerCorrect);
     const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
 
-    const typedAnswersMode = questionType === 'typedAnswers';
+    const typedAnswersMode = (questionType === 'typedAnswers' || questionType === 'untypedAndTypedAnswers');
     const htmlAnswers = [];
 
     let givenTypedAnswersTexts = [];
@@ -48,9 +48,9 @@ function QuestionResults() {
 
     return (
         <div className={`column ${styles['container']}`}>
-            <div className={`row ${styles['question-container']}`}>
-                <img src={QuestionIcon} width='24rem' alt='Question' title='Question' />
-                <div className={`font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
+            <div className={styles['question-container']}>
+                <img className='iconic-question--icon' src={QuestionIcon} width='24rem' alt='Question' title='Question' />
+                <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
             </div>
             <div className={`font--main-for-training-questions border-radius-small ${styles['answer']}`}>{typedAnswersMode ?
                 htmlAnswers.map(ans => ans) :
