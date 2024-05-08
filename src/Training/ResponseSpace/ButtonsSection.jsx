@@ -28,12 +28,14 @@ function ButtonsSection() {
         dispatch(trainingStateActions.challengeIncorrectness());
     }
 
+    const answerSendingIsGoing = useSelector(state => state.answerSendingState.isExecuting);
+
     let selectedComponent;
     switch (questionType) {
         case 'task': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Done' handleClick={()=>handleGoNext()} />); break;
-                case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No'
+                case 'learn': selectedComponent = (<SingleButton text='Done' disabled={answerSendingIsGoing} handleClick={()=>handleGoNext()} />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No' disabled={answerSendingIsGoing}
                     handleTrueClick={() => handleAnswer(true, [])} handleFalseClick={() => handleAnswer(false, [])} />); break;
                 default: break;
             }
@@ -41,9 +43,9 @@ function ButtonsSection() {
         }
         case 'untypedAnswer': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
-                case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text='Check the answer' handleClick={() => handleGoNext()} />); break;
-                case 'check': selectedComponent = (<TrueFalseButtons trueText='Correct' falseText='Incorrect'
+                case 'learn': selectedComponent = (<SingleButton text='Train the question' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text='Check the answer' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'check': selectedComponent = (<TrueFalseButtons trueText='Correct' falseText='Incorrect' disabled={answerSendingIsGoing}
                     handleTrueClick={() => handleAnswer(true, [])} handleFalseClick={() => handleAnswer(false, [])} />); break;
                 default: break;
             }
@@ -51,14 +53,14 @@ function ButtonsSection() {
         }
         case 'typedAnswers': case 'untypedAndTypedAnswers': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Train the question' handleClick={() => handleGoNext()} />); break;
+                case 'learn': selectedComponent = (<SingleButton text='Train the question' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing
                 case 'check': {
                     if (isAnswerCorrect || iDontKnow) {
-                        selectedComponent = (<SingleButton text='Next' handleClick={() => handleGoNext()} />);
+                        selectedComponent = (<SingleButton text='Next' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />);
                     }
                     else {
-                        selectedComponent = selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!'
+                        selectedComponent = selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!' disabled={answerSendingIsGoing}
                             handleMainButtonClick={() => handleAnswer(null, [])} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />);
                     }
                     break;

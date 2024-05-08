@@ -43,12 +43,15 @@ function TypingAnswerPanel() {
         currentAnswerIndex: 1
     });
 
+    const answerSendingIsGoing = useSelector(state => state.answerSendingState.isExecuting);
+
     return (
         <FormProvider {...methods}>
             <form className='column' onSubmit={methods.handleSubmit(handleSubmitNextAnswer)}>
                 <TypingAnswerInputContainerWithValidation
                     currentIndex={typing.currentAnswerIndex}
                     answersCount={typedAnswersLength}
+                    disabled={answerSendingIsGoing}
                     inputValidation={{
                         required: {
                             value: true,
@@ -57,8 +60,8 @@ function TypingAnswerPanel() {
                     }}
                 />
                 <div className={`row ${styles['buttons-line']}`}>
-                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK' />
-                    <button className={`main-button border-radius-small font--main-for-controls ${styles['i-dont-know-button']}`} onClick={handleSubmitIDontKnow}>I don't know</button>
+                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK' disabled={answerSendingIsGoing} />
+                    <input type='button' className={`main-button border-radius-small font--main-for-controls ${styles['i-dont-know-button']}`} onClick={handleSubmitIDontKnow} value="I don't know" disabled={answerSendingIsGoing} />
                 </div>
             </form>
         </FormProvider>
