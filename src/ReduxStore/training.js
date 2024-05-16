@@ -51,12 +51,17 @@ const trainingStateSlice = createSlice({
             //start training current question
             state.currentQuestionTimeSeconds = 0;
             state.correctAnswersPercent = 0;
-            state.questions[state.currentQuestionIndex].trainingStartTime = new Date().toISOString();
 
             //set training stage
             const nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
             state.trainingStage = nextState.trainingStage;
             state.trainingStageParameters = nextState.trainingStageParameters;
+            if (nextState.startTrainingTimer) {
+                state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+            }
+            if (nextState.stopTrainingTimer) {
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+            }
         },
         goNext(state, action) {
             let nextState;
@@ -65,9 +70,6 @@ const trainingStateSlice = createSlice({
                 state.questions[state.currentQuestionIndex].gotAnswer = true;
                 state.questions[state.currentQuestionIndex].givenTypedAnswers = newAnswerState.givenTypedAnswers;
                 state.questions[state.currentQuestionIndex].isAnswerCorrect = newAnswerState.isCorrect;
-                state.questions[state.currentQuestionIndex].timeSeconds = action.payload.timeSeconds;
-                state.questions[state.currentQuestionIndex].myStatus.rating = action.payload.newRating;
-                state.questions[state.currentQuestionIndex].myStatus.penaltyPoints = action.payload.newPenaltyPoints;
                 state.questions[state.currentQuestionIndex].iDontKnow = action.payload.iDontKnow ?? false;
                 nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], {
                     trainingStage: state.trainingStage,
@@ -84,10 +86,16 @@ const trainingStateSlice = createSlice({
             if (nextState.switchToNextQuestion) {
                 if (state.currentQuestionIndex + 1 < state.questionsCount) {
                     state.currentQuestionIndex++;
-                    state.questions[state.currentQuestionIndex].trainingStartTime = new Date().toISOString();
+                    state.questions[state.currentQuestionIndex].trainingStartTime = new Date();
                     nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
                     state.trainingStage = nextState.trainingStage;
                     state.trainingStageParameters = nextState.trainingStageParameters;
+                    if (nextState.startTrainingTimer) {
+                        state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                    }
+                    if (nextState.stopTrainingTimer) {
+                        state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+                    }
                 }
                 else {
                     state.isTrainingResultReady = true;
@@ -96,6 +104,12 @@ const trainingStateSlice = createSlice({
             else {
                 state.trainingStage = nextState.trainingStage;
                 state.trainingStageParameters = nextState.trainingStageParameters;
+                if (nextState.startTrainingTimer) {
+                    state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                }
+                if (nextState.stopTrainingTimer) {
+                    state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+                }
             }
         },
         challengeIncorrectness(state) {

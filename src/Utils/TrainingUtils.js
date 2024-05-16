@@ -5,14 +5,18 @@ export function getNextStateInTrainingQuestion(question, previousState) {
             result = {
                 switchToNextQuestion: false,
                 trainingStage: 'learn',
-                trainingStageParameters: []
+                trainingStageParameters: [],
+                startTrainingTimer: false,
+                stopTrainingTimer: false
             };
         }
         else {
             result = {
                 switchToNextQuestion: false,
                 trainingStage: 'train',
-                trainingStageParameters: []
+                trainingStageParameters: [],
+                startTrainingTimer: true,
+                stopTrainingTimer: false
             }
         }
     }
@@ -24,13 +28,17 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'trainAfterLearning',
-                            trainingStageParameters: previousState.trainingStageParameters
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: true,
+                            stopTrainingTimer: false
                         }; break;
                     case 'train': case 'trainAfterLearning':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
-                            trainingStageParameters: null
+                            trainingStageParameters: null,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: true
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -41,19 +49,25 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
-                            trainingStageParameters: previousState.trainingStageParameters
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: true,
+                            stopTrainingTimer: false
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
-                            trainingStageParameters: previousState.trainingStageParameters
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: true
                         }; break;
                     case 'check':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
-                            trainingStageParameters: null
+                            trainingStageParameters: null,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: false
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -64,19 +78,25 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
-                            trainingStageParameters: previousState.trainingStageParameters
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: true,
+                            stopTrainingTimer: false
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
                             trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: true
                         }; break;
                     case 'check':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
-                            trainingStageParameters: null
+                            trainingStageParameters: null,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: false
                         }; break;
                     default: result = null; break;
                 }; break;

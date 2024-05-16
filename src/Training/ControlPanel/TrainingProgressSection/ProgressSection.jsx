@@ -5,7 +5,7 @@ function ProgressSection() {
     const currentQuestionIndex = useSelector(state => state.trainingState.currentQuestionIndex);
 
     return (
-        <div className={styles['content']}>{currentQuestionIndex} / {questionsCount}</div>
+        <div className={styles['content']}>{currentQuestionIndex+1} / {questionsCount}</div>
     );
 }
 

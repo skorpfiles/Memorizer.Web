@@ -14,7 +14,7 @@ export const useSendQuestionAnswer = () => {
             try {
                 const response = await callApi('/Training/UpdateQuestionStatus', 'POST', accessToken, JSON.stringify({
                     questionId: sentData.questionId,
-                    trainingStartTime: sentData.trainingStartTime,
+                    trainingStartTime: new Date(sentData.trainingStartTime).toISOString(),
                     givenTypedAnswers: sentData.givenTypedAnswers,
                     isAnswerCorrect: sentData.isAnswerCorrect,
                     answerTimeMilliseconds: sentData.answerTimeMilliseconds

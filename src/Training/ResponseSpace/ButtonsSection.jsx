@@ -34,8 +34,8 @@ function ButtonsSection() {
                 questionId,
                 trainingStartTime,
                 givenTypedAnswers,
-                isAnswerCorrect,
-                answerTimeMilliseconds
+                isAnswerCorrect: isResponsedAnswerCorrect,
+                answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
             });
         }
         goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
@@ -45,9 +45,9 @@ function ButtonsSection() {
         await sendQuestionAnswer({
             questionId,
             trainingStartTime,
-            havingGotTypedAnswers,
+            givenTypedAnswers: havingGotTypedAnswers,
             isAnswerCorrect,
-            answerTimeMilliseconds
+            answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
         });
         goNext(false);
     }
@@ -64,7 +64,7 @@ function ButtonsSection() {
             switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text='Done' disabled={answerSendingIsGoing} handleClick={()=>handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No' disabled={answerSendingIsGoing}
-                    handleTrueClick={() => handleAnswer(true, [])} handleFalseClick={() => handleAnswer(false, [], true)} />); break;
+                    handleTrueClick={() => handleAnswer(true, [], true)} handleFalseClick={() => handleAnswer(false, [], true)} />); break;
                 default: break;
             }
             break;
