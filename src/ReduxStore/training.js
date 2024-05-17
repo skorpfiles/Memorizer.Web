@@ -11,6 +11,7 @@ const trainingStateSlice = createSlice({
         currentQuestionIndex: null,
         trainingStage: null,
         trainingStageParameters: null,
+        timerIsGoing: false,
         currentQuestionTimeSeconds: 0,
         correctAnswersPercent: 100,
         isTrainingResultReady: false
@@ -24,6 +25,7 @@ const trainingStateSlice = createSlice({
             state.currentQuestionIndex = null;
             state.trainingStage = null;
             state.trainingStageParameters = null;
+            state.timerIsGoing = false;
             state.currentQuestionTimeSeconds = 0;
             state.correctAnswersPercent = 0;
             state.isTrainingResultReady = false;
@@ -58,9 +60,11 @@ const trainingStateSlice = createSlice({
             state.trainingStageParameters = nextState.trainingStageParameters;
             if (nextState.startTrainingTimer) {
                 state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                state.timerIsGoing = true;
             }
             if (nextState.stopTrainingTimer) {
                 state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+                state.timerIsGoing = false;
             }
         },
         goNext(state, action) {
@@ -83,18 +87,28 @@ const trainingStateSlice = createSlice({
                 });
             }
 
+            if (nextState.startTrainingTimer) {
+                state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                state.timerIsGoing = true;
+            }
+            if (nextState.stopTrainingTimer) {
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+                state.timerIsGoing = false;
+            }
+
             if (nextState.switchToNextQuestion) {
                 if (state.currentQuestionIndex + 1 < state.questionsCount) {
                     state.currentQuestionIndex++;
-                    state.questions[state.currentQuestionIndex].trainingStartTime = new Date();
                     nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
                     state.trainingStage = nextState.trainingStage;
                     state.trainingStageParameters = nextState.trainingStageParameters;
                     if (nextState.startTrainingTimer) {
                         state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                        state.timerIsGoing = true;
                     }
                     if (nextState.stopTrainingTimer) {
                         state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
+                        state.timerIsGoing = false;
                     }
                 }
                 else {
@@ -104,12 +118,6 @@ const trainingStateSlice = createSlice({
             else {
                 state.trainingStage = nextState.trainingStage;
                 state.trainingStageParameters = nextState.trainingStageParameters;
-                if (nextState.startTrainingTimer) {
-                    state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
-                }
-                if (nextState.stopTrainingTimer) {
-                    state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
-                }
             }
         },
         challengeIncorrectness(state) {

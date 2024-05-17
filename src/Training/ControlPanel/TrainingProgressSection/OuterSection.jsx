@@ -11,7 +11,7 @@ function OuterSection(props) {
         <div className={`font--bold display-flex ${styles['outer-container']} ${borderStyle}`}>
             <div className={`row ${styles['inner-container']}`}>
                 <img src={props.icon} width='20rem' alt={props.iconAlt} title={props.iconTitle} />
-                <div className={`flex-all-free-space ${styles['text']}` }>{props.text}</div>
+                <div className={`flex-all-free-space ${styles['text']}` }>{props.children}</div>
             </div>
         </div>
     )
