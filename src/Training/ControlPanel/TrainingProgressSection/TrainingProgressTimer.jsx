@@ -25,7 +25,6 @@ function TrainingProgressTimer() {
             }
         }, 1000);
 
-        // Очистка интервала при размонтировании компонента
         return () => clearInterval(interval);
     }, [resultAnswerTimeMilliseconds, timerIsGoing, trainingStartTime]);
 
