@@ -1,5 +1,5 @@
 import styles from './Footer.module.css';
-import SkorpFilesLogo from './SkorP Files Logo.png';
+import SkorpFilesLogoBlack from './SkorP Files 256px Logo Black.png';
 import { useSelector } from 'react-redux';
 
 function Footer() {
@@ -10,7 +10,7 @@ function Footer() {
         <footer className={styles['container']} style={{ backgroundImage }}>
             <div className={styles['about-text']}>Memorizer is a <a href='https://skorp24.info' target='_blank' rel='noopener noreferrer'>SkorP Files'</a> product.</div>
             <div className={styles['logo']}>
-                <img src={SkorpFilesLogo} width='64rem' alt='SkorP Files' />
+                <img src={SkorpFilesLogoBlack} width='64rem' alt='SkorP Files' />
             </div>
         </footer>
     );

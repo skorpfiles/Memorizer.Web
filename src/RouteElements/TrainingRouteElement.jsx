@@ -9,6 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 import { callApi } from '../Utils/GlobalUtils';
 import { trainingStateActions } from '../ReduxStore/training';
 import { GetTrainingQuestionsForEveryType, DEMO_QUESTIONS_MODE } from '../TestData/TrainingDataForTest';
+import { useNavigate } from 'react-router-dom';
 
 function TrainingRouteElement() {
     const setWallpaperView = useWallpaperViewDispatcher();
@@ -113,9 +114,16 @@ function TrainingRouteElement() {
         mainContent = (<TrainingResultPage />);
     }
 
+    const navigate = useNavigate();
+
+    const handleReturn = () => {
+        dispatch(trainingStateActions.setDefault());
+        navigate('/');
+    }
+
     return (
         <div className='route-element-with-return-button'>
-            {!isTrainingResultReady && (<ReturnToPage path='/' text='Return to the main page' />)}
+            {!isTrainingResultReady && (<ReturnToPage text='Return to the main page' customClickHandler={handleReturn} />)}
             {mainContent}
         </div>
     );
