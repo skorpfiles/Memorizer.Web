@@ -1,12 +1,19 @@
 import { useFormContext } from 'react-hook-form';
 import { findInputError, isFormInvalid } from '../../Utils/ValidationUtils.js';
 import styles from './TypingAnswerInputContainerWithValidation.module.css';
+import { useEffect } from 'react';
 
 function TypingAnswerInputContainerWithValidation(props) {
-    const { register, formState: { errors }} = useFormContext();
+    const { register, setFocus, formState: { errors }} = useFormContext();
 
     const inputError = findInputError(errors, 'typedAnswer');
     const isInvalid = isFormInvalid(inputError);
+
+    useEffect(() => {
+        if (props.focus) {
+            setFocus('typedAnswer');
+        }
+    }, [props.focus, setFocus]);
 
     return (
         <div className={`row border-radius-small ${styles['container']}`}>

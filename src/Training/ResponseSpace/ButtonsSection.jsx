@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { trainingStateActions } from '../../ReduxStore/training';
 import { useGoingNext } from '../../hooks/useGoingNext';
 import { useSendQuestionAnswer } from '../../hooks/useSendQuestionAnswer';
+import { switchTextForDeviceType } from '../../Utils/GlobalUtils';
 
 function ButtonsSection() {
     const dispatch = useDispatch();
@@ -58,12 +59,14 @@ function ButtonsSection() {
 
     const answerSendingIsGoing = useSelector(state => state.answerSendingState.isExecuting);
 
+
+
     let selectedComponent;
     switch (questionType) {
         case 'task': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Done' disabled={answerSendingIsGoing} handleClick={()=>handleGoNext()} />); break;
-                case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText='Yes' falseText='No' disabled={answerSendingIsGoing}
+                case 'learn': selectedComponent = (<SingleButton text={switchTextForDeviceType('Done','Done (Enter)')} disabled={answerSendingIsGoing} handleClick={()=>handleGoNext()} />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<TrueFalseButtons trueText={switchTextForDeviceType('Yes', 'Yes (Q)')} falseText={switchTextForDeviceType('No', 'No (W)')} disabled={answerSendingIsGoing}
                     handleTrueClick={() => handleAnswer(true, [], true)} handleFalseClick={() => handleAnswer(false, [], true)} />); break;
                 default: break;
             }
@@ -71,9 +74,9 @@ function ButtonsSection() {
         }
         case 'untypedAnswer': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Train the question' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
-                case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text='Check the answer' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
-                case 'check': selectedComponent = (<TrueFalseButtons trueText='Correct' falseText='Incorrect' disabled={answerSendingIsGoing}
+                case 'learn': selectedComponent = (<SingleButton text={switchTextForDeviceType('Train the question', 'Train the question (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'train': case 'trainAfterLearning': selectedComponent = (<SingleButton text={switchTextForDeviceType('Check the answer', 'Check the answer (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'check': selectedComponent = (<TrueFalseButtons trueText={switchTextForDeviceType('Correct', 'Correct (Q)')} falseText={switchTextForDeviceType('Incorrect', 'Incorrect (W)')} disabled={answerSendingIsGoing}
                     handleTrueClick={() => handleAnswer(true, [], true)} handleFalseClick={() => handleAnswer(false, [], true)} />); break;
                 default: break;
             }
@@ -81,14 +84,14 @@ function ButtonsSection() {
         }
         case 'typedAnswers': case 'untypedAndTypedAnswers': {
             switch (trainingStage) {
-                case 'learn': selectedComponent = (<SingleButton text='Train the question' disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'learn': selectedComponent = (<SingleButton text={switchTextForDeviceType('Train the question', 'Train the question (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing
                 case 'check': {
                     if (isAnswerCorrect || iDontKnow) {
-                        selectedComponent = (<SingleButton text='Next' disabled={answerSendingIsGoing} handleClick={() => handleSendingHavingGotAnswerAndGoingNext()} />);
+                        selectedComponent = (<SingleButton text={switchTextForDeviceType('Next', 'Next (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleSendingHavingGotAnswerAndGoingNext()} />);
                     }
                     else {
-                        selectedComponent = selectedComponent = (<MainButtonWithObjectionButton mainText='Next' objectionText='It was correct!' disabled={answerSendingIsGoing}
+                        selectedComponent = (<MainButtonWithObjectionButton mainText={switchTextForDeviceType('Next', 'Next (Enter)')} objectionText='It was correct!' disabled={answerSendingIsGoing}
                             handleMainButtonClick={() => handleSendingHavingGotAnswerAndGoingNext()} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />);
                     }
                     break;

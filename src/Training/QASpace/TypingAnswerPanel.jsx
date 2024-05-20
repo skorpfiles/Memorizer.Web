@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useReducer } from 'react';
 import { useGoingNext } from '../../hooks/useGoingNext';
 import styles from './TypingAnswerPanel.module.css';
+import { switchTextForDeviceType } from '../../Utils/GlobalUtils';
 
 function TypingAnswerPanel() {
     const methods = useForm();
@@ -52,6 +53,7 @@ function TypingAnswerPanel() {
                     currentIndex={typing.currentAnswerIndex}
                     answersCount={typedAnswersLength}
                     disabled={answerSendingIsGoing}
+                    focus={ true }
                     inputValidation={{
                         required: {
                             value: true,
@@ -60,7 +62,7 @@ function TypingAnswerPanel() {
                     }}
                 />
                 <div className={`row ${styles['buttons-line']}`}>
-                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value='OK' disabled={answerSendingIsGoing} />
+                    <input type='submit' className='main-button border-radius-small font--main-for-controls flex-all-free-space' value={switchTextForDeviceType('OK','OK (Enter)')} disabled={answerSendingIsGoing} />
                     <input type='button' className={`main-button border-radius-small font--main-for-controls ${styles['i-dont-know-button']}`} onClick={handleSubmitIDontKnow} value="I don't know" disabled={answerSendingIsGoing} />
                 </div>
             </form>
