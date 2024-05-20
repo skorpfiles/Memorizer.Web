@@ -5,9 +5,6 @@ import TrainingLengthOption from './TrainingLengthOption';
 import styles from './ConfigureTrainingShell.module.css';
 
 function ConfigureTrainingShell(props) {
-
-    const onSubmit = data => console.info(data);
-
     let statsText, questionsCountRadioButtonNote = '', timeRadioButtonNote = '(minutes)';
 
     if (props.questionnairesStats.isLoading) {
@@ -35,7 +32,7 @@ function ConfigureTrainingShell(props) {
                 Configure your training
             </header>
             <FormProvider {...props.formMethods}>
-                <form onSubmit={props.formMethods.handleSubmit(onSubmit)}>
+                <form onSubmit={props.formMethods.handleSubmit(props.handleStartTraining)}>
                     <div className='group-inside-panel--2x-margin row'>
                         <label htmlFor='trainingName' className='font--main-for-small-labels row--label-before-textbox'>Name:</label>
                         <InputWithValidation
@@ -90,7 +87,10 @@ function ConfigureTrainingShell(props) {
                         formMethods={props.formMethods}
                     />
                     <div className='group-inside-panel--2x-margin display-flex'>
-                        <input type='submit' className='main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big' disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length===0} value='Start Training!' />
+                        <input type='submit'
+                            className='main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big'
+                            disabled={!props.trainingStatus.selectedQuestionnaires || props.trainingStatus.selectedQuestionnaires.length === 0}
+                            value='Start Training!' />
                     </div>
                     <div className='group-inside-panel--2x-margin'>
                         Add the next page to your bookmarks if you want to have a quick direct access to starting this training.

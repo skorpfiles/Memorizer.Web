@@ -211,6 +211,10 @@ button, input[type="submit"] {
     text-align:center;
 }
 
+.central-content {
+    align-items:center;
+}
+
 .central-button {
     width: 17.2rem;
     margin-left: auto;

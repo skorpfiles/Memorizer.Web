@@ -43,3 +43,13 @@ export function getUserLoginFromCookies() {
         .split('=')[1];
     return cookieValue;
 }
+
+export function isMobileDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const mobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    return mobile;
+}
+
+export function switchTextForDeviceType(textIfMobile, textIfNotMobile) {
+    return isMobileDevice() ? textIfMobile : textIfNotMobile;
+}

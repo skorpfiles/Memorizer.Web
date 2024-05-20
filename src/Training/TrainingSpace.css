@@ -1,0 +1,24 @@
+.training-space-width {
+    width: 30rem;
+}
+
+.training-space-narrow-width {
+    width: 20rem;
+}
+
+.font--main-for-training-questions {
+    font-size: 1.5rem;
+}
+
+.font--question-above-answer {
+    font-size: 1.1rem;
+}
+
+.iconic-question--icon {
+    float:left;
+    margin-right:0.25rem;
+}
+
+.iconic-question--text {
+    line-height:1.4;
+}

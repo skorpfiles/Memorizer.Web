@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 
 function SelectTrainingRouteElement() {
 
-    const [,disableWallpaperView] = useWallpaperViewDispatcher();
+    const setWallpaperView = useWallpaperViewDispatcher();
 
     useEffect(() => {
-        disableWallpaperView();
-    }, [disableWallpaperView]);
+        setWallpaperView('none');
+    }, [setWallpaperView]);
 
     return (
         <div className='route-element-with-return-button'>

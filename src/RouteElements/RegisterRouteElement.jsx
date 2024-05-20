@@ -10,11 +10,11 @@ import { emailSendingStateActions } from '../ReduxStore/emailSendingState';
 import { useWallpaperViewDispatcher } from '../hooks/useWallpaperViewDispatcher';
 
 function RegisterRouteElement() {
-    const [enableWallpaperView,] = useWallpaperViewDispatcher();
+    const setWallpaperView = useWallpaperViewDispatcher();
 
     useEffect(() => {
-        enableWallpaperView();
-    }, [enableWallpaperView]);
+        setWallpaperView('mainWallpaper');
+    }, [setWallpaperView]);
 
     const registrationStateReducer = (state, action) => {
         switch (action.type) {

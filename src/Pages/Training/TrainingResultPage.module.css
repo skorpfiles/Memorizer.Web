@@ -1,0 +1,20 @@
+.thanks-message-container {
+    margin: 2rem auto;
+}
+
+.thanks-message-text {
+    margin-left: 1rem;
+}
+
+.instructions {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.navigate-button-up {
+    margin: 1rem auto 0.5rem auto;
+}
+
+.navigate-button-down {
+    margin: 0.5rem auto 1rem auto;
+}

@@ -1,0 +1,15 @@
+.container {
+    align-items:stretch;
+}
+
+.main-button {
+    flex: 6 0 0;
+}
+
+.separator {
+    width: 0.5rem;
+}
+
+.objection-button {
+    flex: 1 0 0;
+}

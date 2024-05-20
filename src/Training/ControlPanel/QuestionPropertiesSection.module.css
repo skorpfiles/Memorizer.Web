@@ -1,0 +1,13 @@
+.container {
+    padding: 0.25rem 0.2rem;
+    overflow: hidden;
+}
+
+.questionnaire-container {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.separator {
+    width: 0.5rem;
+}

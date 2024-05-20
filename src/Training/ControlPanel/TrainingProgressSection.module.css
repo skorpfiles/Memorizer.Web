@@ -1,0 +1,11 @@
+.container {
+    border-top: 0.1rem solid black;
+}
+
+.outer-section-container {
+    flex: 1 0 0;
+}
+
+.progress-section-container {
+    flex: 4 0 0;
+}

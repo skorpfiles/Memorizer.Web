@@ -1,0 +1,17 @@
+.container {
+    justify-content:center;
+    height:100%;
+}
+
+.question-container {
+    border-bottom: 0.1rem dashed black;
+    padding: 0.4rem 0;
+}
+
+.question-text {
+    margin-left: 0.2rem;
+}
+
+.answer {
+    margin: 0.4rem 0;
+}

@@ -1,7 +1,12 @@
 .container {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
+    border: 0.15rem solid black;
+    width: 10rem;
+    margin: 0.25rem 0;
+    background-color: white;
 }
 
 .userName {
@@ -9,5 +14,16 @@
 }
 
 .logOutButton {
+    display: flex;
+    padding: 0;
+}
+
+.logOutButtonImage {
     cursor: pointer;
+}
+
+.separator {
+    width: 0.15rem;
+    height: 1.1rem;
+    background-color: black;
 }

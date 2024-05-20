@@ -6,7 +6,7 @@ import { callApi, getAccessTokenFromCookies, getUserLoginFromCookies } from './U
 import {
     BrowserRouter as Router,
     Routes,
-    Route
+    Route,
 } from 'react-router-dom';
 
 import MainRouteElement from './RouteElements/MainRouteElement';
@@ -20,6 +20,7 @@ import { emailConfirmationStateActions } from './ReduxStore/emailConfirmationSta
 import { useDispatch, useSelector } from 'react-redux';
 
 import { confirmRegistration } from './Utils/authentication';
+import TrainingRouteElement from './RouteElements/TrainingRouteElement';
 
 function App() {
     const [firstLoadingIsCompleted, setFirstLoadingIsCompleted] = useState(false);
@@ -120,6 +121,14 @@ function App() {
                                     path='train/configure'
                                     element={
                                         <ConfigureTrainingRouteElement/>
+                                    }
+                                />
+                            )}
+                            {isUserLogged && (
+                                <Route
+                                    path='train'
+                                    element={
+                                        <TrainingRouteElement />
                                     }
                                 />
                             )}
