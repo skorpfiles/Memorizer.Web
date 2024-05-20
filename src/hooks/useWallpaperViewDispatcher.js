@@ -6,7 +6,7 @@ export const useWallpaperViewDispatcher = () => {
     return (newView) => {
         switch (newView) {
             case 'mainWallpaper':
-                document.body.style.backgroundImage = "url('book brighted.jpg')";
+                document.body.style.backgroundImage = "url('bookbrighted.webp')";
                 document.body.style.backgroundSize = "cover";
                 document.body.style.backgroundRepeat = "no-repeat";
                 document.body.style.backgroundAttachment = "fixed";
