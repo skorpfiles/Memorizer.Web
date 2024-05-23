@@ -1,7 +1,7 @@
 import NewQuestionSignal from './QuestionStageSection/NewQuestionSignal';
 import Stage from './QuestionStageSection/Stage';
 import styles from './QuestionStageSection.module.css';
-
+import { getTitlesOfTrainingStagesOnQuestionType } from '../../Utils/TrainingUtils';
 import { useSelector } from 'react-redux';
 
 function QuestionStageSection() {
@@ -22,51 +22,6 @@ function QuestionStageSection() {
             ))}
         </div>
     )
-}
-
-function getTitlesOfTrainingStagesOnQuestionType(questionType) {
-    switch (questionType) {
-        case 'task':
-            return [
-                {
-                    title: 'Learn',
-                    trainingStages: ['learn'],
-                    showForNew: true,
-                    showForOld: false
-                },
-                {
-                    title: 'Train',
-                    trainingStages: ['train', 'trainAfterLearning'],
-                    showForNew: true,
-                    showForOld: true
-                }
-            ];
-        case 'untypedAnswer':
-        case 'typedAnswers':
-        case 'untypedAndTypedAnswers':
-            return [
-                {
-                    title: 'Learn',
-                    trainingStages: ['learn'],
-                    showForNew: true,
-                    showForOld: false
-                },
-                {
-                    title: 'Train',
-                    trainingStages: ['train', 'trainAfterLearning'],
-                    showForNew: true,
-                    showForOld: true
-                },
-                {
-                    title: 'Check',
-                    trainingStages: ['check'],
-                    showForNew: true,
-                    showForOld: true
-                }
-            ];
-        default:
-            return [];
-    }
 }
 
 export default QuestionStageSection;

@@ -70,10 +70,10 @@ const trainingStateSlice = createSlice({
         goNext(state, action) {
             let nextState;
             if (action.payload.gotAnswer) {
-                const newAnswerState = checkIfAnswerIsCorrect(state.questions[state.currentQuestionIndex], action.payload.givenTypedAnswers, action.payload.isAnswerCorrect);
+                const newAnswerState = checkIfAnswerIsCorrect(state.trainingStage, state.questions[state.currentQuestionIndex], action.payload.givenTypedAnswers, action.payload.isAnswerCorrect);
                 state.questions[state.currentQuestionIndex].gotAnswer = true;
                 state.questions[state.currentQuestionIndex].givenTypedAnswers = newAnswerState.givenTypedAnswers;
-                state.questions[state.currentQuestionIndex].isAnswerCorrect = newAnswerState.isCorrect;
+                state.questions[state.currentQuestionIndex].isAnswerCorrect = state.questions[state.currentQuestionIndex].isAnswerCorrect !== false ? newAnswerState.isCorrect : false;
                 state.questions[state.currentQuestionIndex].iDontKnow = action.payload.iDontKnow ?? false;
                 nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], {
                     trainingStage: state.trainingStage,
@@ -122,6 +122,7 @@ const trainingStateSlice = createSlice({
         },
         challengeIncorrectness(state) {
             state.questions[state.currentQuestionIndex].isAnswerCorrect = true;
+            state.questions[state.currentQuestionIndex].challenged = true;
         },
         updateCorrectAnswersPercent(state) {
             state.correctAnswersPercent = getCorrectAnswersPercent(state.questions);

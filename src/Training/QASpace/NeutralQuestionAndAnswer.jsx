@@ -1,4 +1,5 @@
 import QuestionIcon from './question.png';
+import PenIcon from './pen.png';
 import styles from './NeutralQuestionAndAnswer.module.css';
 import { useSelector } from 'react-redux';
 function NeutralQuestionAndAnswer() {
@@ -7,7 +8,8 @@ function NeutralQuestionAndAnswer() {
     const untypedAnswer = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].untypedAnswer);
     const typedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].typedAnswers);
 
-    const resultAnswer = (questionType === 'typedAnswers' || questionType === 'untypedAndTypedAnswers') ? typedAnswers.map(ans=>ans.text).join('; ') : untypedAnswer;
+    const resultAnswer = (questionType === 'typedAnswers') ? typedAnswers.map(ans => ans.text).join('; ') : untypedAnswer;
+    const additionalTypedAnswers = (questionType === 'untypedAndTypedAnswers') ? typedAnswers.map(ans => ans.text).join('; ') : null;
 
     return (
         <div className={`column ${styles['container']}`}>
@@ -16,6 +18,12 @@ function NeutralQuestionAndAnswer() {
                 <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
             </div>
             <div className={`font--main-for-training-questions ${styles['answer']}`}>{resultAnswer}</div>
+            {(questionType === 'untypedAndTypedAnswers') && (
+                <div className={`row ${styles['typed-answers-container']}`}>
+                    <img className='iconic-question--icon' src={PenIcon} width='24rem' alt='Typed Answers' title='Typed Answers' />
+                    <div className={`iconic-question--text font--main-for-training-questions ${styles['typed-answers-text']}`}>{additionalTypedAnswers}</div>
+                </div>
+            ) }
         </div>
     );
 }

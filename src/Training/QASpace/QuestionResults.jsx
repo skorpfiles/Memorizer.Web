@@ -1,6 +1,7 @@
 import QuestionIcon from './question.png';
 import styles from './QuestionResults.module.css';
 import { useSelector } from 'react-redux';
+import PenIcon from './pen.png';
 
 function QuestionResults() {
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
@@ -12,6 +13,7 @@ function QuestionResults() {
     const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
 
     const typedAnswersMode = (questionType === 'typedAnswers' || questionType === 'untypedAndTypedAnswers');
+    const untypedAnswerMode = (questionType === 'untypedAnswer' || questionType === 'untypedAndTypedAnswers');
     const htmlAnswers = [];
 
     let givenTypedAnswersTexts = [];
@@ -52,10 +54,21 @@ function QuestionResults() {
                 <img className='iconic-question--icon' src={QuestionIcon} width='24rem' alt='Question' title='Question' />
                 <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
             </div>
-            <div className={`font--main-for-training-questions border-radius-small ${styles['answer']}`}>{typedAnswersMode ?
-                htmlAnswers.map(ans => ans) :
-                untypedAnswer}</div>
-            {typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
+            {untypedAnswerMode && typedAnswersMode && (
+                <div className={`row font--main-for-training-questions border-radius-small ${styles['answer']}`}>
+                    <img className='iconic-question--icon' src={PenIcon} width='24rem' alt='Typed Answers' title='Typed Answers' />
+                    <div className={`iconic-question--text font--main-for-training-questions ${styles['typed-answers-text']}`}>{htmlAnswers.map(ans => ans)}</div>
+                </div>
+            )}
+            {untypedAnswerMode && typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
+            {typedAnswersMode && untypedAnswerMode && (<div className={styles['separator']} />)}
+
+            {untypedAnswerMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>{untypedAnswer}</div>)}
+            {!untypedAnswerMode && typedAnswersMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>{htmlAnswers.map(ans => ans)}</div>)}
+            {!untypedAnswerMode && typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
             {resultMessage}
         </div>
     );
