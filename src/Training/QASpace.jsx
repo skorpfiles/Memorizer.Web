@@ -25,10 +25,20 @@ function QASpace() {
             }
             break;
         }
-        case 'typedAnswers': case 'untypedAndTypedAnswers': {
+        case 'typedAnswers': {
             switch (trainingStage) {
                 case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
                 case 'train': case 'trainAfterLearning': selectedComponent = (<QuestionWithTypingAnswer />); break;
+                case 'check': selectedComponent = (<QuestionResults />); break;
+                default: break;
+            }
+            break;
+        }
+        case 'untypedAndTypedAnswers': {
+            switch (trainingStage) {
+                case 'learn': selectedComponent = (<NeutralQuestionAndAnswer />); break;
+                case 'speak': case 'speakAfterLearning': selectedComponent = (<MainText />); break;
+                case 'write': selectedComponent = (<QuestionWithTypingAnswer />); break;
                 case 'check': selectedComponent = (<QuestionResults />); break;
                 default: break;
             }

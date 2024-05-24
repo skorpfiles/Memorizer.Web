@@ -18,6 +18,7 @@ function ButtonsSection() {
 
     const isAnswerCorrect = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].isAnswerCorrect);
     const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
+    const questionIsChallenged = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].challenged);
 
     const questionId = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].id);
     const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
@@ -42,12 +43,12 @@ function ButtonsSection() {
         goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
     }
 
-    const handleSendingHavingGotAnswerAndGoingNext = async () => {
+    const handleSendingHavingGotAnswerAndGoingNext = async (isResponsedAnswerCorrect) => {
         await sendQuestionAnswer({
             questionId,
             trainingStartTime,
             givenTypedAnswers: havingGotTypedAnswers,
-            isAnswerCorrect,
+            isAnswerCorrect: isResponsedAnswerCorrect ?? isAnswerCorrect,
             answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
         });
         goNext(false);
@@ -82,7 +83,7 @@ function ButtonsSection() {
             }
             break;
         }
-        case 'typedAnswers': case 'untypedAndTypedAnswers': {
+        case 'typedAnswers': {
             switch (trainingStage) {
                 case 'learn': selectedComponent = (<SingleButton text={switchTextForDeviceType('Train the question', 'Train the question (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
                 case 'train': case 'trainAfterLearning': break; //show nothing
@@ -100,6 +101,30 @@ function ButtonsSection() {
             }
             break;
         }
+        case 'untypedAndTypedAnswers': {
+            switch (trainingStage) {
+                case 'learn': selectedComponent = (<SingleButton text={switchTextForDeviceType('Train the question', 'Train the question (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'speak': case 'speakAfterLearning': selectedComponent = (<SingleButton text={switchTextForDeviceType('Go to typing', 'Go to typing (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleGoNext()} />); break;
+                case 'write': break; //show nothing
+                case 'check': {
+                    if (iDontKnow || questionIsChallenged) {
+                        selectedComponent = (<SingleButton text={switchTextForDeviceType('Next', 'Next (Enter)')} disabled={answerSendingIsGoing} handleClick={() => handleSendingHavingGotAnswerAndGoingNext()} />);
+                    }
+                    else if (isAnswerCorrect) {
+                        selectedComponent = (<TrueFalseButtons trueText={switchTextForDeviceType('Correct', 'Correct (Q)')} falseText={switchTextForDeviceType('Incorrect', 'Incorrect (W)')} disabled={answerSendingIsGoing}
+                            handleTrueClick={() => handleSendingHavingGotAnswerAndGoingNext(true)} handleFalseClick={() => handleSendingHavingGotAnswerAndGoingNext(false)} />);
+                    }
+                    else {
+                        selectedComponent = (<MainButtonWithObjectionButton mainText={switchTextForDeviceType('Next', 'Next (Enter)')} objectionText='It was correct!' disabled={answerSendingIsGoing}
+                            handleMainButtonClick={() => handleSendingHavingGotAnswerAndGoingNext()} handleObjectionButtonClick={() => handleChallengingIncorrectness()} />);
+                    }
+                    break;
+                }
+                default: break;
+            }
+            break;
+        }
+
         default: break;
     }
     return (

@@ -8,8 +8,16 @@
     padding: 0.4rem 0;
 }
 
+.typed-answers-container {
+    padding: 0.4rem 0;
+}
+
 .question-text {
     margin-left: 0.2rem;
+}
+
+.typed-answers-text {
+    margin-left: 0.1rem;
 }
 
 .answer {

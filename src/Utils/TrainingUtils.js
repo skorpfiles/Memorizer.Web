@@ -1,3 +1,74 @@
+export function getTitlesOfTrainingStagesOnQuestionType(questionType) {
+    switch (questionType) {
+        case 'task':
+            return [
+                {
+                    title: 'Learn',
+                    trainingStages: ['learn'],
+                    showForNew: true,
+                    showForOld: false
+                },
+                {
+                    title: 'Train',
+                    trainingStages: ['train', 'trainAfterLearning'],
+                    showForNew: true,
+                    showForOld: true
+                }
+            ];
+        case 'untypedAnswer':
+        case 'typedAnswers':
+            return [
+                {
+                    title: 'Learn',
+                    trainingStages: ['learn'],
+                    showForNew: true,
+                    showForOld: false
+                },
+                {
+                    title: 'Train',
+                    trainingStages: ['train', 'trainAfterLearning'],
+                    showForNew: true,
+                    showForOld: true
+                },
+                {
+                    title: 'Check',
+                    trainingStages: ['check'],
+                    showForNew: true,
+                    showForOld: true
+                }
+            ];
+        case 'untypedAndTypedAnswers':
+            return [
+                {
+                    title: 'Learn',
+                    trainingStages: ['learn'],
+                    showForNew: true,
+                    showForOld: false
+                },
+                {
+                    title: 'Speak',
+                    trainingStages: ['speak'],
+                    showForNew: true,
+                    showForOld: true
+                },
+                {
+                    title: 'Write',
+                    trainingStages: ['write'],
+                    showForNew: true,
+                    showForOld: true
+                },
+                {
+                    title: 'Check',
+                    trainingStages: ['check'],
+                    showForNew: true,
+                    showForOld: true
+                }
+            ]
+        default:
+            return [];
+    }
+}
+
 export function getNextStateInTrainingQuestion(question, previousState) {
     let result;
     if (previousState === null) { //start training question
@@ -11,12 +82,23 @@ export function getNextStateInTrainingQuestion(question, previousState) {
             };
         }
         else {
-            result = {
-                switchToNextQuestion: false,
-                trainingStage: 'train',
-                trainingStageParameters: [],
-                startTrainingTimer: true,
-                stopTrainingTimer: false
+            if (question.type !== 'untypedAndTypedAnswers') {
+                result = {
+                    switchToNextQuestion: false,
+                    trainingStage: 'train',
+                    trainingStageParameters: [],
+                    startTrainingTimer: true,
+                    stopTrainingTimer: false
+                }
+            }
+            else {
+                result = {
+                    switchToNextQuestion: false,
+                    trainingStage: 'speak',
+                    trainingStageParameters: [],
+                    startTrainingTimer: true,
+                    stopTrainingTimer: false
+                }
             }
         }
     }
@@ -72,7 +154,7 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                     default: result = null; break;
                 }; break;
             }
-            case 'typedAnswers': case 'untypedAndTypedAnswers': {
+            case 'typedAnswers': {
                 switch (previousState.trainingStage) {
                     case 'learn':
                         result = {
@@ -101,16 +183,53 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                     default: result = null; break;
                 }; break;
             }
+            case 'untypedAndTypedAnswers': {
+                switch (previousState.trainingStage) {
+                    case 'learn':
+                        result = {
+                            switchToNextQuestion: false,
+                            trainingStage: 'speak',
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: true,
+                            stopTrainingTimer: false
+                        }; break;
+                    case 'speak':
+                        result = {
+                            switchToNextQuestion: false,
+                            trainingStage: 'write',
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: false
+                        }; break;
+                    case 'write':
+                        result = {
+                            switchToNextQuestion: false,
+                            trainingStage: 'check',
+                            trainingStageParameters: previousState.trainingStageParameters,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: true
+                        }; break;
+                    case 'check':
+                        result = {
+                            switchToNextQuestion: true,
+                            trainingStage: null,
+                            trainingStageParameters: null,
+                            startTrainingTimer: false,
+                            stopTrainingTimer: false
+                        }; break;
+                    default: result = null; break;
+                }; break;
+            }
             default: result = null; break;
         }
     }
     return result;
 }
 
-export function checkIfAnswerIsCorrect(question, givenTypedAnswers, isAnswerCorrectManual) {
+export function checkIfAnswerIsCorrect(trainingStage, question, givenTypedAnswers, isAnswerCorrectManual) {
     let isAnswerCorrectAutomatic = true;
     const newGivenTypedAnswers = [];
-    if (question.type === 'typedAnswers' || question.type === 'untypedAndTypedAnswers') {
+    if (question.type === 'typedAnswers' || (question.type === 'untypedAndTypedAnswers' && trainingStage === 'write')) {
         const correctAnswersTexts = question.typedAnswers.map(ans => ans.text);
         let appliedAnswersTexts = [];
         for (let i = 0; i < givenTypedAnswers.length; i++) {
