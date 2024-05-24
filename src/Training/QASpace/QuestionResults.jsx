@@ -2,6 +2,7 @@ import QuestionIcon from './question.png';
 import styles from './QuestionResults.module.css';
 import { useSelector } from 'react-redux';
 import PenIcon from './pen.png';
+import MultilineText from '../../Controls/MultilineText';
 
 function QuestionResults() {
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
@@ -58,7 +59,9 @@ function QuestionResults() {
         <div className={`column ${styles['container']}`}>
             <div className={styles['question-container']}>
                 <img className='iconic-question--icon' src={QuestionIcon} width='24rem' alt='Question' title='Question' />
-                <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
+                <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>
+                    <MultilineText text={questionText}/>
+                </div>
             </div>
 
             {untypedAnswerMode && typedAnswersMode && (
@@ -71,7 +74,9 @@ function QuestionResults() {
 
             {typedAnswersMode && untypedAnswerMode && (<div className={styles['separator']} />)}
 
-            {untypedAnswerMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>{untypedAnswer}</div>)}
+            {untypedAnswerMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>
+                <MultilineText text={untypedAnswer}/>
+            </div>)}
             {!untypedAnswerMode && typedAnswersMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>{htmlAnswers.map(ans => ans)}</div>)}
             {!untypedAnswerMode && typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
 
