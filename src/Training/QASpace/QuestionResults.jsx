@@ -1,6 +1,8 @@
 import QuestionIcon from './question.png';
 import styles from './QuestionResults.module.css';
 import { useSelector } from 'react-redux';
+import PenIcon from './pen.png';
+import MultilineText from '../../Controls/MultilineText';
 
 function QuestionResults() {
     const questionType = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].type);
@@ -10,8 +12,10 @@ function QuestionResults() {
     const givenTypedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].givenTypedAnswers);
     const isAnswerCorrect = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].isAnswerCorrect);
     const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
+    const questionIsChallenged = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].challenged);
 
     const typedAnswersMode = (questionType === 'typedAnswers' || questionType === 'untypedAndTypedAnswers');
+    const untypedAnswerMode = (questionType === 'untypedAnswer' || questionType === 'untypedAndTypedAnswers');
     const htmlAnswers = [];
 
     let givenTypedAnswersTexts = [];
@@ -30,7 +34,12 @@ function QuestionResults() {
 
     if (typedAnswersMode) {
         if (isAnswerCorrect) {
-            resultMessage = (<div className={`font--main-for-training-questions ${styles['correct-result-message']}`}>correct</div>);
+            if (questionType === 'typedAnswers' || questionIsChallenged) {
+                resultMessage = (<div className={`font--main-for-training-questions ${styles['correct-result-message']}`}>correct</div>);
+            }
+            else {
+                resultMessage = null;
+            }
         }
         else {
             if (iDontKnow) {
@@ -50,12 +59,27 @@ function QuestionResults() {
         <div className={`column ${styles['container']}`}>
             <div className={styles['question-container']}>
                 <img className='iconic-question--icon' src={QuestionIcon} width='24rem' alt='Question' title='Question' />
-                <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>{questionText}</div>
+                <div className={`iconic-question--text font--question-above-answer ${styles['question-text']}`}>
+                    <MultilineText text={questionText}/>
+                </div>
             </div>
-            <div className={`font--main-for-training-questions border-radius-small ${styles['answer']}`}>{typedAnswersMode ?
-                htmlAnswers.map(ans => ans) :
-                untypedAnswer}</div>
-            {typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
+            {untypedAnswerMode && typedAnswersMode && (
+                <div className={`row font--main-for-training-questions border-radius-small ${styles['answer']}`}>
+                    <img className='iconic-question--icon' src={PenIcon} width='24rem' alt='Typed Answers' title='Typed Answers' />
+                    <div className={`iconic-question--text font--main-for-training-questions ${styles['typed-answers-text']}`}>{htmlAnswers.map(ans => ans)}</div>
+                </div>
+            )}
+            {untypedAnswerMode && typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
+            {typedAnswersMode && untypedAnswerMode && (<div className={styles['separator']} />)}
+
+            {untypedAnswerMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>
+                <MultilineText text={untypedAnswer}/>
+            </div>)}
+            {!untypedAnswerMode && typedAnswersMode && (<div className={`iconic-question--text font--main-for-training-questions border-radius-small ${styles['answer']}`}>{htmlAnswers.map(ans => ans)}</div>)}
+            {!untypedAnswerMode && typedAnswersMode && !isAnswerCorrect && !iDontKnow && givenTypedAnswersTexts.length > 0 && (<div className='font--default'>Incorrect answers: {givenTypedAnswersTexts.filter(ans => !typedAnswers.map(ans => ans.text).includes(ans)).join('; ')}</div>)}
+
             {resultMessage}
         </div>
     );

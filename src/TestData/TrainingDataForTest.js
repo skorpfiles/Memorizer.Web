@@ -148,6 +148,59 @@ export function GetTrainingQuestionsForEveryType() {
                     myStatus: penaltyPointsStatus,
                     ...standardQuestionData
                 },
+                {
+                    id: 'newUntypedAndTypedAnswersQuestion',
+                    codeInQuestionnaire: 10,
+                    type: 'untypedAndTypedAnswers',
+                    text: 'New Question With Untyped And Typed Answers Description. Correct answers: memory, happiness',
+                    untypedAnswer: "Untyped Answer Text",
+                    typedAnswers: [
+                        {
+                            id: 'typedAnswer1ForQuestion10',
+                            text: 'memory'
+                        },
+                        {
+                            id: 'typedAnswer2ForQuestion10',
+                            text: 'happiness'
+                        },
+                    ],
+                    myStatus: newStatus,
+                    ...standardQuestionData
+                },
+                {
+                    id: 'oldUntypedAndTypedAnswersQuestion',
+                    codeInQuestionnaire: 11,
+                    type: 'untypedAndTypedAnswers',
+                    text: 'Old Question With Untyped And Typed Answers Description. Correct answer: life',
+                    untypedAnswer: "Untyped Answer Text",
+                    typedAnswers: [
+                        {
+                            id: 'typedAnswer1ForQuestion11',
+                            text: 'life'
+                        }
+                    ],
+                    myStatus: oldStatus,
+                    ...standardQuestionData
+                },
+                {
+                    id: 'untypedAndTypedAnswersQuestionWithPenaltyPoints',
+                    codeInQuestionnaire: 12,
+                    type: 'untypedAndTypedAnswers',
+                    text: 'Question With Untyped And Typed Answers And Penalty Points Description. Correct answers: learning, self-development',
+                    untypedAnswer: "Untyped Answer Text",
+                    typedAnswers: [
+                        {
+                            id: 'typedAnswer1ForQuestion12',
+                            text: 'learning'
+                        },
+                        {
+                            id: 'typedAnswer2ForQuestion12',
+                            text: 'self-development'
+                        }
+                    ],
+                    myStatus: penaltyPointsStatus,
+                    ...standardQuestionData
+                },
             ]
     }
 }
