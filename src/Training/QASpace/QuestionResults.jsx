@@ -11,6 +11,7 @@ function QuestionResults() {
     const givenTypedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].givenTypedAnswers);
     const isAnswerCorrect = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].isAnswerCorrect);
     const iDontKnow = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].iDontKnow);
+    const questionIsChallenged = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].challenged);
 
     const typedAnswersMode = (questionType === 'typedAnswers' || questionType === 'untypedAndTypedAnswers');
     const untypedAnswerMode = (questionType === 'untypedAnswer' || questionType === 'untypedAndTypedAnswers');
@@ -32,7 +33,12 @@ function QuestionResults() {
 
     if (typedAnswersMode) {
         if (isAnswerCorrect) {
-            resultMessage = (<div className={`font--main-for-training-questions ${styles['correct-result-message']}`}>correct</div>);
+            if (questionType === 'typedAnswers' || questionIsChallenged) {
+                resultMessage = (<div className={`font--main-for-training-questions ${styles['correct-result-message']}`}>correct</div>);
+            }
+            else {
+                resultMessage = null;
+            }
         }
         else {
             if (iDontKnow) {

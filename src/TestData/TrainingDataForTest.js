@@ -1,4 +1,4 @@
-export const DEMO_QUESTIONS_MODE = true;
+export const DEMO_QUESTIONS_MODE = false;
 export function GetTrainingQuestionsForEveryType() {
     const standardQuestionData = {
         questionnaire: {
