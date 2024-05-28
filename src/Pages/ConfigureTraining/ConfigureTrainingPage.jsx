@@ -5,15 +5,107 @@ import SelectQuestionnairePage from './SelectQuestionnairePage';
 import ReturnToPage from '../../ReturnToPage';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoadingPage from '../LoadingPage';
 
 function ConfigureTrainingPage() {
+
+    const accessToken = useSelector(state => state.user.accessToken);
+
+    //------- Training Status -------//
+
     const [trainingStatus, setTrainingStatus] = useState({
+        id: null,
         name: 'My Training',
         selectedQuestionnaires: [],
         trainingLengthAsQuestionsCount: true
     });
+
+    //------- Load Training By ID -------//
+
+    const [searchParams,] = useSearchParams();
+
+    const loadTrainingReducer = (state, action) => {
+        switch (action.type) {
+            case 'setIsLoading':
+                return {
+                    isLoading: true,
+                    loadingFinished: false,
+                    loadingSucceed: false,
+                    loadingError: false,
+                    loadingErrorMessage: null,
+                };
+            case 'setSuccess':
+                return {
+                    isLoading: false,
+                    loadingFinished: true,
+                    loadingSucceed: true,
+                    loadingError: false,
+                    loadingErrorMessage: null,
+                };
+            case 'setError':
+                return {
+                    isLoading: false,
+                    loadingFinished: true,
+                    loadingSucceed: false,
+                    loadingError: true,
+                    loadingErrorMessage: action.errorMessage,
+                };
+            default:
+                return { ...state };
+        }
+    }
+
+    const [loadTrainingState, dispatchLoadTrainingState] = useReducer(loadTrainingReducer, {
+        isLoading: false,
+        loadingFinished: false,
+        loadingSucceed: false,
+        loadingError: false,
+        loadingErrorMessage: null,
+    })
+
+    useEffect(() => {
+        const trainingId = searchParams.get('id');
+        if (trainingId != null) {
+            setSelectQuestionnairePageIsShown(false);
+            dispatchLoadTrainingState('setIsLoading');
+            try {
+                const loadingTrainingFunc = async () => {
+                    let url = '/Repository/Training/' + trainingId;
+                    const response = await callApi(url, 'GET', accessToken);
+                    if (response.ok) {
+                        const result = await response.json();
+                        setTrainingStatus({
+                            id: result.id,
+                            name: result.name,
+                            selectedQuestionnaires: result.questionnaires.map(item => {
+                                return {
+                                    id: item.id,
+                                    name: item.name
+                                };
+                            }),
+                            trainingLengthAsQuestionsCount: result.lengthType === 'questionsCount'
+                        });
+                        methods.setValue('trainingName', result.name);
+                        methods.setValue('questionsCount', result.questionsCount);
+                        methods.setValue('time', result.timeMinutes);
+                        dispatchLoadTrainingState('setSuccess');
+                    }
+                    else {
+                        const result = await response.json();
+                        dispatchLoadTrainingState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
+                    }
+                };
+                loadingTrainingFunc().catch(console.error);
+            }
+            catch (error) {
+                console.log(error);
+                dispatchLoadTrainingState({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
+            }
+        }
+    }, [accessToken, searchParams]);
+
+    //------- Calculating Stats -------//
 
     const questionnairesStatsReducer = (state, action) => {
         switch (action.type) {
@@ -54,37 +146,6 @@ function ConfigureTrainingPage() {
                 return { ...state };
         }
     }
-
-    const [questionnairesStats, dispatchQuestionnairesStats] = useReducer(questionnairesStatsReducer, {
-        questionnaires: [], //{ id : ..., filled: ..., maxTimeToTrainMinutes : ... }
-        stats: {
-            questionsTotalCount: 0,
-            newQuestionsCount: 0,
-            recheckedQuestionsCount: 0,
-            maxTimeToTrainMinutes: 0
-        },
-        isLoading: false,
-        isFinished: false,
-        isSuccessful: false,
-        isError: false,
-        errorMessage: null
-    });
-
-    const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(true); //defines if the SelectQuestionnairePage component is shown in this moment instead of ConfigureTrainingShell.
-
-    const [selectQuestionnairePageStatus, setSelectQuestionnairePageStatus] = useState({
-        currentFilter: 'ownFilter',
-        searchTerm: ''
-    });
-
-    const defaultValues = {
-        trainingLengthRadioGroup: 'questionsCountRadioButton',
-        trainingName: 'My Training'
-    };
-
-    const methods = useForm({defaultValues});
-
-    const accessToken = useSelector(state => state.user.accessToken);
 
     const refreshStatsFunc = async (newTrainingStatusSelectedQuestionnaires) => {
         try {
@@ -163,6 +224,38 @@ function ConfigureTrainingPage() {
         }
     }
 
+    const [questionnairesStats, dispatchQuestionnairesStats] = useReducer(questionnairesStatsReducer, {
+        questionnaires: [], //{ id : ..., filled: ..., maxTimeToTrainMinutes : ... }
+        stats: {
+            questionsTotalCount: 0,
+            newQuestionsCount: 0,
+            recheckedQuestionsCount: 0,
+            maxTimeToTrainMinutes: 0
+        },
+        isLoading: false,
+        isFinished: false,
+        isSuccessful: false,
+        isError: false,
+        errorMessage: null
+    });
+
+    //------- Configure Page / Select Questionnaire Toggling -------//
+
+    const [selectQuestionnairePageIsShown, setSelectQuestionnairePageIsShown] = useState(true); //defines if the SelectQuestionnairePage component is shown in this moment instead of ConfigureTrainingShell.
+
+    const [selectQuestionnairePageStatus, setSelectQuestionnairePageStatus] = useState({
+        currentFilter: 'ownFilter',
+        searchTerm: ''
+    });
+
+    //------- UI filling and handling -------//
+
+    const defaultValues = {
+        trainingLengthRadioGroup: 'questionsCountRadioButton',
+        trainingName: 'My Training'
+    };
+
+    const methods = useForm({defaultValues});
 
     const handleAddingAnotherQuestionnaire = () => setSelectQuestionnairePageIsShown(true);
     const handleDeleteQuestionnaire = async (id) => {
@@ -199,7 +292,9 @@ function ConfigureTrainingPage() {
         }));
     }
 
-    const createTrainingReducer = (state, action) => {
+    //------- Create a new Training -------//
+
+    const saveTrainingReducer = (state, action) => {
         switch (action.type) {
             case 'setIsLoading':
                 return {
@@ -236,7 +331,7 @@ function ConfigureTrainingPage() {
         }
     }
 
-    const [createTrainingState, dispatchCreateTrainingState] = useReducer(createTrainingReducer, {
+    const [saveTrainingState, dispatchSaveTrainingState] = useReducer(saveTrainingReducer, {
         readyForLoading: false,
         isLoading: false,
         loadingFinished: false,
@@ -246,10 +341,10 @@ function ConfigureTrainingPage() {
         loadingErrorMessage: null
     });
 
-    const processCreateTraining = async (data) => {
-        dispatchCreateTrainingState({ type: 'setIsLoading' });
+    const processCreateTraining = async (data, createNew) => {
+        dispatchSaveTrainingState({ type: 'setIsLoading' });
 
-        const body = {
+        let body = {
             name: data.trainingName,
             lengthType: (data.trainingLengthRadioGroup === 'questionsCountRadioButton' ? 'questionsCount' : (data.trainingLengthRadioGroup === 'timeRadioButton' ? 'time' : null)),
             questionsCount: data.questionsCount ? parseInt(data.questionsCount, 10) : 0,
@@ -259,16 +354,30 @@ function ConfigureTrainingPage() {
             questionnairesIds: trainingStatus.selectedQuestionnaires.map(q => q.id)
         };
 
-        const response = await callApi(`/Repository/Training`, 'PUT', accessToken, JSON.stringify(body));
+        if (createNew) {
+            body = {
+                ...body,
+                id: trainingStatus.id
+            }
+        };
+
+        const response = await callApi(`/Repository/Training`, createNew ? 'PUT' : 'POST', accessToken, JSON.stringify(body));
         if (response.ok) {
-            const result = await response.json();
-            dispatchCreateTrainingState({ type: 'setSuccess', resultTrainingId: result.id });
+            if (createNew) {
+                const result = await response.json();
+                dispatchSaveTrainingState({ type: 'setSuccess', resultTrainingId: result.id });
+            }
+            else {
+                dispatchSaveTrainingState({ type: 'setSuccess', resultTrainingId: trainingStatus.id });
+            }
         }
         else {
             const result = await response.json();
-            dispatchCreateTrainingState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
+            dispatchSaveTrainingState({ type: 'setError', errorMessage: `${response.status} ${result.errorText}` });
         }
     }
+
+    //------- Submit & Start Training -------//
 
     const navigate = useNavigate();
 
@@ -279,23 +388,25 @@ function ConfigureTrainingPage() {
         }
         catch (error) {
             console.log(error);
-            dispatchCreateTrainingState({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
+            dispatchSaveTrainingState({ type: 'setError', errorMessage: 'Error: Unable to connect to the API.' });
         }
     }
 
     useEffect(() => {
-        if (createTrainingState.loadingSucceed) {
-            navigate(`/train?id=${createTrainingState.resultTrainingId}`);
+        if (saveTrainingState.loadingSucceed) {
+            navigate(`/train?id=${saveTrainingState.resultTrainingId}`);
         }
-    }, [createTrainingState.loadingSucceed, createTrainingState.resultTrainingId, navigate]);
+    }, [saveTrainingState.loadingSucceed, saveTrainingState.resultTrainingId, navigate]);
+
+    //------- JSX -------//
 
     let result;
 
-    if (createTrainingState.readyForLoading && !createTrainingState.loadingSucceed) {
+    if (saveTrainingState.readyForLoading && !saveTrainingState.loadingSucceed) {
         result = (
             <div className='route-element-with-return-button'>
                 <ReturnToPage customClickHandler={() => setSelectQuestionnairePageIsShown(false)} text='Return to the training page' />
-                <LoadingPage hasErrorResult={createTrainingState.loadingError} />
+                <LoadingPage hasErrorResult={saveTrainingState.loadingError} />
             </div>
         );
     }
