@@ -108,7 +108,6 @@ function ConfigureTrainingPage() {
             //refresh stats for unfilled items
             const processQuestionnaireStatsItem = async (questionnaireStatsItem) => {
                 if (!questionnaireStatsItem.filled) {
-                    await new Promise(resolve => setTimeout(resolve, 2000));
                     const response = await callApi(`/Repository/Questionnaire/${questionnaireStatsItem.id}?calculateTime=true`, 'GET', accessToken);
                     if (response.ok) {
                         const result = await response.json();
