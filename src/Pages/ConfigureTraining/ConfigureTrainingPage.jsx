@@ -348,7 +348,9 @@ function ConfigureTrainingPage() {
         loadingErrorMessage: null
     });
 
-    const processCreateTraining = async (data, createNew) => {
+    //------- Update Training -------//
+
+    const processUpdateTraining = async (data, createNew) => {
         dispatchSaveTrainingState({ type: 'setIsLoading' });
 
         let body = {
@@ -391,7 +393,7 @@ function ConfigureTrainingPage() {
     const handleStartTraining = (data) => {
         console.info(data);
         try {
-            processCreateTraining(data).catch(console.error);
+            processUpdateTraining(data, !trainingStatus.id).catch(console.error);
         }
         catch (error) {
             console.log(error);
