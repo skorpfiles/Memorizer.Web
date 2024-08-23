@@ -23,6 +23,7 @@ function TypingAnswerInputContainerWithValidation(props) {
                 id='typedAnswer'
                 type='text'
                 placeholder='Type an answer'
+                autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                 {...register('typedAnswer', { disabled: props.disabled, ...props.inputValidation })}
             />
             {isInvalid && (
