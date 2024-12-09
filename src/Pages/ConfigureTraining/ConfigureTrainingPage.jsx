@@ -363,7 +363,7 @@ function ConfigureTrainingPage() {
             questionnairesIds: trainingStatus.selectedQuestionnaires.map(q => q.id)
         };
 
-        if (createNew) {
+        if (!createNew) {
             body = {
                 ...body,
                 id: trainingStatus.id
