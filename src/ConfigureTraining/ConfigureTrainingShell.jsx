@@ -86,6 +86,67 @@ function ConfigureTrainingShell(props) {
                         maxValue={props.questionnairesStats.stats.maxTimeToTrainMinutes}
                         formMethods={props.formMethods}
                     />
+                    <div className='group-inside-panel--2x-margin row'>
+                        <label htmlFor='newQuestionsFraction' className='font--main-for-small-labels row--label-before-textbox'>Fraction of new questions:</label>
+                        <InputWithValidation
+                            inputType='number'
+                            inputStep='0.01'
+                            inputId='newQuestionsFraction'
+                            inputName='newQuestionsFraction'
+                            //containerClassName='flex-all-free-space'
+                            inputClassName='main-text-box full-width border-radius-small font--main-for-controls'
+                            validationLabelClassName='validation-label'
+                            value={props.trainingStatus.newQuestionsFraction}
+                            inputValidation={{
+                                required: {
+                                    value: true,
+                                    message: 'Fraction of new questions is required.'
+                                },
+                                min: {
+                                    value: 0,
+                                    message: 'Must be 0 or more.'
+                                },
+                                max: {
+                                    value: 1,
+                                    message: 'Must be 1 or less.'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className='group-inside-panel--2x-margin row'>
+                        <label htmlFor='penaltyQuestionsFraction' className='font--main-for-small-labels row--label-before-textbox'>Fraction of penalty questions:</label>
+                        <InputWithValidation
+                            inputType='number'
+                            inputStep='0.01'
+                            inputId='penaltyQuestionsFraction'
+                            inputName='penaltyQuestionsFraction'
+                            //containerClassName='flex-all-free-space'
+                            inputClassName='main-text-box full-width border-radius-small font--main-for-controls'
+                            validationLabelClassName='validation-label'
+                            value={props.trainingStatus.penaltyQuestionsFraction}
+                            inputValidation={{
+                                required: {
+                                    value: true,
+                                    message: 'Fraction of penalty questions is required.'
+                                },
+                                min: {
+                                    value: 0,
+                                    message: 'Must be 0 or more.'
+                                },
+                                max: {
+                                    value: 1,
+                                    message: `Must be 1 or less.`
+                                },
+                                validate: (value) => {
+                                    //const newQuestionsFraction = props.formMethods.getValues('newQuestionsFraction');
+                                    if ((parseFloat(value) ?? 1) + (parseFloat(props.formMethods.watch('newQuestionsFraction')) ?? 1) > 1) {
+                                        return 'Sum of new and penalty cannot be more than 1.';
+                                    }
+                                }
+                            }}
+                        />
+                    </div>
+
                     <div className='group-inside-panel--2x-margin display-flex'>
                         <input type='submit'
                             className='main-button increased-button-height central-button--small-width font--main-for-controls border-radius-big'

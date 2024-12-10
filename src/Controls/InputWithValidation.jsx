@@ -13,6 +13,7 @@ function InputWithValidation(props) {
                 className={props.inputClassName}
                 id={props.inputId}
                 type={props.inputType}
+                step={props.inputStep}
                 placeholder={props.inputPlaceholder}
                 style={props.inputStyle}
                 {...register(props.inputName, { disabled: props.disabled, ...props.inputValidation })}

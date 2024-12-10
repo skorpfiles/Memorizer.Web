@@ -14,7 +14,9 @@ function ConfigureTrainingPage() {
     const accessToken = useSelector(state => state.user.accessToken);
     const defaultValues = {
         trainingLengthRadioGroup: 'questionsCountRadioButton',
-        trainingName: 'My Training'
+        trainingName: 'My Training',
+        newQuestionsFraction: 0.25,
+        penaltyQuestionsFraction: 0.25
     };
     const methods = useForm({ defaultValues });
 
@@ -163,7 +165,9 @@ function ConfigureTrainingPage() {
         id: null,
         name: 'My Training',
         selectedQuestionnaires: [],
-        trainingLengthAsQuestionsCount: true
+        trainingLengthAsQuestionsCount: true,
+        newQuestionsFraction: 0.25,
+        penaltyQuestionsFraction: 0.25
     });
 
     //------- Load Training By ID -------//
@@ -231,11 +235,15 @@ function ConfigureTrainingPage() {
                             id: result.id,
                             name: result.name,
                             selectedQuestionnaires,
-                            trainingLengthAsQuestionsCount: result.lengthType === 'questionsCount'
+                            trainingLengthAsQuestionsCount: result.lengthType === 'questionsCount',
+                            newQuestionsFraction: result.newQuestionsFraction,
+                            penaltyQuestionsFraction: result.penaltyQuestionsFraction
                         });
                         methods.setValue('trainingName', result.name);
                         methods.setValue('questionsCount', result.questionsCount);
                         methods.setValue('time', result.timeMinutes);
+                        methods.setValue('newQuestionsFraction', result.newQuestionsFraction);
+                        methods.setValue('penaltyQuestionsFraction', result.penaltyQuestionsFraction);
                         dispatchLoadTrainingState('setSuccess');
                         await refreshStatsFuncRef.current(selectedQuestionnaires);
                     }
@@ -299,6 +307,20 @@ function ConfigureTrainingPage() {
         }));
     }
 
+    const handleSettingNewQuestionsFraction = (value) => {
+        setTrainingStatus(prevState => ({
+            ...prevState,
+            newQuestionsFraction: value
+        }));
+    }
+
+    const handleSettingPenaltyQuestionsFraction = (value) => {
+        setTrainingStatus(prevState => ({
+            ...prevState,
+            penaltyQuestionsFraction: value
+        }));
+    }
+
     //------- Create a new Training -------//
 
     const saveTrainingReducer = (state, action) => {
@@ -358,8 +380,8 @@ function ConfigureTrainingPage() {
             lengthType: (data.trainingLengthRadioGroup === 'questionsCountRadioButton' ? 'questionsCount' : (data.trainingLengthRadioGroup === 'timeRadioButton' ? 'time' : null)),
             questionsCount: data.questionsCount ? parseInt(data.questionsCount, 10) : 0,
             timeMinutes: data.time ? parseInt(data.time, 10) : 0,
-            newQuestionsFraction: 0.25,
-            penaltyQuestionsFraction: 0.25,
+            newQuestionsFraction: parseFloat(data.newQuestionsFraction),
+            penaltyQuestionsFraction: parseFloat(data.penaltyQuestionsFraction),
             questionnairesIds: trainingStatus.selectedQuestionnaires.map(q => q.id)
         };
 
@@ -438,6 +460,8 @@ function ConfigureTrainingPage() {
                     handleAddingAnotherQuestionnaire={handleAddingAnotherQuestionnaire}
                     handleDeleteQuestionnaire={handleDeleteQuestionnaire}
                     handleSettingTrainingLength={handleSettingTrainingLength}
+                    handleSettingNewQuestionsFraction={handleSettingNewQuestionsFraction}
+                    handleSettingPenaltyQuestionsFraction={handleSettingPenaltyQuestionsFraction}
                     handleStartTraining={handleStartTraining}
                     setName={handleSettingTrainingName}
                     formMethods={methods}
