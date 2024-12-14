@@ -6,6 +6,13 @@
     width: 20rem;
 }
 
+.training-space-qa-width {
+    width: auto;
+    min-width: 30rem;
+    max-width: 80rem;
+    padding: 5rem;
+}
+
 .font--main-for-training-questions {
     font-size: 1.5rem;
 }
