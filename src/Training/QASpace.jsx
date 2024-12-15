@@ -47,7 +47,7 @@ function QASpace() {
         default: break;
     }
     return (
-        <div className={`flex-all-free-space training-space-width ${styles['content']}`}>
+        <div className={`flex-all-free-space training-space-qa-width ${styles['content']}`}>
             {selectedComponent}
         </div>
     )
