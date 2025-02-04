@@ -3,7 +3,7 @@ import styles from './LoaderSection.module.css';
 function LoaderSection(props) {
     let content;
 
-    if (props.isLoading) {
+    if (props.isLoading || props.hasErrorResult) {
         content = (
             <div>
                 <LoadingWidget hasErrorResult={props.hasErrorResult} errorMessage='Loading error. Please try again.' />

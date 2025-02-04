@@ -26,6 +26,8 @@ function ButtonsSection() {
 
     const havingGotTypedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].givenTypedAnswers);
 
+    const answerSendingStateIsError = useSelector(state => state.answerSendingState.isError);
+
     const handleGoNext = () => {
         goNext(false);
     }
@@ -40,7 +42,9 @@ function ButtonsSection() {
                 answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
             });
         }
-        goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
+        if (!answerSendingStateIsError) {
+            goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
+        };
     }
 
     const handleSendingHavingGotAnswerAndGoingNext = async (isResponsedAnswerCorrect) => {
@@ -51,7 +55,9 @@ function ButtonsSection() {
             isAnswerCorrect: isResponsedAnswerCorrect ?? isAnswerCorrect,
             answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
         });
-        goNext(false);
+        if (!answerSendingStateIsError) {
+            goNext(false);
+        }
     }
 
     const handleChallengingIncorrectness = () => {
