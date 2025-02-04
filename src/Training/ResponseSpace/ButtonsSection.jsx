@@ -29,6 +29,7 @@ function ButtonsSection() {
     const answerSendingStateIsError = useSelector(state => state.answerSendingState.isError);
 
     const handleGoNext = () => {
+        console.log('handleGoNext');
         goNext(false);
     }
 
@@ -43,6 +44,7 @@ function ButtonsSection() {
             });
         }
         if (!answerSendingStateIsError) {
+            console.log(`handleAnswer: Going next because answerSendingStateIsError is ${answerSendingStateIsError}`);
             goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
         };
     }
@@ -56,6 +58,7 @@ function ButtonsSection() {
             answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
         });
         if (!answerSendingStateIsError) {
+            console.log(`handleSendingHavingGotAnswerAndGoingNext: Going next because answerSendingStateIsError is ${answerSendingStateIsError}`);
             goNext(false);
         }
     }
