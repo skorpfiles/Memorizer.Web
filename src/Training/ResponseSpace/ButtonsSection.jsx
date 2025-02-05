@@ -26,16 +26,14 @@ function ButtonsSection() {
 
     const havingGotTypedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].givenTypedAnswers);
 
-    const answerSendingStateIsError = useSelector(state => state.answerSendingState.isError);
-
     const handleGoNext = () => {
-        console.log('handleGoNext');
         goNext(false);
     }
 
     const handleAnswer = async (isResponsedAnswerCorrect, givenTypedAnswers, sendAnswer) => {
+        var isFuncSucceed = true;
         if (sendAnswer) {
-            await sendQuestionAnswer({
+            isFuncSucceed = await sendQuestionAnswer({
                 questionId,
                 trainingStartTime,
                 givenTypedAnswers,
@@ -43,22 +41,20 @@ function ButtonsSection() {
                 answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
             });
         }
-        if (!answerSendingStateIsError) {
-            console.log(`handleAnswer: Going next because answerSendingStateIsError is ${answerSendingStateIsError}`);
+        if (isFuncSucceed) {
             goNext(true, isResponsedAnswerCorrect, givenTypedAnswers);
         };
     }
 
     const handleSendingHavingGotAnswerAndGoingNext = async (isResponsedAnswerCorrect) => {
-        await sendQuestionAnswer({
+        var isFuncSucceed = await sendQuestionAnswer({
             questionId,
             trainingStartTime,
             givenTypedAnswers: havingGotTypedAnswers,
             isAnswerCorrect: isResponsedAnswerCorrect ?? isAnswerCorrect,
             answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
         });
-        if (!answerSendingStateIsError) {
-            console.log(`handleSendingHavingGotAnswerAndGoingNext: Going next because answerSendingStateIsError is ${answerSendingStateIsError}`);
+        if (isFuncSucceed) {
             goNext(false);
         }
     }
@@ -68,8 +64,6 @@ function ButtonsSection() {
     }
 
     const answerSendingIsGoing = useSelector(state => state.answerSendingState.isExecuting);
-
-
 
     let selectedComponent;
     switch (questionType) {

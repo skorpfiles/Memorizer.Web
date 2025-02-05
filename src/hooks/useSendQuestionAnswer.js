@@ -21,19 +21,23 @@ export const useSendQuestionAnswer = () => {
                 }));
                 if (response.ok) {
                     dispatch(answerSendingStateActions.setSuccessfulSending());
+                    return true;
                 }
                 else {
                     const result = await response.json();
                     dispatch(answerSendingStateActions.setError({ errorMessage: `${response.status} ${result.errorText}` }));
+                    return false;
                 }
             }
             catch (error) {
                 console.log(error);
                 dispatch(answerSendingStateActions.setError({ errorMessage: 'Error: Unable to connect to the API.' }));
+                return false;
             }
         }
         else {
             dispatch(answerSendingStateActions.setSuccessfulSending());
+            return true;
         }
     }, [accessToken, dispatch]);
 }
