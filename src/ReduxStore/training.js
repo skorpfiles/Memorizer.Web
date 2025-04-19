@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getNextStateInTrainingQuestion, checkIfAnswerIsCorrect, getCorrectAnswersPercent } from '../Utils/TrainingUtils.js';
+import { maxTimeForLimitedStagesMilliseconds, maxTimeForAllStagesMilliseconds } from '../Utils/TrainingConstants.js';
 
 const trainingStateSlice = createSlice({
     name: 'trainingStateSlice',
@@ -12,7 +13,9 @@ const trainingStateSlice = createSlice({
         trainingStage: null,
         trainingStageParameters: null,
         timerIsGoing: false,
-        currentQuestionTimeSeconds: 0,
+        currentStageStartTime: null,
+        currentStageTimeIsLimited: false,
+        currentStageMaxTimeMilliseconds: maxTimeForAllStagesMilliseconds,
         correctAnswersPercent: 100,
         isTrainingResultReady: false
     },
@@ -26,7 +29,9 @@ const trainingStateSlice = createSlice({
             state.trainingStage = null;
             state.trainingStageParameters = null;
             state.timerIsGoing = false;
-            state.currentQuestionTimeSeconds = 0;
+            state.currentStageStartTime = null;
+            state.currentStageTimeIsLimited = false;
+            state.currentStageMaxTimeMilliseconds = maxTimeForAllStagesMilliseconds;
             state.correctAnswersPercent = 0;
             state.isTrainingResultReady = false;
         },
@@ -51,21 +56,27 @@ const trainingStateSlice = createSlice({
             }
 
             //start training current question
-            state.currentQuestionTimeSeconds = 0;
             state.correctAnswersPercent = 0;
 
             //set training stage
             const nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
             state.trainingStage = nextState.trainingStage;
             state.trainingStageParameters = nextState.trainingStageParameters;
-            if (nextState.startTrainingTimer) {
-                state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
-                state.timerIsGoing = true;
-            }
-            if (nextState.stopTrainingTimer) {
-                state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
-                state.timerIsGoing = false;
-            }
+
+            state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+            state.questions[state.currentQuestionIndex].answerTimeMilliseconds = 0;
+
+            state.currentStageTimeIsLimited = nextState.currentStageTimeIsLimited;
+            state.currentStageMaxTimeMilliseconds = nextState.currentStageTimeIsLimited ? maxTimeForLimitedStagesMilliseconds : maxTimeForAllStagesMilliseconds;
+            state.currentStageStartTime = Date.now();
+            state.timerIsGoing = true;
+        },
+        refreshStageStartTime(state) {
+            const stageResultTimeMilliseconds = Date.now() - state.currentStageStartTime;
+            if (state.currentStageTimeIsLimited && stageResultTimeMilliseconds > state.currentStageMaxTimeMilliseconds)
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds += state.currentStageMaxTimeMilliseconds;
+            else
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds += stageResultTimeMilliseconds;
         },
         goNext(state, action) {
             let nextState;
@@ -87,14 +98,11 @@ const trainingStateSlice = createSlice({
                 });
             }
 
-            if (nextState.startTrainingTimer) {
-                state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
-                state.timerIsGoing = true;
-            }
-            if (nextState.stopTrainingTimer) {
-                state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
-                state.timerIsGoing = false;
-            }
+            const stageResultTimeMilliseconds = Date.now() - state.currentStageStartTime;
+            if (state.currentStageTimeIsLimited && stageResultTimeMilliseconds > state.currentStageMaxTimeMilliseconds)
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds += state.currentStageMaxTimeMilliseconds;
+            else
+                state.questions[state.currentQuestionIndex].answerTimeMilliseconds += stageResultTimeMilliseconds;
 
             if (nextState.switchToNextQuestion) {
                 if (state.currentQuestionIndex + 1 < state.questionsCount) {
@@ -102,22 +110,26 @@ const trainingStateSlice = createSlice({
                     nextState = getNextStateInTrainingQuestion(state.questions[state.currentQuestionIndex], null, null);
                     state.trainingStage = nextState.trainingStage;
                     state.trainingStageParameters = nextState.trainingStageParameters;
-                    if (nextState.startTrainingTimer) {
-                        state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
-                        state.timerIsGoing = true;
-                    }
-                    if (nextState.stopTrainingTimer) {
-                        state.questions[state.currentQuestionIndex].answerTimeMilliseconds = Date.now() - state.questions[state.currentQuestionIndex].trainingStartTime;
-                        state.timerIsGoing = false;
-                    }
+
+                    state.questions[state.currentQuestionIndex].trainingStartTime = Date.now();
+                    state.questions[state.currentQuestionIndex].answerTimeMilliseconds = 0;
+
+                    state.currentStageTimeIsLimited = nextState.currentStageTimeIsLimited;
+                    state.currentStageMaxTimeMilliseconds = nextState.currentStageTimeIsLimited ? maxTimeForLimitedStagesMilliseconds : maxTimeForAllStagesMilliseconds;
+                    state.currentStageStartTime = Date.now();
                 }
                 else {
+                    state.timerIsGoing = false;
                     state.isTrainingResultReady = true;
                 }
             }
             else {
                 state.trainingStage = nextState.trainingStage;
                 state.trainingStageParameters = nextState.trainingStageParameters;
+
+                state.currentStageTimeIsLimited = nextState.currentStageTimeIsLimited;
+                state.currentStageMaxTimeMilliseconds = nextState.currentStageTimeIsLimited ? maxTimeForLimitedStagesMilliseconds : maxTimeForAllStagesMilliseconds;
+                state.currentStageStartTime = Date.now();
             }
         },
         challengeIncorrectness(state) {

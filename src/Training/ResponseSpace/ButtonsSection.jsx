@@ -7,6 +7,7 @@ import { trainingStateActions } from '../../ReduxStore/training';
 import { useGoingNext } from '../../hooks/useGoingNext';
 import { useSendQuestionAnswer } from '../../hooks/useSendQuestionAnswer';
 import { switchTextForDeviceType } from '../../Utils/GlobalUtils';
+import { getCurrentLoggedTimeOfTrainingQuestionMilliseconds } from '../../Utils/TrainingUtils';
 
 function ButtonsSection() {
     const dispatch = useDispatch();
@@ -23,22 +24,28 @@ function ButtonsSection() {
     const questionId = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].id);
     const trainingStartTime = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].trainingStartTime);
     const answerTimeMilliseconds = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].answerTimeMilliseconds);
+    const currentStageStartTime = useSelector(state => state.trainingState.currentStageStartTime);
 
     const havingGotTypedAnswers = useSelector(state => state.trainingState.questions[state.trainingState.currentQuestionIndex].givenTypedAnswers);
+
+    const currentStageTimeIsLimited = useSelector(state => state.trainingState.currentStageTimeIsLimited);
+    const currentStageMaxTimeMilliseconds = useSelector(state => state.trainingState.currentStageMaxTimeMilliseconds);
 
     const handleGoNext = () => {
         goNext(false);
     }
 
     const handleAnswer = async (isResponsedAnswerCorrect, givenTypedAnswers, sendAnswer) => {
-        var isFuncSucceed = true;
+        let isFuncSucceed = true;
         if (sendAnswer) {
+            const resultAnswerTimeMilliseconds = getCurrentLoggedTimeOfTrainingQuestionMilliseconds(answerTimeMilliseconds, currentStageStartTime,
+                currentStageTimeIsLimited, currentStageMaxTimeMilliseconds);
             isFuncSucceed = await sendQuestionAnswer({
                 questionId,
                 trainingStartTime,
                 givenTypedAnswers,
                 isAnswerCorrect: isResponsedAnswerCorrect,
-                answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
+                answerTimeMilliseconds: resultAnswerTimeMilliseconds
             });
         }
         if (isFuncSucceed) {
@@ -47,12 +54,14 @@ function ButtonsSection() {
     }
 
     const handleSendingHavingGotAnswerAndGoingNext = async (isResponsedAnswerCorrect) => {
-        var isFuncSucceed = await sendQuestionAnswer({
+        const resultAnswerTimeMilliseconds = getCurrentLoggedTimeOfTrainingQuestionMilliseconds(answerTimeMilliseconds, currentStageStartTime,
+            currentStageTimeIsLimited, currentStageMaxTimeMilliseconds);
+        let isFuncSucceed = await sendQuestionAnswer({
             questionId,
             trainingStartTime,
             givenTypedAnswers: havingGotTypedAnswers,
             isAnswerCorrect: isResponsedAnswerCorrect ?? isAnswerCorrect,
-            answerTimeMilliseconds: answerTimeMilliseconds ?? (Date.now() - trainingStartTime)
+            answerTimeMilliseconds: resultAnswerTimeMilliseconds
         });
         if (isFuncSucceed) {
             goNext(false);
