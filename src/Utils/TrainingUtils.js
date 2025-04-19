@@ -77,8 +77,7 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                 switchToNextQuestion: false,
                 trainingStage: 'learn',
                 trainingStageParameters: [],
-                startTrainingTimer: false,
-                stopTrainingTimer: false
+                currentStageTimeIsLimited: true
             };
         }
         else {
@@ -87,8 +86,7 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                     switchToNextQuestion: false,
                     trainingStage: 'train',
                     trainingStageParameters: [],
-                    startTrainingTimer: true,
-                    stopTrainingTimer: false
+                    currentStageTimeIsLimited: false
                 }
             }
             else {
@@ -96,8 +94,7 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                     switchToNextQuestion: false,
                     trainingStage: 'speak',
                     trainingStageParameters: [],
-                    startTrainingTimer: true,
-                    stopTrainingTimer: false
+                    currentStageTimeIsLimited: false
                 }
             }
         }
@@ -111,16 +108,15 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                             switchToNextQuestion: false,
                             trainingStage: 'trainAfterLearning',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: true,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: false
                         }; break;
-                    case 'train': case 'trainAfterLearning':
+                    case 'train':
+                    case 'trainAfterLearning':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
                             trainingStageParameters: null,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: true
+                            currentStageTimeIsLimited: null
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -132,24 +128,21 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: true,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: false
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: true
+                            currentStageTimeIsLimited: true
                         }; break;
                     case 'check':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
                             trainingStageParameters: null,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: null
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -161,24 +154,21 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                             switchToNextQuestion: false,
                             trainingStage: 'train',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: true,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: false
                         }; break;
                     case 'train':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: true
+                            currentStageTimeIsLimited: true
                         }; break;
                     case 'check':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
                             trainingStageParameters: null,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: null
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -190,32 +180,28 @@ export function getNextStateInTrainingQuestion(question, previousState) {
                             switchToNextQuestion: false,
                             trainingStage: 'speak',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: true,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: false
                         }; break;
                     case 'speak':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'write',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: false
                         }; break;
                     case 'write':
                         result = {
                             switchToNextQuestion: false,
                             trainingStage: 'check',
                             trainingStageParameters: previousState.trainingStageParameters,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: true
+                            currentStageTimeIsLimited: true
                         }; break;
                     case 'check':
                         result = {
                             switchToNextQuestion: true,
                             trainingStage: null,
                             trainingStageParameters: null,
-                            startTrainingTimer: false,
-                            stopTrainingTimer: false
+                            currentStageTimeIsLimited: null
                         }; break;
                     default: result = null; break;
                 }; break;
@@ -265,4 +251,17 @@ export function getCorrectAnswersPercent(questions) {
     const numberOfCorrectAnswers = questions.filter(question => question.isAnswerCorrect).length;
 
     return numberOfCorrectAnswers / numberOfQuestions * 100;
+}
+
+export function getCurrentLoggedTimeOfTrainingQuestionMilliseconds(lastLoggedAnswerTimeMilliseconds, currentStageStartTime, currentStageTimeIsLimited, currentStageMaxTimeMilliseconds) {
+    const currentStageTimeMilliseconds = Date.now() - currentStageStartTime;
+    if (currentStageTimeIsLimited && currentStageMaxTimeMilliseconds) {
+        if (currentStageTimeMilliseconds > currentStageMaxTimeMilliseconds) {
+            return lastLoggedAnswerTimeMilliseconds + currentStageMaxTimeMilliseconds;
+        } else {
+            return lastLoggedAnswerTimeMilliseconds + currentStageTimeMilliseconds;
+        }
+    } else {
+        return lastLoggedAnswerTimeMilliseconds + currentStageTimeMilliseconds;
+    }
 }
