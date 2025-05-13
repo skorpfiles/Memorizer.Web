@@ -19,6 +19,7 @@ function TrainingLengthOption(props) {
                     key={props.radioButtonId}
                     name={props.radioButtonsName}
                     value={props.radioButtonId}
+                    checked={props.radioButtonChecked}
                     onChange={props.handleSettingRadioButton}
                 />
                 <div className='font--main-for-small-labels'>{props.title}</div>

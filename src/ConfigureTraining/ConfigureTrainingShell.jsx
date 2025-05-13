@@ -67,6 +67,7 @@ function ConfigureTrainingShell(props) {
                     <TrainingLengthOption
                         radioButtonId='questionsCountRadioButton'
                         radioButtonsName='trainingLengthRadioGroup'
+                        radioButtonChecked={props.trainingStatus.trainingLengthAsQuestionsCount}
                         handleSettingRadioButton={props.handleSettingTrainingLength}
                         title='How many questions would you like to train now?'
                         inputId='questionsCount'
@@ -78,6 +79,7 @@ function ConfigureTrainingShell(props) {
                     <TrainingLengthOption
                         radioButtonId='timeRadioButton'
                         radioButtonsName='trainingLengthRadioGroup'
+                        radioButtonChecked={!props.trainingStatus.trainingLengthAsQuestionsCount}
                         handleSettingRadioButton={props.handleSettingTrainingLength}
                         title='Or how much time would you like to spend for the training?'
                         inputId='time'
