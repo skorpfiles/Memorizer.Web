@@ -244,6 +244,7 @@ function ConfigureTrainingPage() {
                         methods.setValue('time', result.timeMinutes);
                         methods.setValue('newQuestionsFraction', result.newQuestionsFraction);
                         methods.setValue('penaltyQuestionsFraction', result.penaltyQuestionsFraction);
+                        methods.setValue('trainingLengthRadioGroup', result.lengthType === 'questionsCount' ? 'questionsCountRadioButton' : 'timeRadioButton');
                         dispatchLoadTrainingState('setSuccess');
                         await refreshStatsFuncRef.current(selectedQuestionnaires);
                     }
